@@ -1,0 +1,211 @@
+✅ PROMPT FINAL POUR REPLIT – BENJ INSIDE
+
+✅ Présentation globale du projet
+Crée une application web complète nommée BENJ INSIDE, une plateforme de gestion chrétienne qui intègre :
+
+✅ Gestion des membres et des rôles (multi-niveaux)
+
+✅ Gestion des finances (cotisations, dettes, délais, rapports simples)
+
+✅ Gestion des témoignages (membres envoient, admin valide/rejette)
+
+✅ Playlist audio (admin télécharge des musiques/enseignements, utilisateurs écoutent en streaming)
+
+✅ Chatbot biblique Kadosh.ia avec toute la Bible + 50 sujets fréquents actuels + explications déjà définies
+
+✅ Contact direct WhatsApp de la régis (+242 06 426 4500)
+
+✅ Interface moderne, sécurisée et responsive, avec mode clair/sombre et design élégant
+
+✅ Organisation des rôles et départements
+L’application doit gérer 4 types d’utilisateurs :
+
+1️⃣ Admin → rôle suprême (Yohann / admin)
+2️⃣ Chefs de département → 3 types de chefs :
+
+Chef des chantres → attribue les notes aux chantres
+
+Chef des intercesseurs → attribue les notes aux intercesseurs
+
+Chef de la régis → attribue les notes à la régis
+3️⃣ Ouvriers → chantres, intercesseurs, régis
+4️⃣ Membres simples
+
+Les chefs peuvent noter uniquement les ouvriers de leur département.
+
+Les départements préchargés :
+
+Chantres
+
+Intercesseurs
+
+Régis
+
+✅ Authentification et sécurité
+Inscription (par défaut rôle = membre)
+
+Connexion par JWT (JSON Web Token)
+
+Rôles hiérarchiques avec contrôle strict d’accès aux routes
+
+Admin précréé :
+
+Utilisateur : Yohann
+
+Mot de passe : admin
+
+Sécurité renforcée (hachage mots de passe, gestion sessions)
+
+✅ Fonctionnalités principales par rôle
+✅ Pour tous (membre, ouvrier, chef, admin)
+
+Modifier profil (info + langue)
+
+Envoyer un témoignage (validé/rejeté par admin)
+
+Chatbot Kadosh.ia → questions bibliques + explications de l’APK
+
+Dashboard → annonces admin + échéances financières + verset du jour + message de bienvenue
+
+Playlist → écouter les audios de l’admin
+
+Bouton direct WhatsApp pour contacter la régis (+242 06 426 4500)
+
+Déconnexion
+
+✅ Pour les ouvriers (chantres, intercesseurs, régis)
+
+Voir tous les ouvriers de leur département
+
+Voir leur score personnel donné par leur chef
+
+✅ Pour les chefs
+
+Voir les ouvriers de leur département
+
+Attribuer des notes aux ouvriers
+
+✅ Pour l’admin
+
+Valider/rejeter témoignages
+
+Gérer les membres (ajouter/supprimer/modifier/attribuer rôle)
+
+Gérer finances (montants, dettes, délais, paiements)
+
+Gérer la playlist (upload/suppression audio)
+
+✅ Chatbot biblique Kadosh.ia amélioré
+Le chatbot doit connaître toute la Bible (Ancien et Nouveau Testament).
+
+Il doit répondre aux questions bibliques en fournissant :
+
+✅ 10 versets bibliques pertinents
+
+✅ 3 interprétations par verset (historique, spirituelle, pratique)
+
+Il doit répondre aux questions sur l’APK (comment utiliser une fonctionnalité).
+
+Il doit contenir une base de 50 sujets fréquents déjà préremplis (exemple : foi, pardon, mariage, dîme, guérison, paix, fin des temps, etc.) avec les réponses déjà définies.
+
+Il peut aussi appeler l’API OpenAI si l’utilisateur pose une question en dehors des sujets préremplis.
+
+✅ Backend (Flask)
+Framework : Flask
+
+Modules :
+
+Flask_SQLAlchemy (ORM)
+
+Flask_JWT_Extended (auth)
+
+Flask-Babel (multi-langue)
+
+Base PostgreSQL sur Neon
+
+Modèles :
+
+User : id, nom, email, mot_de_passe_hash, rôle, département, langue, score, date_inscription
+
+Témoignage : id, user_id, contenu, statut (en_attente/validé/rejeté)
+
+Finance : id, user_id, montant, type (cotisation/dette), deadline, payé (bool)
+
+Annonce : id, titre, contenu, date_publication
+
+Playlist : id, titre, fichier_audio_url
+
+Département : id, nom
+
+Routes organisées :
+
+auth.py → /register, /login
+
+members.py → /profil, /dashboard, /temoignage
+
+chef.py → /chef/ouvriers, /chef/score/<id>
+
+admin.py → /admin/temoignages, /admin/membres, /admin/finances, /admin/playlist
+
+chatbot.py → /kadosh
+
+✅ Frontend
+HTML + Tailwind CSS + JS
+
+Responsive (PC + mobile)
+
+Mode clair/sombre + personnalisation couleur principale
+
+Tableaux de bord adaptés par rôle
+
+Lecteur audio HTML5 avec contrôle volume
+
+Sélecteur de langue (français par défaut + 6 autres langues)
+
+Boutons parfaitement fonctionnels, navigation fluide, design très soigné
+
+✅ Points prioritaires
+1️⃣ Boutons et navigation fiables : aucun bouton ou lien cassé
+2️⃣ Sécurité renforcée : hachage mots de passe, JWT sécurisé, accès filtré par rôle
+3️⃣ Design esthétique et moderne : beau, agréable, fluide
+
+✅ Déploiement
+Fichier requirements.txt + Procfile pour Render
+
+Variables d’environnement :
+
+DATABASE_URL (Neon)
+
+SECRET_KEY (Flask)
+
+OPENAI_KEY (chatbot)
+
+Précharger :
+
+Admin Yohann / admin
+
+Départements : chantres, intercesseurs, régis
+
+✅ Fonctionnalités à ajouter plus tard (pas dans la version initiale)
+Rapports financiers exportables (PDF/CSV)
+
+Notifications WhatsApp automatiques
+
+Dashboard temps réel (WebSocket)
+
+👉 Maintenant, génère la version initiale complète de BENJ INSIDE avec :
+
+✅ Backend Flask sécurisé (JWT, PostgreSQL Neon, multi-langue)
+✅ Frontend Tailwind + JS responsive et esthétique
+✅ Chatbot enrichi avec 50 sujets préremplis + intégration OpenAI
+✅ Contact WhatsApp direct intégré
+✅ Déploiement prêt sur Render
+
+🔥 L’application doit être PRIORITAIREMENT :
+
+Fiable (aucun bouton cassé)
+
+Sécurisée (authentification et rôles blindés)
+
+Belle (design moderne et agréable)
+
