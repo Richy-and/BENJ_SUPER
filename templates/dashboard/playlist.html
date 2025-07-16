@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Playlist - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center">
+            <div class="bg-orange-100 dark:bg-orange-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-music text-orange-600 text-2xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Playlist Audio</h1>
+                <p class="text-gray-600 dark:text-gray-400">Écoutez les enseignements et musiques partagés</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Current Player -->
+    <div id="current-player" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hidden">
+        <div class="flex items-center space-x-4">
+            <div class="bg-orange-100 dark:bg-orange-900 w-12 h-12 rounded-full flex items-center justify-center">
+                <i class="fas fa-music text-orange-600"></i>
+            </div>
+            <div class="flex-1">
+                <h3 id="current-title" class="font-semibold text-gray-900 dark:text-white"></h3>
+                <p id="current-description" class="text-sm text-gray-600 dark:text-gray-400"></p>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button id="play-pause-btn" class="bg-primary-600 hover:bg-primary-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button id="stop-btn" class="bg-red-600 hover:bg-red-700 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fas fa-stop"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mt-4">
+            <div class="flex items-center space-x-4">
+                <span id="current-time" class="text-sm text-gray-500 dark:text-gray-400">0:00</span>
+                <div class="flex-1">
+                    <input type="range" id="progress-bar" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" 
+                           min="0" max="100" value="0">
+                </div>
+                <span id="duration" class="text-sm text-gray-500 dark:text-gray-400">0:00</span>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-volume-down text-gray-500 dark:text-gray-400"></i>
+                    <input type="range" id="volume-control" class="w-20 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" 
+                           min="0" max="100" value="50">
+                    <i class="fas fa-volume-up text-gray-500 dark:text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+        <audio id="audio-player" preload="metadata"></audio>
+    </div>
+
+    <!-- Playlist Items -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Audios disponibles</h2>
+        
+        {% if playlist_items %}
+            <div class="space-y-4">
+                {% for item in playlist_items %}
+                <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                    <div class="bg-orange-100 dark:bg-orange-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-music text-orange-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900 dark:text-white">{{ item.titre }}</h3>
+                        {% if item.description %}
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ item.description }}</p>
+                        {% endif %}
+                        <p class="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                            Ajouté le {{ item.date_ajout.strftime('%d/%m/%Y') }}
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="playAudio('{{ item.fichier_audio_url }}', '{{ item.titre }}', '{{ item.description or '' }}')" 
+                                class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-play mr-2"></i>
+                            Écouter
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <i class="fas fa-music text-gray-300 dark:text-gray-600 text-6xl mb-4"></i>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucun audio disponible</h3>
+                <p class="text-gray-500 dark:text-gray-400">L'administration n'a pas encore ajouté d'audios à la playlist</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 border border-blue-200 dark:border-blue-800">
+        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
+            <i class="fas fa-info-circle mr-2"></i>
+            Instructions d'utilisation
+        </h3>
+        <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+            <li>• Cliquez sur "Écouter" pour démarrer la lecture d'un audio</li>
+            <li>• Utilisez les contrôles de lecture pour mettre en pause, arrêter ou ajuster le volume</li>
+            <li>• La barre de progression vous permet de naviguer dans l'audio</li>
+            <li>• Seuls les audios ajoutés par l'administration sont disponibles</li>
+        </ul>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/audio-player.js') }}"></script>
+{% endblock %}

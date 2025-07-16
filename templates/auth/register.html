@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+            <i class="fas fa-church text-primary-600 text-5xl mb-4"></i>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+                Rejoindre BENJ INSIDE
+            </h2>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">
+                Créez votre compte pour accéder à la plateforme
+            </p>
+        </div>
+
+        <form class="mt-8 space-y-6" method="POST">
+            <div class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Nom d'utilisateur
+                    </label>
+                    <input type="text" id="username" name="username" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                  focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                           placeholder="Choisissez un nom d'utilisateur">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Adresse email
+                    </label>
+                    <input type="email" id="email" name="email" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                  focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                           placeholder="votre.email@exemple.com">
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Mot de passe
+                    </label>
+                    <input type="password" id="password" name="password" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                  focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                           placeholder="Choisissez un mot de passe sécurisé">
+                </div>
+
+                <div>
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Confirmer le mot de passe
+                    </label>
+                    <input type="password" id="confirm_password" name="confirm_password" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                  focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                           placeholder="Confirmez votre mot de passe">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" 
+                        class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-lg 
+                               transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    Créer mon compte
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-gray-600 dark:text-gray-400">
+                    Déjà un compte ? 
+                    <a href="{{ url_for('auth.login') }}" class="text-primary-600 hover:text-primary-700 font-medium">
+                        Se connecter ici
+                    </a>
+                </p>
+            </div>
+        </form>
+
+        <!-- Info about default role -->
+        <div class="mt-8 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <h3 class="text-sm font-medium text-green-800 dark:text-green-200 mb-2">
+                <i class="fas fa-info-circle mr-1"></i>
+                Information
+            </h3>
+            <p class="text-sm text-green-700 dark:text-green-300">
+                Votre compte sera créé avec le rôle "membre" par défaut. L'administration peut modifier votre rôle et vous assigner à un département ultérieurement.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

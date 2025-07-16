@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="relative">
+    <!-- Hero Section -->
+    <div class="relative bg-gradient-to-r from-primary-600 to-primary-800 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Bienvenue sur <span class="text-yellow-300">BENJ INSIDE</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">
+                    Plateforme de gestion chrétienne pour notre communauté
+                </p>
+                <div class="space-x-4">
+                    {% if not session.user_id %}
+                        <a href="{{ url_for('auth.register') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
+                            Rejoindre la communauté
+                        </a>
+                        <a href="{{ url_for('auth.login') }}" class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
+                            Se connecter
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('dashboard.dashboard') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-block">
+                            Accéder au Dashboard
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 100" class="w-full h-16 fill-gray-50 dark:fill-gray-900">
+                <path d="M0,64L1440,32L1440,100L0,100Z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Fonctionnalités de la plateforme
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Une solution complète pour la gestion de notre communauté chrétienne
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
+                    <div class="bg-primary-100 dark:bg-primary-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-users text-primary-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Gestion des membres</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Système de rôles multi-niveaux avec gestion des départements et attribution de scores
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
+                    <div class="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-dollar-sign text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Gestion financière</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Suivi des cotisations, dettes et échéances avec rapports simplifiés
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
+                    <div class="bg-purple-100 dark:bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-heart text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Témoignages</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Partage de témoignages avec système de validation par l'administration
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
+                    <div class="bg-orange-100 dark:bg-orange-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-music text-orange-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Playlist audio</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Écoute en streaming des enseignements et musiques partagés par l'administration
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
+                    <div class="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-robot text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Chatbot Kadosh.ia</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Assistant biblique intelligent avec 50 sujets prédéfinis et intégration IA
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow">
+                    <div class="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fab fa-whatsapp text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Contact direct</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Accès direct à la régis via WhatsApp pour toute assistance
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    {% if not session.user_id %}
+    <div class="bg-primary-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Prêt à rejoindre notre communauté ?
+            </h2>
+            <p class="text-xl mb-8 opacity-90">
+                Inscrivez-vous dès maintenant et commencez votre parcours spirituel avec nous
+            </p>
+            <a href="{{ url_for('auth.register') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold transition-colors inline-block">
+                S'inscrire gratuitement
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Bible Verse Section -->
+    <div class="bg-gray-100 dark:bg-gray-800 py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8">
+                <i class="fas fa-quote-left text-primary-600 text-3xl mb-4"></i>
+                <blockquote class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6 italic">
+                    "Car Dieu a tant aimé le monde qu'il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu'il ait la vie éternelle."
+                </blockquote>
+                <cite class="text-primary-600 font-semibold">Jean 3:16</cite>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

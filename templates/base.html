@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BENJ INSIDE{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div class="min-h-full">
+        <!-- Navigation -->
+        <nav class="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="{{ url_for('index') }}" class="flex items-center space-x-2">
+                            <i class="fas fa-church text-primary-600 text-2xl"></i>
+                            <span class="text-xl font-bold text-gray-900 dark:text-white">BENJ INSIDE</span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- Theme Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-moon dark:hidden text-gray-600"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                        </button>
+                        
+                        <!-- WhatsApp Contact -->
+                        <a href="https://wa.me/242064264500" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors">
+                            <i class="fab fa-whatsapp"></i>
+                            <span class="hidden sm:inline">Contacter Régis</span>
+                        </a>
+                        
+                        {% if session.user_id %}
+                            <div class="relative group">
+                                <button class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                                    <i class="fas fa-user-circle text-xl"></i>
+                                    <span>{{ session.username }}</span>
+                                    <i class="fas fa-chevron-down text-sm"></i>
+                                </button>
+                                <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
+                                    <a href="{{ url_for('dashboard.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                                    </a>
+                                    <a href="{{ url_for('dashboard.profile') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <i class="fas fa-user mr-2"></i>Mon Profil
+                                    </a>
+                                    {% if session.user_role == 'admin' %}
+                                    <a href="{{ url_for('admin.members') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <i class="fas fa-users-cog mr-2"></i>Administration
+                                    </a>
+                                    {% elif session.user_role == 'chef' %}
+                                    <a href="{{ url_for('chef.workers') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <i class="fas fa-users mr-2"></i>Mes Ouvriers
+                                    </a>
+                                    {% endif %}
+                                    <hr class="border-gray-200 dark:border-gray-700">
+                                    <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{{ url_for('auth.login') }}" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors">
+                                Se connecter
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                    {% for category, message in messages %}
+                        <div class="alert-{{ category }} mb-4 p-4 rounded-lg flex items-center">
+                            {% if category == 'success' %}
+                                <i class="fas fa-check-circle mr-2 text-green-600"></i>
+                            {% elif category == 'error' %}
+                                <i class="fas fa-exclamation-circle mr-2 text-red-600"></i>
+                            {% elif category == 'warning' %}
+                                <i class="fas fa-exclamation-triangle mr-2 text-yellow-600"></i>
+                            {% else %}
+                                <i class="fas fa-info-circle mr-2 text-blue-600"></i>
+                            {% endif %}
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">BENJ INSIDE</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Plateforme de gestion chrétienne pour notre communauté. Que Dieu vous bénisse!</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contact</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            +242 06 426 4500
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Liens rapides</h3>
+                        <ul class="space-y-2">
+                            {% if session.user_id %}
+                                <li><a href="{{ url_for('dashboard.dashboard') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Dashboard</a></li>
+                                <li><a href="{{ url_for('dashboard.chatbot') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Kadosh.ia</a></li>
+                                <li><a href="{{ url_for('dashboard.playlist') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Playlist</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('auth.login') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Se connecter</a></li>
+                                <li><a href="{{ url_for('auth.register') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">S'inscrire</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center">
+                    <p class="text-gray-600 dark:text-gray-400">© 2025 BENJ INSIDE. Tous droits réservés. Béni soit le nom de l'Éternel!</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

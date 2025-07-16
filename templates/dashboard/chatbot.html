@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Kadosh.ia - Assistant Biblique{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center">
+            <div class="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-robot text-green-600 text-2xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Kadosh.ia</h1>
+                <p class="text-gray-600 dark:text-gray-400">Votre assistant biblique intelligent</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat Interface -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Chat Area -->
+        <div class="lg:col-span-3">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-96 lg:h-[600px] flex flex-col">
+                <!-- Chat Header -->
+                <div class="bg-green-600 text-white p-4 rounded-t-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-robot text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Kadosh.ia</h3>
+                            <p class="text-sm text-green-100">Assistant biblique en ligne</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50 dark:bg-gray-700">
+                    <!-- Welcome Message -->
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-green-600 w-8 h-8 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-white text-sm"></i>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-3 max-w-md">
+                            <p class="text-gray-900 dark:text-white">
+                                🙏 Shalom! Je suis Kadosh.ia, votre assistant biblique. Je peux vous aider avec:
+                            </p>
+                            <ul class="text-sm text-gray-700 dark:text-gray-300 mt-2 space-y-1">
+                                <li>• Questions bibliques avec versets et explications</li>
+                                <li>• 50 sujets spirituels prédéfinis</li>
+                                <li>• Aide sur l'utilisation de l'application</li>
+                            </ul>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                                Posez-moi votre question ou explorez les sujets disponibles!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="p-4 bg-white dark:bg-gray-800 rounded-b-lg border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex space-x-3">
+                        <input type="text" id="chat-input" placeholder="Posez votre question biblique..."
+                               class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                      bg-white dark:bg-gray-700 text-gray-900 dark:text-white
+                                      focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors">
+                        <button id="send-btn" 
+                                class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg 
+                                       transition-colors focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            <!-- Quick Topics -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Sujets populaires</h3>
+                <div class="space-y-2">
+                    <button onclick="askTopic('foi')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-heart mr-2 text-red-500"></i>Foi
+                    </button>
+                    <button onclick="askTopic('pardon')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-hands-praying mr-2 text-blue-500"></i>Pardon
+                    </button>
+                    <button onclick="askTopic('amour')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-heart mr-2 text-pink-500"></i>Amour
+                    </button>
+                    <button onclick="askTopic('paix')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-dove mr-2 text-green-500"></i>Paix
+                    </button>
+                    <button onclick="askTopic('prière')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-praying-hands mr-2 text-purple-500"></i>Prière
+                    </button>
+                    <button onclick="askTopic('guérison')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-hand-holding-heart mr-2 text-yellow-500"></i>Guérison
+                    </button>
+                </div>
+            </div>
+
+            <!-- App Help -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Aide sur l'app</h3>
+                <div class="space-y-2">
+                    <button onclick="askHelp('Comment utiliser la playlist?')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-music mr-2 text-orange-500"></i>Playlist
+                    </button>
+                    <button onclick="askHelp('Comment soumettre un témoignage?')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-heart mr-2 text-purple-500"></i>Témoignages
+                    </button>
+                    <button onclick="askHelp('Comment modifier mon profil?')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-user mr-2 text-blue-500"></i>Profil
+                    </button>
+                    <button onclick="askHelp('Comment voir mes finances?')" class="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-dollar-sign mr-2 text-green-500"></i>Finances
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                <h3 class="font-semibold text-blue-800 dark:text-blue-200 mb-3">
+                    <i class="fas fa-sparkles mr-2"></i>Fonctionnalités
+                </h3>
+                <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                    <li>• 50 sujets bibliques prédéfinis</li>
+                    <li>• Versets avec interprétations</li>
+                    <li>• Aide sur l'application</li>
+                    <li>• Intelligence artificielle</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Welcome Section -->
+    <div class="bg-gradient-to-r from-primary-600 to-primary-800 text-white rounded-xl shadow-lg p-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">
+                    Bienvenue, {{ user.username }}!
+                </h1>
+                <p class="text-primary-100">
+                    Que la paix de Dieu soit avec vous aujourd'hui
+                </p>
+                <div class="mt-4 text-sm opacity-90">
+                    <span class="bg-primary-500 px-3 py-1 rounded-full">
+                        Rôle: {{ user.role.title() }}
+                    </span>
+                    {% if user.departement %}
+                    <span class="bg-primary-500 px-3 py-1 rounded-full ml-2">
+                        Département: {{ user.departement.nom }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <i class="fas fa-hands-praying text-6xl opacity-20"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="{{ url_for('dashboard.profile') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="bg-blue-100 dark:bg-blue-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-user text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Mon Profil</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Modifier mes informations</p>
+        </a>
+
+        <a href="{{ url_for('dashboard.testimonials') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="bg-purple-100 dark:bg-purple-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-heart text-purple-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Témoignages</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Partager ma foi</p>
+        </a>
+
+        <a href="{{ url_for('dashboard.playlist') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="bg-orange-100 dark:bg-orange-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-music text-orange-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Playlist</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Écouter les enseignements</p>
+        </a>
+
+        <a href="{{ url_for('dashboard.chatbot') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="bg-green-100 dark:bg-green-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-robot text-green-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Kadosh.ia</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Assistant biblique</p>
+        </a>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Daily Verse -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <i class="fas fa-book-open text-primary-600 mr-2"></i>
+                Verset du jour
+            </h2>
+            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <blockquote class="text-gray-700 dark:text-gray-300 italic mb-2">
+                    "{{ daily_verse.text }}"
+                </blockquote>
+                <cite class="text-primary-600 font-semibold">{{ daily_verse.reference }}</cite>
+            </div>
+        </div>
+
+        <!-- Recent Announcements -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <i class="fas fa-bullhorn text-primary-600 mr-2"></i>
+                Annonces récentes
+            </h2>
+            <div class="space-y-4">
+                {% for announcement in announcements %}
+                <div class="border-l-4 border-primary-500 pl-4 py-2">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">{{ announcement.titre }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ announcement.contenu }}</p>
+                    <span class="text-xs text-gray-500 dark:text-gray-500">{{ announcement.date_publication.strftime('%d/%m/%Y') }}</span>
+                </div>
+                {% else %}
+                <p class="text-gray-500 dark:text-gray-400 text-center py-4">Aucune annonce récente</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Status -->
+    {% if finances %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+            <i class="fas fa-dollar-sign text-green-600 mr-2"></i>
+            Mes obligations financières
+        </h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-gray-900 dark:text-white">Type</th>
+                        <th class="px-4 py-2 text-left text-gray-900 dark:text-white">Montant</th>
+                        <th class="px-4 py-2 text-left text-gray-900 dark:text-white">Échéance</th>
+                        <th class="px-4 py-2 text-left text-gray-900 dark:text-white">Statut</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for finance in finances %}
+                    <tr>
+                        <td class="px-4 py-2 text-gray-900 dark:text-white">{{ finance.type.title() }}</td>
+                        <td class="px-4 py-2 text-gray-900 dark:text-white">{{ finance.montant }} FCFA</td>
+                        <td class="px-4 py-2 text-gray-900 dark:text-white">
+                            {% if finance.deadline %}
+                                {{ finance.deadline.strftime('%d/%m/%Y') }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+                            <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                                Non payé
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Role-specific sections -->
+    {% if user.role == 'ouvrier' and user.score > 0 %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+            <i class="fas fa-star text-yellow-500 mr-2"></i>
+            Mon score
+        </h2>
+        <div class="flex items-center">
+            <div class="bg-yellow-100 dark:bg-yellow-900 rounded-full w-16 h-16 flex items-center justify-center mr-4">
+                <span class="text-2xl font-bold text-yellow-700 dark:text-yellow-300">{{ user.score }}</span>
+            </div>
+            <div>
+                <p class="text-gray-700 dark:text-gray-300">Score attribué par votre chef de département</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Sur 20 points</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Admin/Chef Quick Links -->
+    {% if user.role in ['admin', 'chef'] %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+            <i class="fas fa-cogs text-gray-600 mr-2"></i>
+            Gestion
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {% if user.role == 'admin' %}
+            <a href="{{ url_for('admin.members') }}" class="bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg p-4 text-center transition-colors">
+                <i class="fas fa-users text-blue-600 text-2xl mb-2"></i>
+                <p class="text-sm font-medium text-blue-800 dark:text-blue-200">Gestion des membres</p>
+            </a>
+            <a href="{{ url_for('admin.finances') }}" class="bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg p-4 text-center transition-colors">
+                <i class="fas fa-dollar-sign text-green-600 text-2xl mb-2"></i>
+                <p class="text-sm font-medium text-green-800 dark:text-green-200">Gestion financière</p>
+            </a>
+            <a href="{{ url_for('admin.testimonials_admin') }}" class="bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg p-4 text-center transition-colors">
+                <i class="fas fa-heart text-purple-600 text-2xl mb-2"></i>
+                <p class="text-sm font-medium text-purple-800 dark:text-purple-200">Modération témoignages</p>
+            </a>
+            {% endif %}
+            {% if user.role == 'chef' %}
+            <a href="{{ url_for('chef.workers') }}" class="bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/30 rounded-lg p-4 text-center transition-colors">
+                <i class="fas fa-users text-orange-600 text-2xl mb-2"></i>
+                <p class="text-sm font-medium text-orange-800 dark:text-orange-200">Mes ouvriers</p>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

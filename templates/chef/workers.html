@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Ouvriers - Chef{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="bg-orange-100 dark:bg-orange-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-users text-orange-600 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mes Ouvriers</h1>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Gérez les ouvriers 
+                        {% if chef.departement %}
+                            du département {{ chef.departement.nom }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="text-2xl font-bold text-orange-600">{{ workers|length }}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">Ouvriers</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workers List -->
+    {% if workers %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for worker in workers %}
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-orange-100 dark:bg-orange-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-user text-orange-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">{{ worker.username }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ worker.email }}</p>
+                </div>
+            </div>
+            
+            <!-- Current Score -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Score actuel</span>
+                    <span class="text-lg font-bold text-orange-600">
+                        {{ worker.score if worker.score else 'N/A' }}/20
+                    </span>
+                </div>
+                
+                {% if worker_scores[worker.id] %}
+                <div class="text-xs text-gray-500 dark:text-gray-400">
+                    Dernière évaluation: {{ worker_scores[worker.id].date_attribution.strftime('%d/%m/%Y') }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Department -->
+            <div class="mb-4">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Département: </span>
+                <span class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ worker.departement.nom if worker.departement else 'Aucun' }}
+                </span>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex space-x-2">
+                <button onclick="openScoreModal({{ worker.id }}, '{{ worker.username }}', {{ worker.score if worker.score else 0 }})"
+                        class="flex-1 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                    <i class="fas fa-star mr-1"></i>
+                    Noter
+                </button>
+                <a href="{{ url_for('chef.score_history', worker_id=worker.id) }}"
+                   class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-colors text-center">
+                    <i class="fas fa-history mr-1"></i>
+                    Historique
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-12 text-center">
+        <i class="fas fa-users text-gray-300 dark:text-gray-600 text-6xl mb-4"></i>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucun ouvrier</h3>
+        <p class="text-gray-500 dark:text-gray-400">
+            {% if chef.role == 'admin' %}
+                Aucun ouvrier n'est enregistré dans le système.
+            {% else %}
+                Aucun ouvrier n'est assigné à votre département.
+            {% endif %}
+        </p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Score Modal -->
+<div id="scoreModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Attribuer une note à <span id="workerName"></span>
+        </h3>
+        
+        <form id="scoreForm" method="POST">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Note (0-20)
+                    </label>
+                    <div class="flex items-center space-x-4">
+                        <input type="range" name="score" id="scoreRange" min="0" max="20" value="10" 
+                               class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                               oninput="updateScoreDisplay()">
+                        <div class="text-2xl font-bold text-orange-600 w-12 text-center" id="scoreDisplay">10</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Commentaire (optionnel)
+                    </label>
+                    <textarea name="commentaire" rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                     bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                              placeholder="Commentaire sur la performance..."></textarea>
+                </div>
+            </div>
+            
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" onclick="closeScoreModal()"
+                        class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                    Annuler
+                </button>
+                <button type="submit"
+                        class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-star mr-2"></i>
+                    Attribuer la note
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openScoreModal(workerId, workerName, currentScore) {
+    document.getElementById('workerName').textContent = workerName;
+    document.getElementById('scoreRange').value = currentScore;
+    document.getElementById('scoreDisplay').textContent = currentScore;
+    document.getElementById('scoreForm').action = `/chef/score/${workerId}`;
+    document.getElementById('scoreModal').classList.remove('hidden');
+}
+
+function closeScoreModal() {
+    document.getElementById('scoreModal').classList.add('hidden');
+}
+
+function updateScoreDisplay() {
+    const value = document.getElementById('scoreRange').value;
+    document.getElementById('scoreDisplay').textContent = value;
+}
+
+// Close modal on outside click
+document.getElementById('scoreModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeScoreModal();
+    }
+});
+</script>
+{% endblock %}

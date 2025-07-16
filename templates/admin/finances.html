@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion Financière - Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-dollar-sign text-green-600 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gestion Financière</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Gérez les cotisations et dettes des membres</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {% set total_cotisations = finances|selectattr('type', 'equalto', 'cotisation')|map(attribute='montant')|sum %}
+        {% set total_dettes = finances|selectattr('type', 'equalto', 'dette')|map(attribute='montant')|sum %}
+        {% set total_paye = finances|selectattr('paye', 'equalto', True)|map(attribute='montant')|sum %}
+        {% set total_impaye = finances|selectattr('paye', 'equalto', False)|map(attribute='montant')|sum %}
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="text-2xl font-bold text-blue-600 mb-2">{{ total_cotisations }} FCFA</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total cotisations</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="text-2xl font-bold text-red-600 mb-2">{{ total_dettes }} FCFA</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total dettes</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="text-2xl font-bold text-green-600 mb-2">{{ total_paye }} FCFA</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total payé</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="text-2xl font-bold text-orange-600 mb-2">{{ total_impaye }} FCFA</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Total impayé</div>
+        </div>
+    </div>
+
+    <!-- Add Finance Form -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Ajouter une transaction</h2>
+        <form method="POST" action="{{ url_for('admin.add_finance') }}" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Membre
+                    </label>
+                    <select name="user_id" required
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="">Sélectionner un membre</option>
+                        {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Type
+                    </label>
+                    <select name="type" required
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="cotisation">Cotisation</option>
+                        <option value="dette">Dette</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Montant (FCFA)
+                    </label>
+                    <input type="number" name="montant" step="0.01" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Échéance (optionnel)
+                    </label>
+                    <input type="date" name="deadline"
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+            </div>
+            
+            <div class="flex justify-end">
+                <button type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-plus mr-2"></i>
+                    Ajouter la transaction
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Finances Table -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Transactions financières</h2>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Membre
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Type
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Montant
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Échéance
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Statut
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for finance in finances %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="bg-primary-100 dark:bg-primary-900 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-user text-primary-600 text-xs"></i>
+                                </div>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    {{ finance.user.username }}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full
+                                {% if finance.type == 'cotisation' %}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200{% else %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200{% endif %}">
+                                {{ finance.type.title() }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {{ finance.montant }} FCFA
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {% if finance.deadline %}
+                                {{ finance.deadline.strftime('%d/%m/%Y') }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full
+                                {% if finance.paye %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% else %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200{% endif %}">
+                                {% if finance.paye %}Payé{% else %}Non payé{% endif %}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <form method="POST" action="{{ url_for('admin.toggle_payment', finance_id=finance.id) }}" class="inline">
+                                <button type="submit"
+                                        class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-sm">
+                                    {% if finance.paye %}
+                                        <i class="fas fa-undo mr-1"></i>Marquer impayé
+                                    {% else %}
+                                        <i class="fas fa-check mr-1"></i>Marquer payé
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
