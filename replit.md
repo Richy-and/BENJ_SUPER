@@ -81,6 +81,10 @@ Preferred communication style: Simple, everyday language.
 - **CHEF DASHBOARD INTEGRATION**: Dashboard widget for all chef roles (chef, chef_chantres, chef_intercesseurs, chef_régis) to access worker management
 - **WORKER STATISTICS**: Comprehensive statistics dashboard showing total workers, evaluated workers, average scores, and top performers
 - **SCORE HISTORY TRACKING**: Detailed history of all worker evaluations with comments and statistics
+- **ENHANCED RATING INTERFACE**: Dual input system with range slider and direct number input supporting decimal values (0.5 step) for precise scoring (July 17, 2025)
+- **SCORE MANAGEMENT**: Department heads can delete individual evaluations and clear entire worker histories with confirmation dialogs
+- **EVALUATION DELETION**: Individual score deletion with automatic score recalculation to maintain data integrity
+- **HISTORY CLEARING**: Complete worker evaluation history deletion with one-click access from worker management interface
 
 ## System Architecture
 
