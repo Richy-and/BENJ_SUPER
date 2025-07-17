@@ -53,13 +53,13 @@
                         </a>
                         
                         {% if session.user_id %}
-                            <div class="relative group">
-                                <button class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                            <div class="relative">
+                                <button id="user-menu-button" class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                                     <i class="fas fa-user-circle text-xl"></i>
                                     <span>{{ session.username }}</span>
-                                    <i class="fas fa-chevron-down text-sm"></i>
+                                    <i id="menu-chevron" class="fas fa-chevron-down text-sm transition-transform"></i>
                                 </button>
-                                <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 hidden group-hover:block">
+                                <div id="user-menu" class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 hidden z-50">
                                     <a href="{{ url_for('dashboard.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
                                     </a>
@@ -178,6 +178,47 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/language-switcher.js') }}"></script>
     <script src="{{ url_for('static', filename='js/persistent-audio-player.js') }}"></script>
+    
+    <!-- User Menu Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            const chevron = document.getElementById('menu-chevron');
+            let isMenuOpen = false;
+            
+            if (menuButton && userMenu && chevron) {
+                // Toggle menu on button click
+                menuButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    isMenuOpen = !isMenuOpen;
+                    
+                    if (isMenuOpen) {
+                        userMenu.classList.remove('hidden');
+                        chevron.classList.add('rotate-180');
+                    } else {
+                        userMenu.classList.add('hidden');
+                        chevron.classList.remove('rotate-180');
+                    }
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!userMenu.contains(e.target) && !menuButton.contains(e.target)) {
+                        isMenuOpen = false;
+                        userMenu.classList.add('hidden');
+                        chevron.classList.remove('rotate-180');
+                    }
+                });
+                
+                // Keep menu open when clicking inside it
+                userMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+        });
+    </script>
+    
     {% block scripts %}{% endblock %}
 </body>
 </html>
