@@ -41,8 +41,21 @@ class Finance(db.Model):
 class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titre = db.Column(db.String(200), nullable=False)
-    contenu = db.Column(db.Text, nullable=False)
-    date_publication = db.Column(db.DateTime, default=datetime.utcnow)
+    description = db.Column(db.Text, nullable=False)
+    date_programme = db.Column(db.Date, nullable=False)
+    heure_programme = db.Column(db.Time, nullable=False)
+    lieu = db.Column(db.String(200))
+    photo_url = db.Column(db.String(500))
+    intervenants = db.Column(db.Text)  # JSON string of intervenant IDs
+    statut = db.Column(db.String(20), default='en_attente')  # en_attente, approuve, rejete
+    date_creation = db.Column(db.DateTime, default=datetime.utcnow)
+    cree_par = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    approuve_par = db.Column(db.Integer, db.ForeignKey('user.id'))
+    date_approbation = db.Column(db.DateTime)
+    
+    # Relations
+    createur = db.relationship('User', foreign_keys=[cree_par], backref='annonces_creees')
+    approbateur = db.relationship('User', foreign_keys=[approuve_par], backref='annonces_approuvees')
 
 class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
