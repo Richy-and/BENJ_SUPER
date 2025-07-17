@@ -26,16 +26,62 @@ def members():
     departments = Department.query.all()
     return render_template('admin/members.html', users=users, departments=departments)
 
+@admin_bp.route('/members/add', methods=['POST'])
+@admin_required
+def add_member():
+    from werkzeug.security import generate_password_hash
+    
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    role = request.form['role']
+    departement_id = request.form.get('departement_id')
+    langue = request.form.get('langue', 'fr')
+    
+    # Vérifier si l'utilisateur existe déjà
+    if User.query.filter_by(username=username).first():
+        flash('Ce nom d\'utilisateur existe déjà', 'error')
+        return redirect(url_for('admin.members'))
+    
+    if User.query.filter_by(email=email).first():
+        flash('Cette adresse email est déjà utilisée', 'error')
+        return redirect(url_for('admin.members'))
+    
+    # Créer le nouvel utilisateur
+    user = User(
+        username=username,
+        email=email,
+        password_hash=generate_password_hash(password),
+        role=role,
+        departement_id=departement_id if departement_id else None,
+        langue=langue
+    )
+    
+    db.session.add(user)
+    db.session.commit()
+    
+    flash(f'Membre {username} ajouté avec succès!', 'success')
+    return redirect(url_for('admin.members'))
+
 @admin_bp.route('/members/update/<int:user_id>', methods=['POST'])
 @admin_required
 def update_member(user_id):
     user = User.query.get_or_404(user_id)
     
+    user.username = request.form['username']
+    user.email = request.form['email']
     user.role = request.form['role']
+    user.langue = request.form.get('langue', 'fr')
+    
     if request.form.get('departement_id'):
         user.departement_id = request.form['departement_id']
     else:
         user.departement_id = None
+    
+    # Mettre à jour le mot de passe si fourni
+    if request.form.get('password'):
+        from werkzeug.security import generate_password_hash
+        user.password_hash = generate_password_hash(request.form['password'])
     
     db.session.commit()
     flash(f'Utilisateur {user.username} mis à jour avec succès!', 'success')

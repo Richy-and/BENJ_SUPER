@@ -23,28 +23,55 @@
         </div>
     </div>
 
+    <!-- Add Member Button -->
+    <div class="flex justify-end mb-6">
+        <button onclick="openAddModal()" 
+                class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
+            <i class="fas fa-plus"></i>
+            <span>Ajouter un membre</span>
+        </button>
+    </div>
+
     <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
         {% set admin_count = users|selectattr('role', 'equalto', 'admin')|list|length %}
         {% set chef_count = users|selectattr('role', 'equalto', 'chef')|list|length %}
         {% set ouvrier_count = users|selectattr('role', 'equalto', 'ouvrier')|list|length %}
         {% set membre_count = users|selectattr('role', 'equalto', 'membre')|list|length %}
+        {% set chantres_count = users|selectattr('role', 'equalto', 'chantres')|list|length %}
+        {% set intercesseurs_count = users|selectattr('role', 'equalto', 'intercesseurs')|list|length %}
+        {% set regis_count = users|selectattr('role', 'equalto', 'régis')|list|length %}
+        {% set chef_chantres_count = users|selectattr('role', 'equalto', 'chef_chantres')|list|length %}
+        {% set chef_intercesseurs_count = users|selectattr('role', 'equalto', 'chef_intercesseurs')|list|length %}
+        {% set chef_regis_count = users|selectattr('role', 'equalto', 'chef_régis')|list|length %}
         
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
             <div class="text-2xl font-bold text-red-600 mb-2">{{ admin_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Administrateurs</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Admins</div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <div class="text-2xl font-bold text-purple-600 mb-2">{{ chef_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Chefs</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-blue-600 mb-2">{{ chantres_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Chantres</div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <div class="text-2xl font-bold text-orange-600 mb-2">{{ ouvrier_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Ouvriers</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-purple-600 mb-2">{{ intercesseurs_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Intercesseurs</div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-orange-600 mb-2">{{ regis_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Régis</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-pink-600 mb-2">{{ chef_chantres_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Chef Chantres</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-indigo-600 mb-2">{{ chef_intercesseurs_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Chef Intercesseurs</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
             <div class="text-2xl font-bold text-green-600 mb-2">{{ membre_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Membres</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Membres</div>
         </div>
     </div>
 
@@ -94,8 +121,20 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 py-1 text-xs font-semibold rounded-full
-                                {% if user.role == 'admin' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200{% elif user.role == 'chef' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200{% elif user.role == 'ouvrier' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200{% else %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}">
-                                {{ user.role.title() }}
+                                {% if user.role == 'admin' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
+                                {% elif user.role == 'chef' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
+                                {% elif user.role == 'ouvrier' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
+                                {% elif user.role == 'chantres' %}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
+                                {% elif user.role == 'intercesseurs' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
+                                {% elif user.role == 'régis' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
+                                {% elif user.role == 'chef_chantres' %}bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200
+                                {% elif user.role == 'chef_intercesseurs' %}bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200
+                                {% elif user.role == 'chef_régis' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                                {% else %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}">
+                                {% if user.role == 'chef_chantres' %}Chef Chantres
+                                {% elif user.role == 'chef_intercesseurs' %}Chef Intercesseurs
+                                {% elif user.role == 'chef_régis' %}Chef Régis
+                                {% else %}{{ user.role.title() }}{% endif %}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
@@ -113,7 +152,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
-                                <button onclick="editUser({{ user.id }}, '{{ user.username }}', '{{ user.role }}', '{{ user.departement_id or '' }}')"
+                                <button onclick="editUser({{ user.id }}, '{{ user.username }}', '{{ user.email }}', '{{ user.role }}', '{{ user.departement_id or '' }}', '{{ user.langue }}')"
                                         class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
                                     <i class="fas fa-edit"></i>
                                 </button>
@@ -158,6 +197,12 @@
                             class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
                                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                         <option value="membre">Membre</option>
+                        <option value="chantres">Chantres</option>
+                        <option value="intercesseurs">Intercesseurs</option>
+                        <option value="régis">Régis</option>
+                        <option value="chef_chantres">Chef des Chantres</option>
+                        <option value="chef_intercesseurs">Chef des Intercesseurs</option>
+                        <option value="chef_régis">Chef de la Régis</option>
                         <option value="ouvrier">Ouvrier</option>
                         <option value="chef">Chef</option>
                         <option value="admin">Admin</option>
@@ -177,6 +222,41 @@
                         {% endfor %}
                     </select>
                 </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Email
+                    </label>
+                    <input type="email" name="email" id="editEmail" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Langue
+                    </label>
+                    <select name="langue" id="editLangue" required
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="pt">Português</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Nouveau mot de passe (optionnel)
+                    </label>
+                    <input type="password" name="password" id="editPassword"
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
             </div>
             
             <div class="flex justify-end space-x-3 mt-6">
@@ -193,11 +273,113 @@
     </div>
 </div>
 
+<!-- Add Member Modal -->
+<div id="addMemberModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ajouter un nouveau membre</h3>
+        <form method="POST" action="{{ url_for('admin.add_member') }}">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Nom d'utilisateur
+                    </label>
+                    <input type="text" name="username" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Email
+                    </label>
+                    <input type="email" name="email" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Mot de passe
+                    </label>
+                    <input type="password" name="password" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Rôle
+                    </label>
+                    <select name="role" required
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="membre">Membre</option>
+                        <option value="chantres">Chantres</option>
+                        <option value="intercesseurs">Intercesseurs</option>
+                        <option value="régis">Régis</option>
+                        <option value="chef_chantres">Chef des Chantres</option>
+                        <option value="chef_intercesseurs">Chef des Intercesseurs</option>
+                        <option value="chef_régis">Chef de la Régis</option>
+                        <option value="ouvrier">Ouvrier</option>
+                        <option value="chef">Chef</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Département
+                    </label>
+                    <select name="departement_id"
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="">Aucun département</option>
+                        {% for department in departments %}
+                        <option value="{{ department.id }}">{{ department.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Langue
+                    </label>
+                    <select name="langue"
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="pt">Português</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" onclick="closeAddModal()"
+                        class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                    Annuler
+                </button>
+                <button type="submit"
+                        class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Ajouter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
-function editUser(userId, username, role, departmentId) {
+function editUser(userId, username, email, role, departmentId, langue) {
     document.getElementById('editUsername').value = username;
+    document.getElementById('editEmail').value = email;
     document.getElementById('editRole').value = role;
     document.getElementById('editDepartment').value = departmentId;
+    document.getElementById('editLangue').value = langue;
+    document.getElementById('editPassword').value = '';
     document.getElementById('editUserForm').action = `/admin/members/update/${userId}`;
     document.getElementById('editUserModal').classList.remove('hidden');
 }
@@ -206,10 +388,24 @@ function closeEditModal() {
     document.getElementById('editUserModal').classList.add('hidden');
 }
 
-// Close modal on outside click
+function openAddModal() {
+    document.getElementById('addMemberModal').classList.remove('hidden');
+}
+
+function closeAddModal() {
+    document.getElementById('addMemberModal').classList.add('hidden');
+}
+
+// Close modals on outside click
 document.getElementById('editUserModal').addEventListener('click', function(e) {
     if (e.target === this) {
         closeEditModal();
+    }
+});
+
+document.getElementById('addMemberModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAddModal();
     }
 });
 </script>

@@ -109,7 +109,7 @@ def create_app():
         db.create_all()
         
         # Create default departments
-        departments = ['Chantres', 'Intercesseurs', 'Régis']
+        departments = ['Chantres', 'Intercesseurs', 'Régis', 'Administration', 'Jeunesse', 'Évangélisation']
         for dept_name in departments:
             if not Department.query.filter_by(nom=dept_name).first():
                 dept = Department(nom=dept_name)
