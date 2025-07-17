@@ -293,3 +293,51 @@ def delete_announcement(announcement_id):
     
     flash('Annonce supprimée', 'success')
     return redirect(url_for('admin.announcements'))
+
+@admin_bp.route('/members/delete/<int:user_id>', methods=['POST'])
+@admin_required
+def delete_user_admin(user_id):
+    from models import Score, Temoignage, Finance, Announcement, DepartmentRequest
+    
+    user = User.query.get_or_404(user_id)
+    
+    # Vérifier que l'utilisateur n'est pas l'admin actuel
+    if user.id == session['user_id']:
+        flash('Vous ne pouvez pas supprimer votre propre compte', 'error')
+        return redirect(url_for('admin.members'))
+    
+    try:
+        # Supprimer d'abord tous les scores associés (reçus et donnés)
+        Score.query.filter_by(user_id=user_id).delete()
+        Score.query.filter_by(chef_id=user_id).delete()
+        
+        # Supprimer tous les témoignages associés
+        Temoignage.query.filter_by(user_id=user_id).delete()
+        
+        # Supprimer toutes les finances associées
+        Finance.query.filter_by(user_id=user_id).delete()
+        
+        # Supprimer toutes les demandes de département associées
+        DepartmentRequest.query.filter_by(user_id=user_id).delete()
+        DepartmentRequest.query.filter_by(reviewed_by=user_id).delete()
+        
+        # Supprimer les annonces créées par cet utilisateur
+        Announcement.query.filter_by(cree_par=user_id).delete()
+        
+        # Mettre à jour les annonces approuvées par cet utilisateur (remettre à null)
+        announcements_approved = Announcement.query.filter_by(approuve_par=user_id).all()
+        for announcement in announcements_approved:
+            announcement.approuve_par = None
+            announcement.date_approbation = None
+        
+        # Supprimer l'utilisateur
+        db.session.delete(user)
+        db.session.commit()
+        
+        flash(f'Membre {user.username} supprimé avec succès', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('Erreur lors de la suppression du membre', 'error')
+        print(f"Erreur suppression utilisateur: {e}")
+    
+    return redirect(url_for('admin.members'))
