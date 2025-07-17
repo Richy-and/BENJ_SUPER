@@ -125,12 +125,21 @@
             this.audioElement.src = url;
             this.audioElement.load();
             
-            // Set volume immediately
-            const userVolumeMultiplier = this.volume; // User's volume preference (0.0 - 1.0)
-            const finalVolume = Math.min(1.0, adminVolume * userVolumeMultiplier);
-            this.audioElement.volume = finalVolume;
+            // Set volume immediately - use admin volume directly for users
+            const isAdminMode = window.location.pathname.includes('/admin/') || 
+                              document.getElementById('add-audio-modal');
             
-            console.log('Volume set to:', finalVolume, 'Admin:', adminVolume, 'User:', userVolumeMultiplier);
+            if (isAdminMode) {
+                // Admin mode - can adjust volume
+                const userVolumeMultiplier = this.volume; // User's volume preference (0.0 - 1.0)
+                const finalVolume = Math.min(1.0, adminVolume * userVolumeMultiplier);
+                this.audioElement.volume = finalVolume;
+                console.log('Admin mode - Volume set to:', finalVolume, 'Admin:', adminVolume, 'User:', userVolumeMultiplier);
+            } else {
+                // User mode - locked to admin volume
+                this.audioElement.volume = adminVolume;
+                console.log('User mode - Volume locked to admin setting:', adminVolume);
+            }
             
             // Play when ready
             this.audioElement.addEventListener('canplay', () => {
@@ -217,17 +226,29 @@
         // Update volume
         updateVolume: function() {
             if (this.audioElement && this.volumeControl) {
-                this.volume = this.volumeControl.value / 100;
+                // Check if we're in admin mode (has volume control)
+                const isAdminMode = window.location.pathname.includes('/admin/') || 
+                                  document.getElementById('add-audio-modal');
                 
-                // Apply admin volume setting if available
-                if (this.currentTrack && this.currentTrack.adminVolume) {
-                    const finalVolume = this.currentTrack.adminVolume * this.volume;
-                    this.audioElement.volume = finalVolume;
+                if (isAdminMode) {
+                    // Admin can control volume
+                    this.volume = this.volumeControl.value / 100;
+                    
+                    // Apply admin volume setting if available
+                    if (this.currentTrack && this.currentTrack.adminVolume) {
+                        const finalVolume = this.currentTrack.adminVolume * this.volume;
+                        this.audioElement.volume = finalVolume;
+                    } else {
+                        this.audioElement.volume = this.volume;
+                    }
+                    
+                    this.saveSettings();
                 } else {
-                    this.audioElement.volume = this.volume;
+                    // User mode - volume is locked to admin setting
+                    if (this.currentTrack && this.currentTrack.adminVolume) {
+                        this.audioElement.volume = this.currentTrack.adminVolume;
+                    }
                 }
-                
-                this.saveSettings();
             }
         },
         
