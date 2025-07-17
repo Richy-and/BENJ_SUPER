@@ -92,12 +92,36 @@
         {% for worker in workers %}
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div class="flex items-center mb-4">
-                <div class="bg-orange-100 dark:bg-orange-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                    <i class="fas fa-user text-orange-600 text-xl"></i>
+                <div class="
+                    {% if worker.role == 'ouvrier' %}bg-orange-100 dark:bg-orange-900
+                    {% elif worker.role == 'chantres' %}bg-purple-100 dark:bg-purple-900
+                    {% elif worker.role == 'intercesseurs' %}bg-blue-100 dark:bg-blue-900
+                    {% elif worker.role == 'régis' %}bg-cyan-100 dark:bg-cyan-900
+                    {% else %}bg-gray-100 dark:bg-gray-900{% endif %}
+                    w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-user 
+                        {% if worker.role == 'ouvrier' %}text-orange-600
+                        {% elif worker.role == 'chantres' %}text-purple-600
+                        {% elif worker.role == 'intercesseurs' %}text-blue-600
+                        {% elif worker.role == 'régis' %}text-cyan-600
+                        {% else %}text-gray-600{% endif %}
+                        text-xl"></i>
                 </div>
                 <div>
                     <h3 class="font-semibold text-gray-900 dark:text-white">{{ worker.username }}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">{{ worker.email }}</p>
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full
+                        {% if worker.role == 'ouvrier' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
+                        {% elif worker.role == 'chantres' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
+                        {% elif worker.role == 'intercesseurs' %}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
+                        {% elif worker.role == 'régis' %}bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200
+                        {% else %}bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200{% endif %}">
+                        {% if worker.role == 'ouvrier' %}Ouvrier
+                        {% elif worker.role == 'chantres' %}Ouvrier Chantre
+                        {% elif worker.role == 'intercesseurs' %}Ouvrier Intercesseur
+                        {% elif worker.role == 'régis' %}Ouvrier Régis
+                        {% else %}{{ worker.role.title() }}{% endif %}
+                    </span>
                 </div>
             </div>
             

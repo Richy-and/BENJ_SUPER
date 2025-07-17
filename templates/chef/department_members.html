@@ -42,12 +42,18 @@
                 <span class="px-2 py-1 text-xs font-semibold rounded-full
                     {% if member.role == 'admin' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
                     {% elif member.role == 'ouvrier' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
+                    {% elif member.role == 'chantres' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
+                    {% elif member.role == 'intercesseurs' %}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
+                    {% elif member.role == 'régis' %}bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200
                     {% elif member.role == 'chef_chantres' %}bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200
                     {% elif member.role == 'chef_intercesseurs' %}bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200
                     {% elif member.role == 'chef_régis' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
                     {% else %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}">
                     {% if member.role == 'admin' %}Admin
                     {% elif member.role == 'ouvrier' %}Ouvrier
+                    {% elif member.role == 'chantres' %}Ouvrier Chantre
+                    {% elif member.role == 'intercesseurs' %}Ouvrier Intercesseur
+                    {% elif member.role == 'régis' %}Ouvrier Régis
                     {% elif member.role == 'chef_chantres' %}Chef des Chantres
                     {% elif member.role == 'chef_intercesseurs' %}Chef des Intercesseurs
                     {% elif member.role == 'chef_régis' %}Chef de la Régis
@@ -56,7 +62,7 @@
             </div>
 
             <!-- Score (only for ouvriers) -->
-            {% if member.role == 'ouvrier' %}
+            {% if member.role in ['ouvrier', 'chantres', 'intercesseurs', 'régis'] %}
             <div class="mb-4">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Score actuel</span>
