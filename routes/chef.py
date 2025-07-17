@@ -11,7 +11,9 @@ def chef_required(f):
             return redirect(url_for('auth.login'))
         
         user_role = session.get('user_role')
-        if user_role not in ['chef', 'admin']:
+        # Autoriser tous les rôles de chef et admin
+        chef_roles = ['chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis']
+        if user_role not in chef_roles:
             flash('Accès refusé. Droits de chef requis.', 'error')
             return redirect(url_for('dashboard.dashboard'))
         
@@ -29,6 +31,7 @@ def workers():
         workers = User.query.filter_by(role='ouvrier').all()
     else:
         # Chef can only see workers from their department
+        # Support all types of chef roles
         workers = User.query.filter(
             User.role == 'ouvrier',
             User.departement_id == chef.departement_id

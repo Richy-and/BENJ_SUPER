@@ -85,6 +85,16 @@
         </a>
         {% endif %}
         
+        {% if current_user.role in ['chef', 'chef_chantres', 'chef_intercesseurs', 'chef_régis'] %}
+        <a href="{{ url_for('chef.workers') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-users text-orange-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Mes Ouvriers</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Gérer et noter les ouvriers</p>
+        </a>
+        {% endif %}
+        
         {% if current_user.role == 'admin' and pending_requests_count > 0 %}
         <a href="{{ url_for('department_requests.admin_department_requests') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center relative">
             <div class="bg-red-100 dark:bg-red-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">

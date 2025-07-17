@@ -28,6 +28,64 @@
         </div>
     </div>
 
+    <!-- Statistics Cards -->
+    {% if workers %}
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {% set total_workers = workers|length %}
+        {% set scored_workers = workers|selectattr('score')|list|length %}
+        {% set avg_score = (workers|selectattr('score')|map(attribute='score')|sum / scored_workers)|round(2) if scored_workers > 0 else 0 %}
+        {% set top_performer = workers|selectattr('score')|max(attribute='score') if scored_workers > 0 else none %}
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Ouvriers</p>
+                    <p class="text-2xl font-bold text-blue-600">{{ total_workers }}</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                    <i class="fas fa-users text-blue-600"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Ouvriers Évalués</p>
+                    <p class="text-2xl font-bold text-green-600">{{ scored_workers }}</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                    <i class="fas fa-star text-green-600"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Score Moyen</p>
+                    <p class="text-2xl font-bold text-purple-600">{{ avg_score if avg_score > 0 else 'N/A' }}</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                    <i class="fas fa-chart-line text-purple-600"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Meilleur Score</p>
+                    <p class="text-2xl font-bold text-yellow-600">{{ top_performer.score if top_performer else 'N/A' }}</p>
+                </div>
+                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center">
+                    <i class="fas fa-trophy text-yellow-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Workers List -->
     {% if workers %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
