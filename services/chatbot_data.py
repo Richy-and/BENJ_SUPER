@@ -263,6 +263,502 @@ BIBLICAL_TOPICS.update({
             "Spirituelle: La gratitude transforme notre perspective et nous rapproche de Dieu.",
             "Pratique: Cultiver la reconnaissance améliore notre bien-être mental et nos relations."
         ]
+    },
+    
+    "bénédiction": {
+        "versets": [
+            {"reference": "Nombres 6:24-26", "text": "Que l'Éternel te bénisse, et qu'il te garde! Que l'Éternel fasse luire sa face sur toi, et qu'il t'accorde sa grâce! Que l'Éternel tourne sa face vers toi, et qu'il te donne la paix!"},
+            {"reference": "Éphésiens 1:3", "text": "Béni soit Dieu, le Père de notre Seigneur Jésus-Christ, qui nous a bénis de toute sorte de bénédictions spirituelles dans les lieux célestes en Christ!"},
+            {"reference": "Genèse 12:2", "text": "Je ferai de toi une grande nation, et je te bénirai; je rendrai ton nom grand, et tu seras une source de bénédiction."},
+            {"reference": "Psaume 67:1", "text": "Que Dieu ait pitié de nous et qu'il nous bénisse, Qu'il fasse luire sur nous sa face!"},
+            {"reference": "Deutéronome 28:2", "text": "Voici toutes les bénédictions qui se répandront sur toi et qui seront ton partage, lorsque tu obéiras à la voix de l'Éternel, ton Dieu"}
+        ],
+        "interpretations": [
+            "Historique: Les bénédictions étaient centrales dans l'alliance de Dieu avec son peuple.",
+            "Spirituelle: Dieu désire nous bénir et nous rendre bénis pour les autres.",
+            "Pratique: Reconnaître et partager les bénédictions de Dieu transforme nos vies."
+        ]
+    },
+    
+    "crainte": {
+        "versets": [
+            {"reference": "Proverbes 1:7", "text": "La crainte de l'Éternel est le commencement de la science"},
+            {"reference": "Psaume 111:10", "text": "La crainte de l'Éternel est le commencement de la sagesse"},
+            {"reference": "Ecclésiaste 12:13", "text": "Écoutons la fin du discours: Crains Dieu et observe ses commandements. C'est là ce que doit faire tout homme."},
+            {"reference": "Psaume 34:11", "text": "Venez, mes fils, écoutez-moi! Je vous enseignerai la crainte de l'Éternel."},
+            {"reference": "Proverbes 14:27", "text": "La crainte de l'Éternel est une source de vie, Pour détourner des pièges de la mort."}
+        ],
+        "interpretations": [
+            "Historique: La crainte de Dieu était la base de la sagesse dans l'Ancien Testament.",
+            "Spirituelle: La crainte révérencielle de Dieu est le début de toute vraie connaissance.",
+            "Pratique: Respecter Dieu nous guide vers des choix sages dans la vie."
+        ]
+    },
+    
+    "louange": {
+        "versets": [
+            {"reference": "Psaume 150:6", "text": "Que tout ce qui respire loue l'Éternel! Louez l'Éternel!"},
+            {"reference": "Psaume 34:1", "text": "Je bénirai l'Éternel en tout temps; Sa louange sera toujours dans ma bouche."},
+            {"reference": "Hébreux 13:15", "text": "Par lui, offrons sans cesse à Dieu un sacrifice de louange"},
+            {"reference": "Psaume 22:3", "text": "Pourtant tu es le Saint, Tu sièges au milieu des louanges d'Israël."},
+            {"reference": "Actes 16:25", "text": "Vers le milieu de la nuit, Paul et Silas priaient et chantaient les louanges de Dieu"}
+        ],
+        "interpretations": [
+            "Historique: La louange était au cœur du culte israélite et des premiers chrétiens.",
+            "Spirituelle: La louange nous connecte à la présence de Dieu et transforme notre perspective.",
+            "Pratique: Louer Dieu régulièrement élève notre esprit et renforce notre foi."
+        ]
+    },
+    
+    "servir": {
+        "versets": [
+            {"reference": "Marc 10:43-44", "text": "Il n'en est pas de même au milieu de vous. Mais quiconque veut être grand parmi vous, qu'il soit votre serviteur; et quiconque veut être le premier parmi vous, qu'il soit l'esclave de tous."},
+            {"reference": "Galates 5:13", "text": "Frères, vous avez été appelés à la liberté, seulement ne faites pas de cette liberté un prétexte de vivre selon la chair; mais rendez-vous, par la charité, serviteurs les uns des autres."},
+            {"reference": "1 Pierre 4:10", "text": "Comme de bons dispensateurs des diverses grâces de Dieu, que chacun de vous mette au service des autres le don qu'il a reçu"},
+            {"reference": "Josué 24:15", "text": "Et si vous ne trouvez pas bon de servir l'Éternel, choisissez aujourd'hui qui vous voulez servir"}
+        ],
+        "interpretations": [
+            "Historique: Servir Dieu et les autres était central dans l'éthique biblique.",
+            "Spirituelle: Le service est l'expression naturelle de l'amour chrétien.",
+            "Pratique: Servir les autres nous rend semblables à Jésus et apporte la joie."
+        ]
+    },
+    
+    "justice": {
+        "versets": [
+            {"reference": "Michée 6:8", "text": "On t'a fait connaître, ô homme, ce qui est bien; Et ce que l'Éternel demande de toi, C'est que tu pratiques la justice, Que tu aimes la miséricorde, Et que tu marches humblement avec ton Dieu."},
+            {"reference": "Ésaïe 1:17", "text": "Apprenez à faire le bien, recherchez la justice, Protégez l'opprimé; Faites droit à l'orphelin, Défendez la veuve."},
+            {"reference": "Psaume 37:28", "text": "Car l'Éternel aime la justice, Et il n'abandonne pas ses fidèles"},
+            {"reference": "Proverbes 21:3", "text": "La pratique de la justice et de l'équité, Voilà ce que l'Éternel préfère aux sacrifices."}
+        ],
+        "interpretations": [
+            "Historique: La justice était un pilier de la loi divine et des prophètes.",
+            "Spirituelle: Dieu est juste et appelle son peuple à pratiquer la justice.",
+            "Pratique: Défendre les faibles et pratiquer l'équité reflète le caractère de Dieu."
+        ]
+    },
+    
+    "miséricorde": {
+        "versets": [
+            {"reference": "Lamentations 3:22-23", "text": "Les bontés de l'Éternel ne sont pas épuisées, Ses compassions ne sont pas à leur terme; Elles se renouvellent chaque matin. Oh! que ta fidélité est grande!"},
+            {"reference": "Psaume 103:8", "text": "L'Éternel est miséricordieux et compatissant, Lent à la colère et riche en bonté."},
+            {"reference": "Matthieu 5:7", "text": "Heureux les miséricordieux, car ils obtiendront miséricorde!"},
+            {"reference": "Éphésiens 2:4", "text": "Mais Dieu, qui est riche en miséricorde, à cause du grand amour dont il nous a aimés"}
+        ],
+        "interpretations": [
+            "Historique: La miséricorde de Dieu était célébrée dans tout l'Ancien Testament.",
+            "Spirituelle: La miséricorde divine est la source de notre salut et de notre espoir.",
+            "Pratique: Montrer la miséricorde aux autres reflète la miséricorde que nous avons reçue."
+        ]
+    },
+    
+    "protection": {
+        "versets": [
+            {"reference": "Psaume 91:1-2", "text": "Celui qui demeure sous l'abri du Très-Haut Repose à l'ombre du Tout-Puissant. Je dis à l'Éternel: Mon refuge et ma forteresse, Mon Dieu en qui je me confie!"},
+            {"reference": "Psaume 23:4", "text": "Quand je marche dans la vallée de l'ombre de la mort, Je ne crains aucun mal, car tu es avec moi"},
+            {"reference": "Proverbes 18:10", "text": "Le nom de l'Éternel est une tour forte; Le juste s'y réfugie, et se trouve en sûreté."},
+            {"reference": "Psaume 121:7-8", "text": "L'Éternel te gardera de tout mal, Il gardera ton âme; L'Éternel gardera ton départ et ton arrivée, Dès maintenant et à jamais."}
+        ],
+        "interpretations": [
+            "Historique: Dieu était le protecteur d'Israël dans toutes les circonstances.",
+            "Spirituelle: La protection divine s'étend à tous les aspects de notre vie.",
+            "Pratique: Nous pouvons avoir confiance en la protection de Dieu dans l'adversité."
+        ]
+    },
+    
+    "pureté": {
+        "versets": [
+            {"reference": "Psaume 51:10", "text": "O Dieu! crée en moi un cœur pur, Et renouvelle en moi un esprit bien disposé."},
+            {"reference": "Matthieu 5:8", "text": "Heureux ceux qui ont le cœur pur, car ils verront Dieu!"},
+            {"reference": "1 Jean 3:3", "text": "Quiconque a cette espérance en lui se purifie, comme lui-même est pur."},
+            {"reference": "Proverbes 20:9", "text": "Qui dira: J'ai purifié mon cœur, Je suis net de mon péché?"}
+        ],
+        "interpretations": [
+            "Historique: La pureté était requise pour s'approcher de Dieu dans l'Ancien Testament.",
+            "Spirituelle: La pureté du cœur est le résultat de l'œuvre de l'Esprit en nous.",
+            "Pratique: Rechercher la pureté dans nos pensées et actions nous rapproche de Dieu."
+        ]
+    },
+    
+    "obéissance": {
+        "versets": [
+            {"reference": "1 Samuel 15:22", "text": "Samuel dit: L'Éternel trouve-t-il du plaisir dans les holocaustes et les sacrifices, comme dans l'obéissance à la voix de l'Éternel? Voici, l'obéissance vaut mieux que les sacrifices"},
+            {"reference": "Jean 14:15", "text": "Si vous m'aimez, gardez mes commandements."},
+            {"reference": "Actes 5:29", "text": "Pierre et les apôtres répondirent: Il faut obéir à Dieu plutôt qu'aux hommes."},
+            {"reference": "Deutéronome 11:27", "text": "la bénédiction, si vous obéissez aux commandements de l'Éternel, votre Dieu, que je vous prescris en ce jour"}
+        ],
+        "interpretations": [
+            "Historique: L'obéissance à Dieu était la condition des bénédictions dans l'alliance.",
+            "Spirituelle: L'obéissance est l'expression de notre amour et de notre confiance en Dieu.",
+            "Pratique: Obéir à Dieu nous garde dans sa volonté et nous protège du mal."
+        ]
+    },
+    
+    "persévérance": {
+        "versets": [
+            {"reference": "Hébreux 12:1", "text": "Nous donc aussi, puisque nous sommes environnés d'une si grande nuée de témoins, rejetons tout fardeau, et le péché qui nous enveloppe si facilement, et courons avec persévérance dans la carrière qui nous est ouverte"},
+            {"reference": "Galates 6:9", "text": "Ne nous lassons pas de faire le bien; car nous moissonnerons au temps convenable, si nous ne nous relâchons pas."},
+            {"reference": "1 Corinthiens 15:58", "text": "Ainsi, mes frères bien-aimés, soyez fermes, inébranlables, travaillant de mieux en mieux à l'œuvre du Seigneur"},
+            {"reference": "Apocalypse 2:10", "text": "Ne crains pas ce que tu vas souffrir. Voici, le diable jettera quelques-uns de vous en prison, afin que vous soyez éprouvés, et vous aurez une tribulation de dix jours. Sois fidèle jusqu'à la mort, et je te donnerai la couronne de vie."}
+        ],
+        "interpretations": [
+            "Historique: La persévérance était nécessaire pour les premiers chrétiens face à la persécution.",
+            "Spirituelle: Persévérer dans la foi nous assure de recevoir les récompenses éternelles.",
+            "Pratique: La persévérance dans les difficultés développe notre caractère et notre foi."
+        ]
+    },
+    
+    "joie": {
+        "versets": [
+            {"reference": "Néhémie 8:10", "text": "Ne vous affligez pas, car la joie de l'Éternel sera votre force."},
+            {"reference": "Psaume 16:11", "text": "Tu me feras connaître le sentier de la vie; Il y a d'abondantes joies devant ta face, Des délices éternelles à ta droite."},
+            {"reference": "Philippiens 4:4", "text": "Réjouissez-vous toujours dans le Seigneur; je le répète, réjouissez-vous."},
+            {"reference": "Jean 15:11", "text": "Je vous ai dit ces choses, afin que ma joie soit en vous, et que votre joie soit parfaite."}
+        ],
+        "interpretations": [
+            "Historique: La joie était un signe de la présence de Dieu parmi son peuple.",
+            "Spirituelle: La joie chrétienne transcende les circonstances et trouve sa source en Dieu.",
+            "Pratique: Cultiver la joie nous rend témoins de la bonté de Dieu dans notre monde."
+        ]
+    },
+    
+    "confiance": {
+        "versets": [
+            {"reference": "Proverbes 3:5-6", "text": "Confie-toi en l'Éternel de tout ton cœur, Et ne t'appuie pas sur ta sagesse; Reconnais-le dans toutes tes voies, Et il aplanira tes sentiers."},
+            {"reference": "Psaume 37:3", "text": "Confie-toi en l'Éternel, et pratique le bien; Aie le pays pour demeure et la fidélité pour pâture."},
+            {"reference": "Ésaïe 26:4", "text": "Confiez-vous en l'Éternel à perpétuité, Car l'Éternel, l'Éternel est le rocher des siècles."},
+            {"reference": "Psaume 56:3", "text": "Quand je suis dans la crainte, En toi je me confie."}
+        ],
+        "interpretations": [
+            "Historique: La confiance en Dieu était la base de la survie du peuple d'Israël.",
+            "Spirituelle: Faire confiance à Dieu nous libère de l'anxiété et de la peur.",
+            "Pratique: Développer la confiance en Dieu nous aide à prendre de meilleures décisions."
+        ]
+    },
+    
+    "courage": {
+        "versets": [
+            {"reference": "Josué 1:9", "text": "Ne t'ai-je pas donné cet ordre: Fortifie-toi et prends courage? Ne t'effraie point et ne t'épouvante point, car l'Éternel, ton Dieu, est avec toi dans tout ce que tu entreprendras."},
+            {"reference": "Psaume 27:14", "text": "Espère en l'Éternel! Fortifie-toi et que ton cœur s'affermisse! Espère en l'Éternel!"},
+            {"reference": "1 Corinthiens 16:13", "text": "Veillez, demeurez fermes dans la foi, soyez des hommes, fortifiez-vous."},
+            {"reference": "Deutéronome 31:6", "text": "Fortifiez-vous et ayez du courage! Ne craignez point et ne soyez point effrayés devant eux; car l'Éternel, ton Dieu, marchera lui-même avec toi"}
+        ],
+        "interpretations": [
+            "Historique: Le courage était nécessaire pour conquérir la Terre Promise et résister aux ennemis.",
+            "Spirituelle: Le courage chrétien vient de la certitude que Dieu est avec nous.",
+            "Pratique: Avoir du courage nous permet de faire ce qui est juste même dans l'adversité."
+        ]
+    },
+    
+    "liberté": {
+        "versets": [
+            {"reference": "Jean 8:36", "text": "Si donc le Fils vous affranchit, vous serez réellement libres."},
+            {"reference": "Galates 5:1", "text": "C'est pour la liberté que Christ nous a affranchis. Demeurez donc fermes, et ne vous laissez pas mettre de nouveau sous le joug de la servitude."},
+            {"reference": "2 Corinthiens 3:17", "text": "Or, le Seigneur c'est l'Esprit; et là où est l'Esprit du Seigneur, là est la liberté."},
+            {"reference": "Romains 8:2", "text": "En effet, la loi de l'esprit de vie en Jésus-Christ m'a affranchi de la loi du péché et de la mort."}
+        ],
+        "interpretations": [
+            "Historique: La liberté était promise par Dieu à travers l'histoire du salut.",
+            "Spirituelle: Christ nous libère du péché et de la mort pour une vie nouvelle.",
+            "Pratique: Vivre dans la liberté chrétienne signifie servir Dieu et les autres avec joie."
+        ]
+    },
+    
+    "transformation": {
+        "versets": [
+            {"reference": "2 Corinthiens 5:17", "text": "Si quelqu'un est en Christ, il est une nouvelle créature. Les choses anciennes sont passées; voici, toutes choses sont devenues nouvelles."},
+            {"reference": "Romains 12:2", "text": "Ne vous conformez pas au siècle présent, mais soyez transformés par le renouvellement de l'intelligence"},
+            {"reference": "2 Corinthiens 3:18", "text": "Nous tous qui, le visage découvert, contemplons comme dans un miroir la gloire du Seigneur, nous sommes transformés en la même image, de gloire en gloire"},
+            {"reference": "Éphésiens 4:22-24", "text": "à vous dépouiller, eu égard à votre vie passée, du vieil homme qui se corrompt par les convoitises trompeuses, à être renouvelés dans l'esprit de votre intelligence, et à revêtir l'homme nouveau"}
+        ],
+        "interpretations": [
+            "Historique: La transformation était promise par les prophètes et accomplie en Christ.",
+            "Spirituelle: L'Esprit Saint nous transforme progressivement à l'image de Christ.",
+            "Pratique: Accepter la transformation divine change radicalement notre manière de vivre."
+        ]
+    },
+    
+    "compassion": {
+        "versets": [
+            {"reference": "Matthieu 9:36", "text": "Voyant la foule, il fut ému de compassion pour elle, parce qu'elle était languissante et abattue, comme des brebis qui n'ont point de berger."},
+            {"reference": "Colossiens 3:12", "text": "Ainsi donc, comme des élus de Dieu, saints et bien-aimés, revêtez-vous d'entrailles de miséricorde, de bonté, d'humilité, de douceur, de patience."},
+            {"reference": "1 Pierre 3:8", "text": "Enfin, soyez tous animés des mêmes pensées et des mêmes sentiments, pleins d'amour fraternel, de compassion, d'humilité."},
+            {"reference": "Lamentations 3:32", "text": "Mais, lorsqu'il afflige, Il a compassion selon sa grande miséricorde"}
+        ],
+        "interpretations": [
+            "Historique: La compassion de Dieu était manifestée envers Israël malgré leur infidélité.",
+            "Spirituelle: La compassion divine nous pousse à avoir pitié des autres dans leurs souffrances.",
+            "Pratique: Développer la compassion nous rend plus humains et plus proches de Dieu."
+        ]
+    },
+    
+    "force": {
+        "versets": [
+            {"reference": "Ésaïe 40:31", "text": "Mais ceux qui se confient en l'Éternel renouvellent leur force. Ils prennent le vol comme les aigles; Ils courent, et ne se lassent point, Ils marchent, et ne se fatiguent point."},
+            {"reference": "Philippiens 4:13", "text": "Je puis tout par celui qui me fortifie."},
+            {"reference": "2 Corinthiens 12:9", "text": "et il m'a dit: Ma grâce te suffit, car ma puissance s'accomplit dans la faiblesse."},
+            {"reference": "Psaume 46:1", "text": "Dieu est pour nous un refuge et un appui, Un secours qui ne manque jamais dans la détresse."}
+        ],
+        "interpretations": [
+            "Historique: La force de Dieu se manifestait dans la faiblesse humaine tout au long de l'histoire biblique.",
+            "Spirituelle: Notre force vient de notre relation avec Dieu, pas de nos capacités propres.",
+            "Pratique: Compter sur la force divine nous permet d'affronter les défis les plus difficiles."
+        ]
+    },
+    
+    "lumière": {
+        "versets": [
+            {"reference": "Jean 8:12", "text": "Jésus leur parla de nouveau, et dit: Je suis la lumière du monde; celui qui me suit ne marchera pas dans les ténèbres, mais il aura la lumière de la vie."},
+            {"reference": "Matthieu 5:14", "text": "Vous êtes la lumière du monde. Une ville située sur une montagne ne peut être cachée"},
+            {"reference": "Psaume 119:105", "text": "Ta parole est une lampe à mes pieds, Et une lumière sur mon sentier."},
+            {"reference": "1 Jean 1:5", "text": "La nouvelle que nous avons apprise de lui, et que nous vous annonçons, c'est que Dieu est lumière, et qu'il n'y a point en lui de ténèbres."}
+        ],
+        "interpretations": [
+            "Historique: La lumière était un symbole de la présence divine dans le temple et les Écritures.",
+            "Spirituelle: Christ est la lumière qui éclaire notre chemin et révèle la vérité.",
+            "Pratique: Être lumière pour les autres signifie refléter l'amour et la vérité de Dieu."
+        ]
+    },
+    
+    "vérité": {
+        "versets": [
+            {"reference": "Jean 14:6", "text": "Jésus lui dit: Je suis le chemin, la vérité, et la vie. Nul ne vient au Père que par moi."},
+            {"reference": "Jean 8:32", "text": "vous connaîtrez la vérité, et la vérité vous affranchira."},
+            {"reference": "Psaume 119:160", "text": "Le fondement de ta parole est la vérité, Et toutes les lois de ta justice sont éternelles."},
+            {"reference": "Éphésiens 4:15", "text": "mais que, professant la vérité dans la charité, nous croissions à tous égards en celui qui est le chef, Christ"}
+        ],
+        "interpretations": [
+            "Historique: La vérité de Dieu était révélée progressivement à travers sa Parole.",
+            "Spirituelle: Jésus-Christ est la vérité incarnée qui nous révèle parfaitement Dieu.",
+            "Pratique: Vivre dans la vérité nous libère du mensonge et de la tromperie."
+        ]
+    },
+    
+    "résurrection": {
+        "versets": [
+            {"reference": "Jean 11:25", "text": "Jésus lui dit: Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort"},
+            {"reference": "1 Corinthiens 15:20", "text": "Mais maintenant, Christ est ressuscité des morts, il est les prémices de ceux qui sont morts."},
+            {"reference": "Romains 6:4", "text": "Nous avons donc été ensevelis avec lui par le baptême en sa mort, afin que, comme Christ est ressuscité des morts par la gloire du Père, de même nous aussi nous marchions en nouveauté de vie."},
+            {"reference": "1 Thessaloniciens 4:16", "text": "Car le Seigneur lui-même, à un signal donné, à la voix d'un archange, et au son de la trompette de Dieu, descendra du ciel, et les morts en Christ ressusciteront premièrement."}
+        ],
+        "interpretations": [
+            "Historique: La résurrection était espérée par les juifs et accomplie en Jésus-Christ.",
+            "Spirituelle: La résurrection de Christ garantit notre propre résurrection future.",
+            "Pratique: L'espoir de la résurrection transforme notre vision de la mort et de la vie."
+        ]
+    },
+    
+    "unité": {
+        "versets": [
+            {"reference": "Éphésiens 4:3", "text": "vous efforçant de conserver l'unité de l'esprit par le lien de la paix."},
+            {"reference": "Jean 17:21", "text": "afin que tous soient un, comme toi, Père, tu es en moi, et comme je suis en toi, afin qu'eux aussi soient un en nous"},
+            {"reference": "1 Corinthiens 12:12", "text": "Car, comme le corps est un et a plusieurs membres, et comme tous les membres du corps, malgré leur nombre, ne forment qu'un seul corps, ainsi en est-il de Christ."},
+            {"reference": "Psaume 133:1", "text": "Voici, oh! qu'il est agréable, qu'il est doux Pour des frères de demeurer ensemble!"}
+        ],
+        "interpretations": [
+            "Historique: L'unité du peuple de Dieu était un objectif constant malgré les divisions.",
+            "Spirituelle: L'unité chrétienne reflète l'unité divine et témoigne de l'amour de Dieu.",
+            "Pratique: Rechercher l'unité dans l'Église nécessite humilité, patience et amour mutuel."
+        ]
+    },
+    
+    "repos": {
+        "versets": [
+            {"reference": "Matthieu 11:28", "text": "Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos."},
+            {"reference": "Psaume 23:2", "text": "Il me fait reposer dans de verts pâturages, Il me dirige près des eaux paisibles."},
+            {"reference": "Hébreux 4:9", "text": "Il y a donc un repos de sabbat réservé au peuple de Dieu."},
+            {"reference": "Exode 20:8", "text": "Souviens-toi du jour du repos, pour le sanctifier."}
+        ],
+        "interpretations": [
+            "Historique: Le repos sabbatique était institué par Dieu dès la création.",
+            "Spirituelle: Le repos en Christ libère de l'agitation et des soucis du monde.",
+            "Pratique: Prendre du temps de repos honore Dieu et restaure notre âme."
+        ]
+    },
+    
+    "réconciliation": {
+        "versets": [
+            {"reference": "2 Corinthiens 5:18", "text": "Et tout cela vient de Dieu, qui nous a réconciliés avec lui par Christ, et qui nous a donné le ministère de la réconciliation."},
+            {"reference": "Romains 5:10", "text": "Car si, lorsque nous étions ennemis, nous avons été réconciliés avec Dieu par la mort de son Fils, à plus forte raison, étant réconciliés, serons-nous sauvés par sa vie."},
+            {"reference": "Matthieu 5:24", "text": "laisse là ton offrande devant l'autel, et va d'abord te réconcilier avec ton frère; puis, viens présenter ton offrande."},
+            {"reference": "Éphésiens 2:16", "text": "et de les réconcilier, l'un et l'autre en un seul corps, avec Dieu par la croix, en détruisant par elle l'inimitié."}
+        ],
+        "interpretations": [
+            "Historique: La réconciliation était le but du système sacrificiel de l'Ancien Testament.",
+            "Spirituelle: Christ a accompli la réconciliation parfaite entre Dieu et l'humanité.",
+            "Pratique: Nous sommes appelés à être des agents de réconciliation dans nos relations."
+        ]
+    },
+    
+    "fidélité": {
+        "versets": [
+            {"reference": "Lamentations 3:23", "text": "Elles se renouvellent chaque matin. Oh! que ta fidélité est grande!"},
+            {"reference": "Psaume 89:1", "text": "Je chanterai toujours les bontés de l'Éternel; Ma bouche fera connaître ta fidélité de génération en génération."},
+            {"reference": "1 Corinthiens 4:2", "text": "Du reste, ce qu'on demande des dispensateurs, c'est que chacun soit trouvé fidèle."},
+            {"reference": "Apocalypse 2:10", "text": "Sois fidèle jusqu'à la mort, et je te donnerai la couronne de vie."}
+        ],
+        "interpretations": [
+            "Historique: La fidélité de Dieu envers ses promesses traverse toute l'histoire biblique.",
+            "Spirituelle: La fidélité divine est la garantie de notre espérance et de notre salut.",
+            "Pratique: Être fidèle dans les petites choses nous prépare pour de plus grandes responsabilités."
+        ]
+    },
+    
+    "sanctification": {
+        "versets": [
+            {"reference": "1 Thessaloniciens 4:3", "text": "Ce que Dieu veut, c'est votre sanctification"},
+            {"reference": "Hébreux 12:14", "text": "Recherchez la paix avec tous, et la sanctification, sans laquelle personne ne verra le Seigneur."},
+            {"reference": "1 Pierre 1:15", "text": "Mais, puisque celui qui vous a appelés est saint, vous aussi soyez saints dans toute votre conduite"},
+            {"reference": "Jean 17:17", "text": "Sanctifie-les par ta vérité: ta parole est la vérité."}
+        ],
+        "interpretations": [
+            "Historique: La sainteté était requise pour s'approcher de Dieu dans l'Ancien Testament.",
+            "Spirituelle: La sanctification est l'œuvre de l'Esprit qui nous rend semblables à Christ.",
+            "Pratique: Poursuivre la sanctification transforme progressivement notre caractère."
+        ]
+    },
+    
+    "baptême": {
+        "versets": [
+            {"reference": "Matthieu 28:19", "text": "Allez, faites de toutes les nations des disciples, les baptisant au nom du Père, du Fils et du Saint-Esprit"},
+            {"reference": "Romains 6:3-4", "text": "Ignorez-vous que nous tous qui avons été baptisés en Jésus-Christ, c'est en sa mort que nous avons été baptisés? Nous avons donc été ensevelis avec lui par le baptême en sa mort"},
+            {"reference": "Actes 2:38", "text": "Pierre leur dit: Repentez-vous, et que chacun de vous soit baptisé au nom de Jésus-Christ"}
+        ],
+        "interpretations": [
+            "Historique: Le baptême était pratiqué par Jean-Baptiste et institué par Jésus.",
+            "Spirituelle: Le baptême symbolise notre mort au péché et notre résurrection avec Christ.",
+            "Pratique: Le baptême est un acte d'obéissance et de témoignage public de notre foi."
+        ]
+    },
+    
+    "communion": {
+        "versets": [
+            {"reference": "1 Corinthiens 11:24-25", "text": "et, après avoir rendu grâces, le rompit, et dit: Ceci est mon corps, qui est rompu pour vous; faites ceci en mémoire de moi. De même, après avoir soupé, il prit la coupe, et dit: Cette coupe est la nouvelle alliance en mon sang"},
+            {"reference": "Matthieu 26:26-28", "text": "Pendant qu'ils mangeaient, Jésus prit du pain; et, après avoir rendu grâces, il le rompit, et le donna aux disciples, en disant: Prenez, mangez, ceci est mon corps."},
+            {"reference": "1 Corinthiens 10:16", "text": "La coupe de bénédiction que nous bénissons, n'est-elle pas la communion au sang de Christ? Le pain que nous rompons, n'est-il pas la communion au corps de Christ?"}
+        ],
+        "interpretations": [
+            "Historique: La communion fut instituée par Jésus lors de la dernière Cène.",
+            "Spirituelle: La communion nous unit à Christ et à son sacrifice sur la croix.",
+            "Pratique: Participer à la communion nous rappelle l'amour de Christ et fortifie notre foi."
+        ]
+    },
+    
+    "péché": {
+        "versets": [
+            {"reference": "Romains 3:23", "text": "Car tous ont péché et sont privés de la gloire de Dieu"},
+            {"reference": "1 Jean 1:8", "text": "Si nous disons que nous n'avons pas de péché, nous nous séduisons nous-mêmes, et la vérité n'est point en nous."},
+            {"reference": "Romains 6:23", "text": "Car le salaire du péché, c'est la mort; mais le don gratuit de Dieu, c'est la vie éternelle en Jésus-Christ notre Seigneur."}
+        ],
+        "interpretations": [
+            "Historique: Le péché est entré dans le monde par la désobéissance d'Adam et Ève.",
+            "Spirituelle: Le péché nous sépare de Dieu et nécessite la rédemption par Christ.",
+            "Pratique: Reconnaître notre péché est le premier pas vers la repentance et le salut."
+        ]
+    },
+    
+    "évangélisation": {
+        "versets": [
+            {"reference": "Matthieu 28:19-20", "text": "Allez, faites de toutes les nations des disciples, les baptisant au nom du Père, du Fils et du Saint-Esprit, et enseignez-leur à observer tout ce que je vous ai prescrit."},
+            {"reference": "Marc 16:15", "text": "Puis il leur dit: Allez par tout le monde, et prêchez la bonne nouvelle à toute la création."},
+            {"reference": "Romains 10:14", "text": "Comment donc invoqueront-ils celui en qui ils n'ont pas cru? Et comment croiront-ils en celui dont ils n'ont pas entendu parler?"}
+        ],
+        "interpretations": [
+            "Historique: L'évangélisation était le mandat donné par Jésus à ses disciples.",
+            "Spirituelle: Partager l'Évangile est un privilège et une responsabilité pour tous les chrétiens.",
+            "Pratique: L'évangélisation peut se faire par nos paroles, nos actions et notre témoignage de vie."
+        ]
+    },
+    
+    "repentance": {
+        "versets": [
+            {"reference": "Actes 3:19", "text": "Repentez-vous donc et convertissez-vous, pour que vos péchés soient effacés"},
+            {"reference": "Luc 13:3", "text": "Non, je vous le dis. Mais si vous ne vous repentez, vous périrez tous également."},
+            {"reference": "2 Corinthiens 7:10", "text": "En effet, la tristesse selon Dieu produit une repentance à salut dont on ne se repent jamais"}
+        ],
+        "interpretations": [
+            "Historique: La repentance était prêchée par Jean-Baptiste et Jésus comme préparation au royaume.",
+            "Spirituelle: La repentance implique un changement de cœur et de direction dans notre vie.",
+            "Pratique: Se repentir signifie abandonner le péché et se tourner vers Dieu."
+        ]
+    },
+    
+    "grâce": {
+        "versets": [
+            {"reference": "Éphésiens 2:8-9", "text": "Car c'est par la grâce que vous êtes sauvés, par le moyen de la foi. Et cela ne vient pas de vous, c'est le don de Dieu. Ce n'est point par les œuvres, afin que personne ne se glorifie."},
+            {"reference": "2 Corinthiens 12:9", "text": "et il m'a dit: Ma grâce te suffit, car ma puissance s'accomplit dans la faiblesse."},
+            {"reference": "Romains 5:20", "text": "Or, là où le péché a abondé, la grâce a surabondé"}
+        ],
+        "interpretations": [
+            "Historique: La grâce de Dieu se manifeste tout au long de l'histoire du salut.",
+            "Spirituelle: La grâce est la faveur imméritée de Dieu envers nous malgré nos péchés.",
+            "Pratique: Vivre par la grâce nous libère de la culpabilité et nous permet de grandir."
+        ]
+    },
+    
+    "éternité": {
+        "versets": [
+            {"reference": "Jean 3:16", "text": "Car Dieu a tant aimé le monde qu'il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu'il ait la vie éternelle."},
+            {"reference": "1 Jean 5:13", "text": "Je vous ai écrit ces choses, afin que vous sachiez que vous avez la vie éternelle, vous qui croyez au nom du Fils de Dieu."},
+            {"reference": "Apocalypse 21:4", "text": "Il essuiera toute larme de leurs yeux, et la mort ne sera plus, et il n'y aura plus ni deuil, ni cri, ni douleur, car les premières choses ont disparu."}
+        ],
+        "interpretations": [
+            "Historique: L'espoir de l'éternité avec Dieu a toujours été au cœur de la foi biblique.",
+            "Spirituelle: L'éternité commence maintenant dans notre relation avec Dieu par Christ.",
+            "Pratique: La perspective éternelle donne un sens et une espérance à notre vie présente."
+        ]
+    },
+    
+    "royaume": {
+        "versets": [
+            {"reference": "Matthieu 6:33", "text": "Cherchez premièrement le royaume et la justice de Dieu; et toutes ces choses vous seront données par-dessus."},
+            {"reference": "Marc 1:15", "text": "Il disait: Le temps est accompli, et le royaume de Dieu est proche. Repentez-vous, et croyez à la bonne nouvelle."},
+            {"reference": "Luc 17:21", "text": "On ne dira point: Il est ici, ou: Il est là. Car voici, le royaume de Dieu est au milieu de vous."}
+        ],
+        "interpretations": [
+            "Historique: Le royaume de Dieu était le thème central de l'enseignement de Jésus.",
+            "Spirituelle: Le royaume représente la souveraineté de Dieu dans nos cœurs et dans le monde.",
+            "Pratique: Vivre selon les principes du royaume transforme notre manière d'être et d'agir."
+        ]
+    },
+    
+    "saint-esprit": {
+        "versets": [
+            {"reference": "Jean 14:26", "text": "Mais le consolateur, l'Esprit-Saint, que le Père enverra en mon nom, vous enseignera toutes choses"},
+            {"reference": "Actes 1:8", "text": "Mais vous recevrez une puissance, le Saint-Esprit survenant sur vous, et vous serez mes témoins"},
+            {"reference": "1 Corinthiens 6:19", "text": "Ne savez-vous pas que votre corps est le temple du Saint-Esprit qui est en vous"}
+        ],
+        "interpretations": [
+            "Historique: L'Esprit Saint était promis par Jésus et donné à la Pentecôte.",
+            "Spirituelle: L'Esprit Saint nous guide, nous console et nous donne la puissance pour vivre chrétiennement.",
+            "Pratique: Être rempli de l'Esprit transforme notre vie et notre témoignage."
+        ]
+    },
+    
+    "discernement": {
+        "versets": [
+            {"reference": "1 Jean 4:1", "text": "Bien-aimés, n'ajoutez pas foi à tout esprit; mais éprouvez les esprits, pour savoir s'ils sont de Dieu"},
+            {"reference": "Hébreux 5:14", "text": "Mais la nourriture solide est pour les hommes faits, pour ceux dont le jugement est exercé par l'usage à discerner ce qui est bien et ce qui est mal."},
+            {"reference": "1 Thessaloniciens 5:21", "text": "Mais examinez toutes choses; retenez ce qui est bon"}
+        ],
+        "interpretations": [
+            "Historique: Le discernement était nécessaire pour distinguer les vrais prophètes des faux.",
+            "Spirituelle: L'Esprit Saint nous donne le discernement pour reconnaître la vérité.",
+            "Pratique: Développer le discernement nous aide à faire de bons choix spirituels."
+        ]
+    },
+    
+    "providence": {
+        "versets": [
+            {"reference": "Romains 8:28", "text": "Nous savons, du reste, que toutes choses concourent au bien de ceux qui aiment Dieu"},
+            {"reference": "Matthieu 6:26", "text": "Regardez les oiseaux du ciel: ils ne sèment ni ne moissonnent, et ils n'amassent rien dans des greniers; et votre Père céleste les nourrit."},
+            {"reference": "Psaume 23:1", "text": "L'Éternel est mon berger: je ne manquerai de rien."}
+        ],
+        "interpretations": [
+            "Historique: La providence divine s'est manifestée dans la protection et la provision pour son peuple.",
+            "Spirituelle: Dieu veille sur nous et pourvoit à nos besoins selon sa sagesse parfaite.",
+            "Pratique: Faire confiance à la providence divine nous libère de l'anxiété et de l'inquiétude."
+        ]
     }
 })
 
