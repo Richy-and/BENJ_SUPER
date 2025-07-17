@@ -33,6 +33,11 @@ Preferred communication style: Simple, everyday language.
 - **TRANSACTION DELETION**: Admin can delete transactions with confirmation dialog
 - **IMPROVED FINANCE UI**: Enhanced finance management interface with edit/delete buttons and modal forms
 - **FINANCIAL VALIDATION**: All financial forms now use consistent "Valider" buttons
+- **LOCAL AUDIO PLAYLIST MANAGEMENT**: Admin can now upload local audio files with volume control (July 17, 2025)
+- **ENHANCED AUDIO FEATURES**: Added volume control per track, local file support, and no-download streaming
+- **IMPROVED AUDIO PLAYER**: Dynamic volume control combining admin settings with user preferences
+- **AUDIO MANAGEMENT**: Support for both local files (MP3, WAV, OGG) and external URLs with visual indicators
+- **ADMIN AUDIO INTERFACE**: Complete audio management with file upload, volume slider, and source selection
 - Fixed chatbot topic response formatting to display verses and interpretations properly
 - Enhanced error handling for OpenAI API key issues with user-friendly messages
 - Updated dashboard Kadosh.ia icon to use new logo instead of robot icon

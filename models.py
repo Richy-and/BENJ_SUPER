@@ -49,6 +49,8 @@ class Playlist(db.Model):
     titre = db.Column(db.String(200), nullable=False)
     fichier_audio_url = db.Column(db.String(500), nullable=False)
     description = db.Column(db.Text, nullable=True)
+    volume = db.Column(db.Float, default=0.7)  # Volume par défaut (0.0 - 1.0)
+    is_local = db.Column(db.Boolean, default=False)  # True si fichier local
     date_ajout = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Score(db.Model):

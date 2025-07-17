@@ -110,10 +110,10 @@
         },
         
         // Load audio and start playing
-        play: function(url, title, description = '') {
+        play: function(url, title, description = '', adminVolume = 0.7) {
             if (!this.audioElement) return;
             
-            this.currentTrack = { url, title, description };
+            this.currentTrack = { url, title, description, adminVolume };
             
             // Update UI
             this.updateTrackInfo(title, description);
@@ -125,6 +125,11 @@
             
             // Play when ready
             this.audioElement.addEventListener('canplay', () => {
+                // Set volume based on admin setting and user preference
+                const userVolumeMultiplier = this.volume; // User's volume preference (0.0 - 1.0)
+                const finalVolume = adminVolume * userVolumeMultiplier;
+                this.audioElement.volume = finalVolume;
+                
                 this.audioElement.play()
                     .then(() => {
                         this.isPlaying = true;
@@ -200,7 +205,15 @@
         updateVolume: function() {
             if (this.audioElement && this.volumeControl) {
                 this.volume = this.volumeControl.value / 100;
-                this.audioElement.volume = this.volume;
+                
+                // Apply admin volume setting if available
+                if (this.currentTrack && this.currentTrack.adminVolume) {
+                    const finalVolume = this.currentTrack.adminVolume * this.volume;
+                    this.audioElement.volume = finalVolume;
+                } else {
+                    this.audioElement.volume = this.volume;
+                }
+                
                 this.saveSettings();
             }
         },
@@ -442,8 +455,8 @@
     };
     
     // Global function to play audio (called from template)
-    window.playAudio = function(url, title, description) {
-        AudioPlayer.play(url, title, description);
+    window.playAudio = function(url, title, description, adminVolume) {
+        AudioPlayer.play(url, title, description, adminVolume);
     };
     
     // Initialize when DOM is ready
