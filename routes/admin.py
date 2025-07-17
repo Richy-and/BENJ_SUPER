@@ -306,29 +306,27 @@ def delete_user_admin(user_id):
         return redirect(url_for('admin.members'))
     
     try:
-        # Utiliser une session SQL brute pour éviter les problèmes d'ORM
-        connection = db.engine.connect()
-        trans = connection.begin()
+        # Fermer complètement la session SQLAlchemy pour éviter les conflits
+        db.session.close()
         
-        try:
-            # Supprimer dans l'ordre pour éviter les violations de contraintes
-            connection.execute(db.text("DELETE FROM score WHERE user_id = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("DELETE FROM score WHERE chef_id = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("DELETE FROM temoignage WHERE user_id = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("DELETE FROM finance WHERE user_id = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("DELETE FROM department_request WHERE user_id = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("DELETE FROM announcement WHERE cree_par = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = :user_id"), {'user_id': user_id})
-            connection.execute(db.text("DELETE FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
-            
-            trans.commit()
-            flash(f'Membre {username} supprimé avec succès', 'success')
-        except Exception as e:
-            trans.rollback()
-            raise e
-        finally:
-            connection.close()
+        # Utiliser une nouvelle connexion complètement indépendante
+        engine = db.get_engine()
+        with engine.connect() as connection:
+            with connection.begin() as trans:
+                # Supprimer dans l'ordre pour éviter les violations de contraintes
+                connection.execute(db.text("DELETE FROM score WHERE user_id = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("DELETE FROM score WHERE chef_id = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("DELETE FROM temoignage WHERE user_id = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("DELETE FROM finance WHERE user_id = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("DELETE FROM department_request WHERE user_id = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("DELETE FROM announcement WHERE cree_par = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = :user_id"), {'user_id': user_id})
+                connection.execute(db.text("DELETE FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
+                
+                # Transaction validée automatiquement à la fin du bloc with
+        
+        flash(f'Membre {username} supprimé avec succès', 'success')
             
     except Exception as e:
         flash('Erreur lors de la suppression du membre', 'error')
