@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Candidatures{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                <i class="fas fa-building mr-3"></i>
+                Mes Candidatures
+            </h1>
+            <div class="flex space-x-4">
+                <a href="{{ url_for('department_requests.create_department_request') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-plus mr-2"></i>
+                    Nouvelle Candidature
+                </a>
+                <a href="{{ url_for('dashboard.dashboard') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Retour au Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border">
+                <div class="px-4 py-5 sm:p-6">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                        Total candidatures
+                    </dt>
+                    <dd class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">
+                        {{ mes_demandes|length }}
+                    </dd>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border">
+                <div class="px-4 py-5 sm:p-6">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                        En attente
+                    </dt>
+                    <dd class="mt-1 text-3xl font-semibold text-yellow-600">
+                        {{ mes_demandes|selectattr('statut', 'equalto', 'en_attente')|list|length }}
+                    </dd>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg border">
+                <div class="px-4 py-5 sm:p-6">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+                        Approuvées
+                    </dt>
+                    <dd class="mt-1 text-3xl font-semibold text-green-600">
+                        {{ mes_demandes|selectattr('statut', 'equalto', 'approuve')|list|length }}
+                    </dd>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des demandes -->
+        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border">
+            <div class="px-4 py-5 sm:p-6">
+                <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    Historique de mes candidatures
+                </h2>
+                
+                {% if mes_demandes %}
+                    <div class="space-y-4">
+                        {% for demande in mes_demandes %}
+                        <div class="border-l-4 
+                            {% if demande.statut == 'en_attente' %}border-yellow-400 bg-yellow-50 dark:bg-yellow-900{% endif %}
+                            {% if demande.statut == 'approuve' %}border-green-400 bg-green-50 dark:bg-green-900{% endif %}
+                            {% if demande.statut == 'rejete' %}border-red-400 bg-red-50 dark:bg-red-900{% endif %}
+                            p-4 rounded-r-lg">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            {{ demande.department.nom }}
+                                        </h3>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                            {% if demande.statut == 'en_attente' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100{% endif %}
+                                            {% if demande.statut == 'approuve' %}bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100{% endif %}
+                                            {% if demande.statut == 'rejete' %}bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100{% endif %}">
+                                            {% if demande.statut == 'en_attente' %}En attente{% endif %}
+                                            {% if demande.statut == 'approuve' %}Approuvée{% endif %}
+                                            {% if demande.statut == 'rejete' %}Rejetée{% endif %}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">
+                                        <strong>Rôle demandé:</strong> {{ demande.role_requested }}
+                                    </p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                                        <strong>Motivation:</strong> {{ demande.motivation[:100] }}{% if demande.motivation|length > 100 %}...{% endif %}
+                                    </p>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400 space-y-1">
+                                        <p><i class="fas fa-calendar mr-1"></i>Soumise le: {{ demande.created_at.strftime('%d/%m/%Y à %H:%M') }}</p>
+                                        {% if demande.reviewed_at %}
+                                        <p><i class="fas fa-eye mr-1"></i>Révisée le: {{ demande.reviewed_at.strftime('%d/%m/%Y à %H:%M') }}</p>
+                                        {% endif %}
+                                        {% if demande.admin_notes %}
+                                        <p class="mt-2"><i class="fas fa-sticky-note mr-1"></i><strong>Notes de l'admin:</strong> {{ demande.admin_notes }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-8">
+                        <i class="fas fa-building text-gray-400 text-5xl mb-4"></i>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4">
+                            Vous n'avez encore soumis aucune candidature.
+                        </p>
+                        <a href="{{ url_for('department_requests.create_department_request') }}" 
+                           class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-plus mr-2"></i>
+                            Postuler maintenant
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

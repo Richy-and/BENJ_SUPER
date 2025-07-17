@@ -1,6 +1,6 @@
 import os
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
-from models import User, Temoignage, Finance, Announcement, Playlist, Department
+from models import User, Temoignage, Finance, Announcement, Playlist, Department, DepartmentRequest
 from app import db
 from datetime import datetime
 
@@ -26,8 +26,10 @@ def dashboard():
     
     # Get playlist data for admin
     playlist_items = None
+    pending_requests_count = 0
     if user.role == 'admin':
         playlist_items = Playlist.query.order_by(Playlist.date_ajout.desc()).limit(5).all()
+        pending_requests_count = DepartmentRequest.query.filter_by(statut='en_attente').count()
     
     # Bible verse of the day (static for now)
     daily_verse = {
@@ -41,7 +43,8 @@ def dashboard():
                          announcements=announcements,
                          finances=finances,
                          daily_verse=daily_verse,
-                         playlist_items=playlist_items)
+                         playlist_items=playlist_items,
+                         pending_requests_count=pending_requests_count)
 
 @dashboard_bp.route('/profile', methods=['GET', 'POST'])
 @login_required

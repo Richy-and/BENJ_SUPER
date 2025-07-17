@@ -76,6 +76,9 @@
                                     <a href="{{ url_for('department_requests.admin_department_requests') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <i class="fas fa-building mr-2"></i>Demandes Département
                                     </a>
+                                    <a href="{{ url_for('department_requests.candidature_stats') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <i class="fas fa-chart-bar mr-2"></i>Statistiques Candidatures
+                                    </a>
                                     {% elif session.user_role == 'chef' %}
                                     <a href="{{ url_for('chef.workers') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <i class="fas fa-users mr-2"></i>Mes Ouvriers

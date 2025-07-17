@@ -24,12 +24,22 @@
     </div>
 
     <!-- Add Member Button -->
-    <div class="flex justify-end mb-6">
+    <div class="flex justify-end mb-6 space-x-4">
         <button onclick="openAddModal()" 
                 class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
             <i class="fas fa-plus"></i>
             <span>Ajouter un membre</span>
         </button>
+        <a href="{{ url_for('department_requests.admin_department_requests') }}" 
+           class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
+            <i class="fas fa-building"></i>
+            <span>Candidatures</span>
+        </a>
+        <a href="{{ url_for('department_requests.candidature_stats') }}" 
+           class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
+            <i class="fas fa-chart-bar"></i>
+            <span>Statistiques</span>
+        </a>
     </div>
 
     <!-- Statistics Cards -->
