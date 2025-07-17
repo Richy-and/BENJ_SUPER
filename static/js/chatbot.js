@@ -48,6 +48,17 @@
                     this.autoResizeInput();
                 });
             }
+            
+            // Setup topic dropdown
+            this.setupTopicDropdown();
+            
+            // Setup explore button
+            const exploreBtn = document.getElementById('explore-btn');
+            if (exploreBtn) {
+                exploreBtn.addEventListener('click', () => {
+                    this.exploreTopic();
+                });
+            }
         },
         
         // Send message
@@ -218,6 +229,75 @@
             if (this.chatMessages) {
                 this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
             }
+        },
+        
+        // Setup topic dropdown
+        setupTopicDropdown: function() {
+            this.loadTopics();
+        },
+        
+        // Load topics from server
+        loadTopics: function() {
+            fetch('/chatbot/topics')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.topics) {
+                        this.populateTopicDropdown(data.topics);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading topics:', error);
+                });
+        },
+        
+        // Populate dropdown with topics
+        populateTopicDropdown: function(topics) {
+            const dropdown = document.getElementById('topic-dropdown');
+            if (!dropdown) return;
+            
+            // Clear existing options except first one
+            dropdown.innerHTML = '<option value="">Choisissez un sujet...</option>';
+            
+            // Add topics
+            topics.forEach(topic => {
+                const option = document.createElement('option');
+                option.value = topic;
+                option.textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
+                dropdown.appendChild(option);
+            });
+        },
+        
+        // Explore selected topic
+        exploreTopic: function() {
+            const dropdown = document.getElementById('topic-dropdown');
+            if (!dropdown) return;
+            
+            const selectedTopic = dropdown.value;
+            if (!selectedTopic) {
+                alert('Veuillez d\'abord sélectionner un sujet.');
+                return;
+            }
+            
+            // Show loading
+            this.showLoading();
+            
+            // Fetch topic response
+            fetch(`/chatbot/topic/${selectedTopic}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.hideLoading();
+                    
+                    if (data.response) {
+                        this.addMessage(data.response, 'assistant', 'pre-loaded');
+                    } else if (data.error) {
+                        this.addMessage(`Erreur: ${data.error}`, 'assistant', 'error');
+                    }
+                })
+                .catch(error => {
+                    this.hideLoading();
+                    console.error('Error exploring topic:', error);
+                    this.addMessage('Erreur lors du chargement du sujet. Veuillez réessayer.', 'assistant', 'error');
+                });
         },
         
         // Auto-resize input

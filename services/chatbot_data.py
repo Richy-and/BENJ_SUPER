@@ -759,7 +759,570 @@ BIBLICAL_TOPICS.update({
             "Spirituelle: Dieu veille sur nous et pourvoit à nos besoins selon sa sagesse parfaite.",
             "Pratique: Faire confiance à la providence divine nous libère de l'anxiété et de l'inquiétude."
         ]
+    },
+    
+    "création": {
+        "versets": [
+            {"reference": "Genèse 1:1", "text": "Au commencement, Dieu créa les cieux et la terre."},
+            {"reference": "Psaume 19:1", "text": "Les cieux racontent la gloire de Dieu, Et l'étendue manifeste l'œuvre de ses mains."},
+            {"reference": "Romains 1:20", "text": "En effet, les perfections invisibles de Dieu, sa puissance éternelle et sa divinité, se voient comme à l'œil nu, depuis la création du monde"}
+        ],
+        "interpretations": [
+            "Historique: La création révèle la puissance et la sagesse de Dieu dès le commencement.",
+            "Spirituelle: La création témoigne de la gloire de Dieu et de son amour pour l'humanité.",
+            "Pratique: Contempler la création nous aide à adorer et à honorer notre Créateur."
+        ]
+    },
+    
+    "tentation": {
+        "versets": [
+            {"reference": "1 Corinthiens 10:13", "text": "Aucune tentation ne vous est survenue qui n'ait été humaine, et Dieu, qui est fidèle, ne permettra pas que vous soyez tentés au-delà de vos forces"},
+            {"reference": "Matthieu 4:1", "text": "Alors Jésus fut emmené par l'Esprit dans le désert, pour être tenté par le diable."},
+            {"reference": "Hébreux 4:15", "text": "Car nous n'avons pas un souverain sacrificateur qui ne puisse compatir à nos faiblesses; au contraire, il a été tenté comme nous en toutes choses, sans commettre de péché."}
+        ],
+        "interpretations": [
+            "Historique: Jésus lui-même a été tenté, montrant qu'il comprend nos luttes.",
+            "Spirituelle: Dieu limite nos tentations et nous donne la force de résister.",
+            "Pratique: Face à la tentation, nous pouvons compter sur l'aide divine et la Parole de Dieu."
+        ]
+    },
+    
+    "jeûne": {
+        "versets": [
+            {"reference": "Matthieu 6:16", "text": "Lorsque vous jeûnez, ne prenez pas un air triste, comme les hypocrites, qui se rendent le visage tout défait, pour montrer aux hommes qu'ils jeûnent."},
+            {"reference": "Joël 2:12", "text": "Maintenant encore, dit l'Éternel, Revenez à moi de tout votre cœur, Avec des jeûnes, avec des pleurs et des lamentations!"},
+            {"reference": "Actes 14:23", "text": "Ils firent nommer des anciens dans chaque Église, et, après avoir prié et jeûné, ils les recommandèrent au Seigneur en qui ils avaient cru."}
+        ],
+        "interpretations": [
+            "Historique: Le jeûne était pratiqué par les croyants de l'Ancien et du Nouveau Testament.",
+            "Spirituelle: Le jeûne nous aide à nous concentrer sur Dieu et à chercher sa volonté.",
+            "Pratique: Jeûner avec la bonne attitude renforce notre relation avec Dieu."
+        ]
+    },
+    
+    "adoration": {
+        "versets": [
+            {"reference": "Jean 4:24", "text": "Dieu est Esprit, et il faut que ceux qui l'adorent l'adorent en esprit et en vérité."},
+            {"reference": "Psaume 95:6", "text": "Venez, prosternons-nous et humilions-nous, Fléchissons le genou devant l'Éternel, notre créateur!"},
+            {"reference": "Apocalypse 4:11", "text": "Tu es digne, notre Seigneur et notre Dieu, de recevoir la gloire et l'honneur et la puissance"}
+        ],
+        "interpretations": [
+            "Historique: L'adoration était au centre de la vie spirituelle du peuple de Dieu.",
+            "Spirituelle: L'adoration authentique vient du cœur et honore Dieu pour qui il est.",
+            "Pratique: Adorer Dieu transforme notre perspective et notre relation avec lui."
+        ]
+    },
+    
+    "sacrifice": {
+        "versets": [
+            {"reference": "Hébreux 10:10", "text": "C'est en vertu de cette volonté que nous sommes sanctifiés, par l'offrande du corps de Jésus-Christ, une fois pour toutes."},
+            {"reference": "Romains 12:1", "text": "Je vous exhorte donc, frères, par les compassions de Dieu, à offrir vos corps comme un sacrifice vivant, saint, agréable à Dieu"},
+            {"reference": "1 Samuel 15:22", "text": "L'obéissance vaut mieux que les sacrifices, Et l'observation de sa parole vaut mieux que la graisse des béliers."}
+        ],
+        "interpretations": [
+            "Historique: Les sacrifices de l'Ancien Testament préfiguraient le sacrifice parfait de Christ.",
+            "Spirituelle: Le sacrifice de Jésus a accompli tous les sacrifices et nous a réconciliés avec Dieu.",
+            "Pratique: Notre réponse au sacrifice de Christ est de lui offrir nos vies en sacrifice vivant."
+        ]
+    },
+    
+    "alliance": {
+        "versets": [
+            {"reference": "Jérémie 31:33", "text": "Mais voici l'alliance que je ferai avec la maison d'Israël, Après ces jours-là, dit l'Éternel: Je mettrai ma loi au dedans d'eux, Je l'écrirai dans leur cœur"},
+            {"reference": "Hébreux 8:6", "text": "Mais maintenant il a obtenu un ministère d'autant supérieur qu'il est le médiateur d'une alliance plus excellente"},
+            {"reference": "Luc 22:20", "text": "Il prit de même la coupe, après le souper, et la donna, en disant: Cette coupe est la nouvelle alliance en mon sang, qui est répandu pour vous."}
+        ],
+        "interpretations": [
+            "Historique: Dieu a établi plusieurs alliances avec son peuple à travers l'histoire.",
+            "Spirituelle: La nouvelle alliance en Christ est supérieure et éternelle.",
+            "Pratique: Vivre selon la nouvelle alliance transforme notre relation avec Dieu."
+        ]
+    },
+    
+    "pentecôte": {
+        "versets": [
+            {"reference": "Actes 2:4", "text": "Et ils furent tous remplis du Saint-Esprit, et se mirent à parler en d'autres langues, selon que l'Esprit leur donnait de s'exprimer."},
+            {"reference": "Actes 2:41", "text": "Ceux qui acceptèrent sa parole furent baptisés; et, en ce jour-là, le nombre des disciples s'augmenta d'environ trois mille âmes."},
+            {"reference": "Joël 2:28", "text": "Après cela, je répandrai mon esprit sur toute chair; Vos fils et vos filles prophétiseront"}
+        ],
+        "interpretations": [
+            "Historique: La Pentecôte marque la naissance de l'Église et l'effusion du Saint-Esprit.",
+            "Spirituelle: L'Esprit Saint donne la puissance pour témoigner et servir Dieu.",
+            "Pratique: Nous pouvons demander à être remplis du Saint-Esprit pour notre service."
+        ]
+    },
+    
+    "vision": {
+        "versets": [
+            {"reference": "Proverbes 29:18", "text": "Quand il n'y a pas de révélation, le peuple est sans frein; Heureux s'il observe la loi!"},
+            {"reference": "Habacuc 2:2", "text": "L'Éternel m'adressa la parole, et il dit: Écris la prophétie: Grave-la sur des tables, Afin qu'on la lise couramment."},
+            {"reference": "Actes 26:19", "text": "En conséquence, roi Agrippa, je n'ai point résisté à la vision céleste"}
+        ],
+        "interpretations": [
+            "Historique: Dieu a donné des visions à ses prophètes et serviteurs pour guider son peuple.",
+            "Spirituelle: Les visions divines révèlent la volonté et les plans de Dieu.",
+            "Pratique: Rechercher la vision de Dieu pour notre vie nous donne direction et but."
+        ]
+    },
+    
+    "miracles": {
+        "versets": [
+            {"reference": "Marc 16:17", "text": "Voici les miracles qui accompagneront ceux qui auront cru: en mon nom, ils chasseront les démons"},
+            {"reference": "Jean 14:12", "text": "En vérité, en vérité, je vous le dis, celui qui croit en moi fera aussi les œuvres que je fais, et il en fera de plus grandes"},
+            {"reference": "Actes 3:6", "text": "Alors Pierre lui dit: Je n'ai ni argent, ni or; mais ce que j'ai, je te le donne: au nom de Jésus-Christ de Nazareth, lève-toi et marche."}
+        ],
+        "interpretations": [
+            "Historique: Jésus et les apôtres ont accompli de nombreux miracles pour confirmer l'Évangile.",
+            "Spirituelle: Les miracles révèlent la puissance de Dieu et sa compassion pour l'humanité.",
+            "Pratique: Nous pouvons prier pour les miracles tout en acceptant la volonté souveraine de Dieu."
+        ]
+    },
+    
+    "prophétie": {
+        "versets": [
+            {"reference": "2 Pierre 1:21", "text": "car ce n'est pas par une volonté d'homme que la prophétie a jamais été apportée, mais c'est poussés par le Saint-Esprit que des hommes ont parlé de la part de Dieu."},
+            {"reference": "1 Corinthiens 14:3", "text": "Celui qui prophétise, au contraire, parle aux hommes, les édifie, les exhorte, les console."},
+            {"reference": "Amos 3:7", "text": "Car le Seigneur, l'Éternel, ne fait rien Sans avoir révélé son secret à ses serviteurs les prophètes."}
+        ],
+        "interpretations": [
+            "Historique: Les prophètes étaient les porte-parole de Dieu pour son peuple.",
+            "Spirituelle: La prophétie édifie, exhorte et console l'Église.",
+            "Pratique: Nous devons éprouver les prophéties à la lumière de la Parole de Dieu."
+        ]
+    },
+    
+    "gloire": {
+        "versets": [
+            {"reference": "1 Corinthiens 10:31", "text": "Soit donc que vous mangiez, soit que vous buviez, soit que vous fassiez quelque autre chose, faites tout pour la gloire de Dieu."},
+            {"reference": "Romains 3:23", "text": "Car tous ont péché et sont privés de la gloire de Dieu"},
+            {"reference": "2 Corinthiens 3:18", "text": "Nous tous qui, le visage découvert, contemplons comme dans un miroir la gloire du Seigneur, nous sommes transformés en la même image, de gloire en gloire"}
+        ],
+        "interpretations": [
+            "Historique: La gloire de Dieu se manifestait dans le tabernacle et le temple.",
+            "Spirituelle: Nous sommes appelés à refléter la gloire de Dieu dans nos vies.",
+            "Pratique: Tout ce que nous faisons doit avoir pour but de glorifier Dieu."
+        ]
+    },
+    
+    "discipline": {
+        "versets": [
+            {"reference": "Hébreux 12:6", "text": "Car le Seigneur châtie celui qu'il aime, Et il frappe de la verge tous ceux qu'il reconnaît pour ses fils."},
+            {"reference": "Proverbes 3:11", "text": "Mon fils, ne méprise pas la correction de l'Éternel, Et ne t'effraie point de ses châtiments"},
+            {"reference": "1 Corinthiens 11:32", "text": "Mais quand nous sommes jugés, nous sommes châtiés par le Seigneur, afin que nous ne soyons pas condamnés avec le monde."}
+        ],
+        "interpretations": [
+            "Historique: Dieu disciplinait son peuple pour le ramener dans le droit chemin.",
+            "Spirituelle: La discipline divine est une expression de l'amour paternel de Dieu.",
+            "Pratique: Accepter la discipline de Dieu nous aide à grandir dans la sainteté."
+        ]
+    },
+    
+    "dons": {
+        "versets": [
+            {"reference": "1 Corinthiens 12:4", "text": "Il y a diversité de dons, mais le même Esprit"},
+            {"reference": "Romains 12:6", "text": "Puisque nous avons des dons différents, selon la grâce qui nous a été accordée"},
+            {"reference": "1 Pierre 4:10", "text": "Comme de bons dispensateurs des diverses grâces de Dieu, que chacun de vous mette au service des autres le don qu'il a reçu"}
+        ],
+        "interpretations": [
+            "Historique: L'Esprit Saint distribuait des dons spirituels dans l'Église primitive.",
+            "Spirituelle: Chaque croyant reçoit des dons pour l'édification du corps de Christ.",
+            "Pratique: Nous devons découvrir et utiliser nos dons pour servir les autres."
+        ]
+    },
+    
+    "ministère": {
+        "versets": [
+            {"reference": "Éphésiens 4:11-12", "text": "Et il a donné les uns comme apôtres, les autres comme prophètes, les autres comme évangélistes, les autres comme pasteurs et docteurs, pour le perfectionnement des saints en vue de l'œuvre du ministère"},
+            {"reference": "2 Timothée 4:5", "text": "Mais toi, sois sobre en toutes choses, supporte les souffrances, fais l'œuvre d'un évangéliste, remplis bien ton ministère."},
+            {"reference": "1 Pierre 4:11", "text": "Si quelqu'un parle, que ce soit comme annonçant les oracles de Dieu; si quelqu'un remplit un ministère, qu'il le remplisse selon la force que Dieu communique"}
+        ],
+        "interpretations": [
+            "Historique: Dieu a établi différents ministères pour équiper et édifier l'Église.",
+            "Spirituelle: Le ministère est un service sacré rendu à Dieu et à son peuple.",
+            "Pratique: Nous devons servir fidèlement dans le ministère que Dieu nous confie."
+        ]
+    },
+    
+    "autorité": {
+        "versets": [
+            {"reference": "Romains 13:1", "text": "Que toute personne soit soumise aux autorités supérieures; car il n'y a point d'autorité qui ne vienne de Dieu"},
+            {"reference": "Matthieu 28:18", "text": "Jésus, s'étant approché, leur parla ainsi: Tout pouvoir m'a été donné dans le ciel et sur la terre."},
+            {"reference": "Hébreux 13:17", "text": "Obéissez à vos conducteurs et ayez pour eux de la déférence, car ils veillent sur vos âmes"}
+        ],
+        "interpretations": [
+            "Historique: Dieu a établi l'autorité pour maintenir l'ordre et la justice.",
+            "Spirituelle: L'autorité ultime appartient à Jésus-Christ.",
+            "Pratique: Nous devons respecter l'autorité tout en obéissant d'abord à Dieu."
+        ]
+    },
+    
+    "famille": {
+        "versets": [
+            {"reference": "Éphésiens 5:25", "text": "Maris, aimez vos femmes, comme Christ a aimé l'Église, et s'est livré lui-même pour elle"},
+            {"reference": "Éphésiens 6:1", "text": "Enfants, obéissez à vos parents, selon le Seigneur, car cela est juste."},
+            {"reference": "Proverbes 22:6", "text": "Instruis l'enfant selon la voie qu'il doit suivre; Et quand il sera vieux, il ne s'en détournera pas."}
+        ],
+        "interpretations": [
+            "Historique: La famille était l'unité de base de la société biblique.",
+            "Spirituelle: La famille reflète les relations divines et l'amour de Dieu.",
+            "Pratique: Vivre selon les principes bibliques fortifie la famille."
+        ]
+    },
+    
+    "travail": {
+        "versets": [
+            {"reference": "Colossiens 3:23", "text": "Tout ce que vous faites, faites-le de bon cœur, comme pour le Seigneur et non pour des hommes"},
+            {"reference": "2 Thessaloniciens 3:10", "text": "Car, lorsque nous étions chez vous, nous vous disions expressément: Si quelqu'un ne veut pas travailler, qu'il ne mange pas non plus."},
+            {"reference": "Proverbes 14:23", "text": "Tout travail procure l'abondance, Mais les paroles en l'air ne mènent qu'à la disette."}
+        ],
+        "interpretations": [
+            "Historique: Le travail était valorisé dans la culture biblique comme expression de l'image de Dieu.",
+            "Spirituelle: Notre travail peut être un acte d'adoration et de service à Dieu.",
+            "Pratique: Travailler avec intégrité et excellence honore Dieu et bénit les autres."
+        ]
+    },
+    
+    "richesse": {
+        "versets": [
+            {"reference": "1 Timothée 6:10", "text": "Car l'amour de l'argent est une racine de tous les maux; et quelques-uns, en étant possédés, se sont égarés loin de la foi"},
+            {"reference": "Matthieu 6:19", "text": "Ne vous amassez pas des trésors sur la terre, où la teigne et la rouille détruisent, et où les voleurs percent et dérobent"},
+            {"reference": "Proverbes 30:8", "text": "Éloigne de moi la fausseté et la parole mensongère; Ne me donne ni pauvreté, ni richesse, Accorde-moi le pain qui m'est nécessaire"}
+        ],
+        "interpretations": [
+            "Historique: L'Ancien Testament présentait la richesse comme une bénédiction, mais avec des responsabilités.",
+            "Spirituelle: La richesse peut être une bénédiction ou une malédiction selon notre cœur.",
+            "Pratique: Gérer les biens matériels avec sagesse et générosité honore Dieu."
+        ]
+    },
+    
+    "pauvreté": {
+        "versets": [
+            {"reference": "Matthieu 5:3", "text": "Heureux les pauvres en esprit, car le royaume des cieux est à eux!"},
+            {"reference": "Jacques 2:5", "text": "Écoutez, mes frères bien-aimés: Dieu n'a-t-il pas choisi les pauvres aux yeux du monde, pour qu'ils soient riches en la foi"},
+            {"reference": "2 Corinthiens 8:9", "text": "Car vous connaissez la grâce de notre Seigneur Jésus-Christ, qui pour vous s'est fait pauvre, de riche qu'il était"}
+        ],
+        "interpretations": [
+            "Historique: Dieu a toujours eu une attention particulière pour les pauvres et les démunis.",
+            "Spirituelle: La pauvreté en esprit nous rend réceptifs aux richesses spirituelles.",
+            "Pratique: Nous devons aider les pauvres et cultiver l'humilité dans notre cœur."
+        ]
+    },
+    
+    "maladie": {
+        "versets": [
+            {"reference": "Jacques 5:14", "text": "Quelqu'un parmi vous est-il malade? Qu'il appelle les anciens de l'Église, et que les anciens prient pour lui, en l'oignant d'huile au nom du Seigneur"},
+            {"reference": "2 Corinthiens 12:9", "text": "et il m'a dit: Ma grâce te suffit, car ma puissance s'accomplit dans la faiblesse."},
+            {"reference": "Psaume 103:3", "text": "C'est lui qui pardonne toutes tes iniquités, Qui guérit toutes tes maladies"}
+        ],
+        "interpretations": [
+            "Historique: Jésus a guéri de nombreuses maladies, montrant sa compassion.",
+            "Spirituelle: La maladie peut être une occasion de dépendre davantage de Dieu.",
+            "Pratique: Nous devons prier pour les malades tout en cherchant l'aide médicale appropriée."
+        ]
+    },
+    
+    "mort": {
+        "versets": [
+            {"reference": "1 Corinthiens 15:55", "text": "O mort, où est ta victoire? O mort, où est ton aiguillon?"},
+            {"reference": "Jean 11:25", "text": "Jésus lui dit: Je suis la résurrection et la vie. Celui qui croit en moi vivra, quand même il serait mort"},
+            {"reference": "Philippiens 1:21", "text": "car Christ est ma vie, et la mort m'est un gain."}
+        ],
+        "interpretations": [
+            "Historique: La mort est entrée dans le monde par le péché, mais Christ l'a vaincue.",
+            "Spirituelle: Pour les croyants, la mort est un passage vers la vie éternelle avec Dieu.",
+            "Pratique: L'espoir de la résurrection nous aide à faire face à la mort avec foi."
+        ]
+    },
+    
+    "deuil": {
+        "versets": [
+            {"reference": "Matthieu 5:4", "text": "Heureux les affligés, car ils seront consolés!"},
+            {"reference": "Psaume 34:18", "text": "L'Éternel est près de ceux qui ont le cœur brisé, Et il sauve ceux qui ont l'esprit dans l'abattement."},
+            {"reference": "Apocalypse 21:4", "text": "Il essuiera toute larme de leurs yeux, et la mort ne sera plus, et il n'y aura plus ni deuil, ni cri, ni douleur"}
+        ],
+        "interpretations": [
+            "Historique: Le deuil était reconnu et respecté dans la culture biblique.",
+            "Spirituelle: Dieu console ceux qui pleurent et comprend leur douleur.",
+            "Pratique: Le deuil est un processus naturel que nous pouvons traverser avec l'aide de Dieu."
+        ]
+    },
+    
+    "consolation": {
+        "versets": [
+            {"reference": "2 Corinthiens 1:3", "text": "Béni soit Dieu, le Père de notre Seigneur Jésus-Christ, le Père des miséricordes et le Dieu de toute consolation"},
+            {"reference": "Esaïe 61:2", "text": "Pour proclamer une année de grâce de l'Éternel, Et un jour de vengeance de notre Dieu; Pour consoler tous les affligés"},
+            {"reference": "Jean 14:16", "text": "Et moi, je prierai le Père, et il vous donnera un autre consolateur, afin qu'il demeure éternellement avec vous"}
+        ],
+        "interpretations": [
+            "Historique: Dieu a toujours été le consolateur de son peuple dans les épreuves.",
+            "Spirituelle: L'Esprit Saint est notre consolateur permanent qui nous réconforte.",
+            "Pratique: Nous pouvons consoler les autres avec la consolation que nous avons reçue de Dieu."
+        ]
+    },
+    
+    "jugement": {
+        "versets": [
+            {"reference": "2 Corinthiens 5:10", "text": "Car il nous faut tous comparaître devant le tribunal de Christ, afin que chacun reçoive selon le bien ou le mal qu'il aura fait, étant dans son corps."},
+            {"reference": "Hébreux 9:27", "text": "Et comme il est réservé aux hommes de mourir une seule fois, après quoi vient le jugement"},
+            {"reference": "Romains 14:10", "text": "Mais toi, pourquoi juges-tu ton frère? ou toi, pourquoi méprises-tu ton frère? puisque nous comparaîtrons tous devant le tribunal de Christ."}
+        ],
+        "interpretations": [
+            "Historique: Le jugement de Dieu était annoncé par les prophètes comme inévitable.",
+            "Spirituelle: Le jugement final révélera la justice parfaite de Dieu.",
+            "Pratique: La réalité du jugement nous motive à vivre dans la sainteté et l'amour."
+        ]
+    },
+    
+    "salut": {
+        "versets": [
+            {"reference": "Actes 4:12", "text": "Il n'y a de salut en aucun autre; car il n'y a sous le ciel aucun autre nom qui ait été donné parmi les hommes, par lequel nous devions être sauvés."},
+            {"reference": "Éphésiens 2:8", "text": "Car c'est par la grâce que vous êtes sauvés, par le moyen de la foi. Et cela ne vient pas de vous, c'est le don de Dieu."},
+            {"reference": "Romains 10:9", "text": "Si tu confesses de ta bouche le Seigneur Jésus, et si tu crois dans ton cœur que Dieu l'a ressuscité des morts, tu seras sauvé."}
+        ],
+        "interpretations": [
+            "Historique: Le salut était promis dès la Genèse et accompli par Jésus-Christ.",
+            "Spirituelle: Le salut est un don gratuit de Dieu reçu par la foi.",
+            "Pratique: Accepter le salut en Christ transforme notre destinée éternelle."
+        ]
+    },
+    
+    "enfer": {
+        "versets": [
+            {"reference": "Matthieu 25:41", "text": "Ensuite il dira à ceux qui seront à sa gauche: Retirez-vous de moi, maudits; allez dans le feu éternel qui a été préparé pour le diable et pour ses anges."},
+            {"reference": "Apocalypse 20:14", "text": "Et la mort et le séjour des morts furent jetés dans l'étang de feu. C'est la seconde mort, l'étang de feu."},
+            {"reference": "Marc 9:43", "text": "Si ta main est pour toi une occasion de chute, coupe-la; mieux vaut pour toi entrer manchot dans la vie, que d'avoir les deux mains et d'aller dans la géhenne"}
+        ],
+        "interpretations": [
+            "Historique: L'enfer était décrit comme la destination des méchants dans l'enseignement biblique.",
+            "Spirituelle: L'enfer représente la séparation éternelle d'avec Dieu.",
+            "Pratique: La réalité de l'enfer nous motive à chercher le salut et à évangéliser."
+        ]
+    },
+    
+    "paradis": {
+        "versets": [
+            {"reference": "Luc 23:43", "text": "Jésus lui répondit: Je te le dis en vérité, aujourd'hui tu seras avec moi dans le paradis."},
+            {"reference": "2 Corinthiens 12:4", "text": "qu'il a été enlevé dans le paradis, et qu'il a entendu des paroles ineffables qu'il n'est pas permis à un homme d'exprimer."},
+            {"reference": "Apocalypse 2:7", "text": "Que celui qui a des oreilles entende ce que l'Esprit dit aux Églises: A celui qui vaincra je donnerai à manger de l'arbre de vie, qui est dans le paradis de Dieu."}
+        ],
+        "interpretations": [
+            "Historique: Le paradis était la demeure originelle de l'homme avant la chute.",
+            "Spirituelle: Le paradis représente la communion parfaite avec Dieu.",
+            "Pratique: L'espoir du paradis nous encourage à persévérer dans la foi."
+        ]
+    },
+    
+    "ciel": {
+        "versets": [
+            {"reference": "Matthieu 6:9", "text": "Voici donc comment vous devez prier: Notre Père qui es aux cieux! Que ton nom soit sanctifié"},
+            {"reference": "Philippiens 3:20", "text": "Mais notre cité à nous est dans les cieux, d'où nous attendons aussi comme Sauveur le Seigneur Jésus-Christ"},
+            {"reference": "Apocalypse 21:1", "text": "Puis je vis un nouveau ciel et une nouvelle terre; car le premier ciel et la première terre avaient disparu, et la mer n'était plus."}
+        ],
+        "interpretations": [
+            "Historique: Le ciel était considéré comme la demeure de Dieu dans la pensée biblique.",
+            "Spirituelle: Le ciel représente la destination finale des rachetés.",
+            "Pratique: Avoir une perspective céleste influence nos priorités terrestres."
+        ]
+    },
+    
+    "anges": {
+        "versets": [
+            {"reference": "Hébreux 1:14", "text": "Ne sont-ils pas tous des esprits au service de Dieu, envoyés pour exercer un ministère en faveur de ceux qui doivent hériter du salut?"},
+            {"reference": "Psaume 91:11", "text": "Car il ordonnera à ses anges De te garder dans toutes tes voies"},
+            {"reference": "Luc 15:10", "text": "De même, je vous le dis, il y a de la joie devant les anges de Dieu pour un seul pécheur qui se repent."}
+        ],
+        "interpretations": [
+            "Historique: Les anges apparaissent tout au long de l'histoire biblique comme messagers de Dieu.",
+            "Spirituelle: Les anges servent Dieu et ministrent aux croyants.",
+            "Pratique: Reconnaître l'activité angélique nous encourage dans notre foi."
+        ]
+    },
+    
+    "démons": {
+        "versets": [
+            {"reference": "Éphésiens 6:12", "text": "Car nous n'avons pas à lutter contre la chair et le sang, mais contre les dominations, contre les autorités, contre les princes de ce monde de ténèbres, contre les esprits méchants dans les lieux célestes."},
+            {"reference": "Jacques 4:7", "text": "Soumettez-vous donc à Dieu; résistez au diable, et il fuira loin de vous."},
+            {"reference": "1 Pierre 5:8", "text": "Soyez sobres, veillez. Votre adversaire, le diable, rôde comme un lion rugissant, cherchant qui il dévorera."}
+        ],
+        "interpretations": [
+            "Historique: Les démons étaient reconnus comme des forces spirituelles maléfiques dans la Bible.",
+            "Spirituelle: Les démons s'opposent à Dieu et tentent de nuire aux croyants.",
+            "Pratique: Nous devons résister aux démons par la prière et la Parole de Dieu."
+        ]
+    },
+    
+    "satan": {
+        "versets": [
+            {"reference": "1 Pierre 5:8", "text": "Soyez sobres, veillez. Votre adversaire, le diable, rôde comme un lion rugissant, cherchant qui il dévorera."},
+            {"reference": "Jean 8:44", "text": "Vous avez pour père le diable, et vous voulez accomplir les désirs de votre père. Il a été meurtrier dès le commencement, et il ne se tient pas dans la vérité, parce qu'il n'y a pas de vérité en lui."},
+            {"reference": "Apocalypse 12:9", "text": "Et il fut précipité, le grand dragon, le serpent ancien, appelé le diable et Satan, celui qui séduit toute la terre"}
+        ],
+        "interpretations": [
+            "Historique: Satan apparaît dès la Genèse comme l'adversaire de Dieu et de l'humanité.",
+            "Spirituelle: Satan est l'ennemi de nos âmes qui cherche à nous éloigner de Dieu.",
+            "Pratique: Reconnaître les tactiques de Satan nous aide à lui résister efficacement."
+        ]
+    },
+    
+    "combat": {
+        "versets": [
+            {"reference": "Éphésiens 6:11", "text": "Revêtez-vous de toutes les armes de Dieu, afin de pouvoir tenir ferme contre les ruses du diable."},
+            {"reference": "2 Timothée 4:7", "text": "J'ai combattu le bon combat, j'ai achevé la course, j'ai gardé la foi."},
+            {"reference": "1 Timothée 6:12", "text": "Combats le bon combat de la foi, saisis la vie éternelle, à laquelle tu as été appelé"}
+        ],
+        "interpretations": [
+            "Historique: La vie chrétienne était présentée comme un combat spirituel dans le Nouveau Testament.",
+            "Spirituelle: Nous sommes engagés dans un combat contre les forces du mal.",
+            "Pratique: Nous devons nous équiper spirituellement pour mener le bon combat."
+        ]
+    },
+    
+    "victoire": {
+        "versets": [
+            {"reference": "1 Corinthiens 15:57", "text": "Mais grâces soient rendues à Dieu, qui nous donne la victoire par notre Seigneur Jésus-Christ!"},
+            {"reference": "1 Jean 5:4", "text": "parce que tout ce qui est né de Dieu triomphe du monde; et la victoire qui triomphe du monde, c'est notre foi."},
+            {"reference": "Romains 8:37", "text": "Mais dans toutes ces choses nous sommes plus que vainqueurs par celui qui nous a aimés."}
+        ],
+        "interpretations": [
+            "Historique: Dieu donnait la victoire à son peuple dans les batailles spirituelles et physiques.",
+            "Spirituelle: En Christ, nous avons la victoire sur le péché, la mort et Satan.",
+            "Pratique: Marcher dans la victoire de Christ nous donne confiance et espoir."
+        ]
+    },
+    
+    "paraboles": {
+        "versets": [
+            {"reference": "Matthieu 13:3", "text": "Il leur parla en paraboles sur beaucoup de choses, et il dit"},
+            {"reference": "Marc 4:34", "text": "Il ne leur parlait point sans parabole; mais, en particulier, il expliquait tout à ses disciples."},
+            {"reference": "Matthieu 13:13", "text": "C'est pourquoi je leur parle en paraboles, parce qu'en voyant ils ne voient point, et qu'en entendant ils n'entendent ni ne comprennent."}
+        ],
+        "interpretations": [
+            "Historique: Jésus utilisait les paraboles pour enseigner les vérités spirituelles.",
+            "Spirituelle: Les paraboles révèlent les mystères du royaume de Dieu.",
+            "Pratique: Étudier les paraboles nous aide à comprendre les enseignements de Jésus."
+        ]
+    },
+    
+    "berger": {
+        "versets": [
+            {"reference": "Jean 10:11", "text": "Je suis le bon berger. Le bon berger donne sa vie pour ses brebis."},
+            {"reference": "Psaume 23:1", "text": "L'Éternel est mon berger: je ne manquerai de rien."},
+            {"reference": "1 Pierre 5:4", "text": "Et lorsque le souverain pasteur paraîtra, vous obtiendrez la couronne incorruptible de la gloire."}
+        ],
+        "interpretations": [
+            "Historique: L'image du berger était familière dans la culture pastorale du Proche-Orient.",
+            "Spirituelle: Jésus est notre bon berger qui prend soin de nous.",
+            "Pratique: Suivre le bon berger nous assure protection et guidance."
+        ]
+    },
+    
+    "brebis": {
+        "versets": [
+            {"reference": "Jean 10:27", "text": "Mes brebis entendent ma voix; je les connais, et elles me suivent."},
+            {"reference": "Matthieu 9:36", "text": "Voyant la foule, il fut ému de compassion pour elle, parce qu'elle était languissante et abattue, comme des brebis qui n'ont point de berger."},
+            {"reference": "Ésaïe 53:6", "text": "Nous étions tous errants comme des brebis, Chacun suivait sa propre voie; Et l'Éternel a fait retomber sur lui l'iniquité de nous tous."}
+        ],
+        "interpretations": [
+            "Historique: Les brebis représentaient le peuple de Dieu dans l'imagerie biblique.",
+            "Spirituelle: Nous sommes les brebis de Christ, dépendantes de ses soins.",
+            "Pratique: Reconnaître notre statut de brebis nous aide à dépendre du berger."
+        ]
+    },
+    
+    "vigne": {
+        "versets": [
+            {"reference": "Jean 15:1", "text": "Je suis le vrai cep, et mon Père est le vigneron."},
+            {"reference": "Jean 15:5", "text": "Je suis le cep, vous êtes les sarments. Celui qui demeure en moi et en qui je demeure porte beaucoup de fruit, car sans moi vous ne pouvez rien faire."},
+            {"reference": "Galates 5:22", "text": "Mais le fruit de l'Esprit, c'est l'amour, la joie, la paix, la patience, la bonté, la bénignité, la fidélité"}
+        ],
+        "interpretations": [
+            "Historique: La vigne était une image courante pour représenter Israël et l'Église.",
+            "Spirituelle: Notre union avec Christ produit des fruits spirituels.",
+            "Pratique: Demeurer en Christ est essentiel pour porter du fruit."
+        ]
+    },
+    
+    "fruits": {
+        "versets": [
+            {"reference": "Matthieu 7:16", "text": "Vous les reconnaîtrez à leurs fruits. Cueille-t-on des raisins sur des épines, ou des figues sur des chardons?"},
+            {"reference": "Jean 15:8", "text": "Si vous portez beaucoup de fruit, c'est ainsi que mon Père sera glorifié, et que vous serez mes disciples."},
+            {"reference": "Galates 5:22", "text": "Mais le fruit de l'Esprit, c'est l'amour, la joie, la paix, la patience, la bonté, la bénignité, la fidélité"}
+        ],
+        "interpretations": [
+            "Historique: Les fruits étaient utilisés pour évaluer la qualité spirituelle dans l'enseignement biblique.",
+            "Spirituelle: Les fruits de l'Esprit révèlent la présence de Dieu dans nos vies.",
+            "Pratique: Cultiver les fruits de l'Esprit témoigne de notre foi."
+        ]
+    },
+    
+    "semence": {
+        "versets": [
+            {"reference": "Matthieu 13:8", "text": "Une autre partie tomba dans la bonne terre: elle donna du fruit, un grain cent, un autre soixante, un autre trente."},
+            {"reference": "1 Pierre 1:23", "text": "puisque vous avez été régénérés, non par une semence corruptible, mais par une semence incorruptible, par la parole vivante et permanente de Dieu."},
+            {"reference": "Luc 8:11", "text": "Voici ce que signifie cette parabole: La semence, c'est la parole de Dieu."}
+        ],
+        "interpretations": [
+            "Historique: Jésus utilisait l'image de la semence pour enseigner sur le royaume de Dieu.",
+            "Spirituelle: La Parole de Dieu est comme une semence qui grandit dans nos cœurs.",
+            "Pratique: Cultiver la Parole de Dieu dans nos vies produit une croissance spirituelle."
+        ]
+    },
+    
+    "moisson": {
+        "versets": [
+            {"reference": "Matthieu 9:37", "text": "Alors il dit à ses disciples: La moisson est grande, mais il y a peu d'ouvriers."},
+            {"reference": "Jean 4:35", "text": "Ne dites-vous pas qu'il y a encore quatre mois jusqu'à la moisson? Voici, je vous le dis, levez les yeux, et regardez les champs qui déjà blanchissent pour la moisson."},
+            {"reference": "Galates 6:9", "text": "Ne nous lassons pas de faire le bien; car nous moissonnerons au temps convenable, si nous ne nous relâchons pas."}
+        ],
+        "interpretations": [
+            "Historique: La moisson était une période importante dans la société agricole biblique.",
+            "Spirituelle: La moisson spirituelle représente le salut des âmes.",
+            "Pratique: Nous sommes appelés à participer à la moisson spirituelle."
+        ]
+    },
+    
+    "pain": {
+        "versets": [
+            {"reference": "Jean 6:35", "text": "Jésus leur dit: Je suis le pain de vie. Celui qui vient à moi n'aura jamais faim, et celui qui croit en moi n'aura jamais soif."},
+            {"reference": "Matthieu 4:4", "text": "Jésus répondit: Il est écrit: L'homme ne vivra pas de pain seulement, mais de toute parole qui sort de la bouche de Dieu."},
+            {"reference": "1 Corinthiens 11:24", "text": "et, après avoir rendu grâces, le rompit, et dit: Ceci est mon corps, qui est rompu pour vous; faites ceci en mémoire de moi."}
+        ],
+        "interpretations": [
+            "Historique: Le pain était l'aliment de base dans la culture du Proche-Orient ancien.",
+            "Spirituelle: Jésus est le pain de vie qui nourrit spirituellement.",
+            "Pratique: Nous devons nous nourrir spirituellement de Christ et de sa Parole."
+        ]
+    },
+    
+    "eau": {
+        "versets": [
+            {"reference": "Jean 4:14", "text": "mais celui qui boira de l'eau que je lui donnerai n'aura jamais soif, et l'eau que je lui donnerai deviendra en lui une source d'eau qui jaillira jusque dans la vie éternelle."},
+            {"reference": "Jean 7:38", "text": "Celui qui croit en moi, des fleuves d'eau vive couleront de son sein, comme dit l'Écriture."},
+            {"reference": "Apocalypse 22:17", "text": "Et l'Esprit et l'épouse disent: Viens. Et que celui qui entend dise: Viens. Et que celui qui a soif vienne; que celui qui veut, prenne de l'eau de la vie, gratuitement."}
+        ],
+        "interpretations": [
+            "Historique: L'eau était précieuse dans le climat aride du Proche-Orient.",
+            "Spirituelle: L'eau vive représente l'Esprit Saint et la vie éternelle.",
+            "Pratique: Jésus satisfait notre soif spirituelle la plus profonde."
+        ]
+    },
+    
+    "sel": {
+        "versets": [
+            {"reference": "Matthieu 5:13", "text": "Vous êtes le sel de la terre. Mais si le sel perd sa saveur, avec quoi la lui rendra-t-on?"},
+            {"reference": "Marc 9:50", "text": "Le sel est une bonne chose; mais si le sel devient sans saveur, avec quoi l'assaisonnerez-vous? Ayez du sel en vous-mêmes, et soyez en paix les uns avec les autres."},
+            {"reference": "Colossiens 4:6", "text": "Que votre parole soit toujours accompagnée de grâce, assaisonnée de sel, afin que vous sachiez comment il faut répondre à chacun."}
+        ],
+        "interpretations": [
+            "Historique: Le sel était utilisé pour conserver et assaisonner les aliments.",
+            "Spirituelle: Les chrétiens doivent être le sel de la terre, préservant et assaisonnant la société.",
+            "Pratique: Notre influence doit être positive et préservatrice dans le monde."
+        ]
     }
+    
+
+    
+
 })
 
 # Help responses for app functionality
