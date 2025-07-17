@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from models import User, Temoignage, Finance, Announcement, Playlist, Department
 from app import db
 from datetime import datetime
+import os
+from werkzeug.utils import secure_filename
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -210,14 +212,38 @@ def playlist_admin():
 @admin_required
 def add_playlist_item():
     titre = request.form['titre']
-    fichier_audio_url = request.form['fichier_audio_url']
     description = request.form.get('description', '')
+    volume = float(request.form.get('volume', 0.7))
     
-    playlist_item = Playlist(
-        titre=titre,
-        fichier_audio_url=fichier_audio_url,
-        description=description
-    )
+    # Vérifier si c'est un fichier local ou une URL
+    if 'fichier_audio' in request.files and request.files['fichier_audio'].filename:
+        # Fichier local uploadé
+        fichier_audio = request.files['fichier_audio']
+        if fichier_audio and fichier_audio.filename:
+            # Sauvegarder le fichier localement
+            filename = secure_filename(fichier_audio.filename)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
+            filename = timestamp + filename
+            filepath = os.path.join('static/audio', filename)
+            fichier_audio.save(filepath)
+            
+            playlist_item = Playlist(
+                titre=titre,
+                fichier_audio_url=f'/static/audio/{filename}',
+                description=description,
+                volume=volume,
+                is_local=True
+            )
+    else:
+        # URL externe
+        fichier_audio_url = request.form['fichier_audio_url']
+        playlist_item = Playlist(
+            titre=titre,
+            fichier_audio_url=fichier_audio_url,
+            description=description,
+            volume=volume,
+            is_local=False
+        )
     
     db.session.add(playlist_item)
     db.session.commit()
