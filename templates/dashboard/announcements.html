@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}Annonces - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-bullhorn text-blue-600 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gestion des Annonces</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Créez et gérez vos annonces de programmes</p>
+                </div>
+            </div>
+            <button onclick="openAddAnnouncementModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                <i class="fas fa-plus mr-2"></i>
+                Nouvelle Annonce
+            </button>
+        </div>
+    </div>
+
+    <!-- Mes Annonces -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Mes Annonces</h2>
+        
+        {% if mes_annonces %}
+            <div class="space-y-4">
+                {% for annonce in mes_annonces %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ annonce.titre }}</h3>
+                                <span class="px-2 py-1 text-xs rounded-full
+                                    {% if annonce.statut == 'approuve' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}
+                                    {% if annonce.statut == 'en_attente' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200{% endif %}
+                                    {% if annonce.statut == 'rejete' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200{% endif %}">
+                                    {% if annonce.statut == 'approuve' %}Approuvée{% endif %}
+                                    {% if annonce.statut == 'en_attente' %}En attente{% endif %}
+                                    {% if annonce.statut == 'rejete' %}Rejetée{% endif %}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">{{ annonce.description }}</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <i class="fas fa-calendar text-blue-600 mr-2"></i>
+                                    {{ annonce.date_programme.strftime('%d/%m/%Y') }}
+                                </div>
+                                <div>
+                                    <i class="fas fa-clock text-blue-600 mr-2"></i>
+                                    {{ annonce.heure_programme.strftime('%H:%M') }}
+                                </div>
+                                {% if annonce.lieu %}
+                                <div>
+                                    <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                                    {{ annonce.lieu }}
+                                </div>
+                                {% endif %}
+                                {% if annonce.intervenants %}
+                                <div>
+                                    <i class="fas fa-users text-blue-600 mr-2"></i>
+                                    {% set intervenant_ids = annonce.intervenants|from_json %}
+                                    {% for id in intervenant_ids %}
+                                        {% for ouvrier in ouvriers %}
+                                            {% if ouvrier.id|string == id %}{{ ouvrier.username }}{% if not loop.last %}, {% endif %}{% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        {% if annonce.photo_url %}
+                        <div class="ml-4">
+                            <img src="{{ annonce.photo_url }}" alt="Photo programme" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 mt-4">
+                        <button onclick="openEditAnnouncementModal({{ annonce.id }})" 
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 px-3 py-1 rounded-lg transition-colors">
+                            <i class="fas fa-edit mr-1"></i>
+                            Modifier
+                        </button>
+                        <button onclick="deleteAnnouncement({{ annonce.id }}, '{{ annonce.titre }}')" 
+                                class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 px-3 py-1 rounded-lg transition-colors">
+                            <i class="fas fa-trash mr-1"></i>
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <i class="fas fa-bullhorn text-gray-300 dark:text-gray-600 text-6xl mb-4"></i>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucune annonce</h3>
+                <p class="text-gray-500 dark:text-gray-400">Créez votre première annonce de programme</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 border border-blue-200 dark:border-blue-800">
+        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-3">
+            <i class="fas fa-info-circle mr-2"></i>
+            Instructions
+        </h3>
+        <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+            <li>• Les annonces créées sont visibles sur tous les dashboards une fois approuvées</li>
+            <li>• Vous pouvez ajouter une photo, spécifier la date, l'heure et le lieu</li>
+            <li>• Sélectionnez les intervenants parmi les ouvriers de la communauté</li>
+            <li>• Les annonces sont soumises à validation par l'administration</li>
+            <li>• Formats photo acceptés: JPG, PNG, GIF, WebP (max 10MB)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Modal Ajouter Annonce -->
+<div id="addAnnouncementModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Nouvelle Annonce</h3>
+        
+        <form method="POST" action="{{ url_for('announcements.create_announcement') }}" enctype="multipart/form-data">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Titre *</label>
+                    <input type="text" name="titre" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description *</label>
+                    <textarea name="description" required rows="4"
+                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date *</label>
+                        <input type="date" name="date_programme" required
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Heure *</label>
+                        <input type="time" name="heure_programme" required
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Lieu</label>
+                    <input type="text" name="lieu"
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Photo</label>
+                    <input type="file" name="photo" accept="image/*"
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Intervenants</label>
+                    <div class="max-h-32 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-md p-2 space-y-1">
+                        {% for ouvrier in ouvriers %}
+                        <label class="flex items-center">
+                            <input type="checkbox" name="intervenants" value="{{ ouvrier.id }}" class="mr-2">
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ ouvrier.username }} ({{ ouvrier.role }})</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end space-x-2 mt-6">
+                <button type="button" onclick="closeAddAnnouncementModal()"
+                        class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+                    Annuler
+                </button>
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Valider
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openAddAnnouncementModal() {
+    document.getElementById('addAnnouncementModal').classList.remove('hidden');
+}
+
+function closeAddAnnouncementModal() {
+    document.getElementById('addAnnouncementModal').classList.add('hidden');
+}
+
+function deleteAnnouncement(id, titre) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer l'annonce "${titre}" ?`)) {
+        fetch(`/announcements/delete/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Erreur lors de la suppression');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erreur lors de la suppression');
+        });
+    }
+}
+</script>
+
+{% endblock %}

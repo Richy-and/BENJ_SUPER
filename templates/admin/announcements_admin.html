@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Administration des Annonces - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="bg-red-100 dark:bg-red-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Administration des Annonces</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Gérer les annonces de programmes</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    Total : {{ annonces|length }} annonces
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="bg-green-100 dark:bg-green-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-check text-green-600 text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ annonces|selectattr('statut', 'equalto', 'approuve')|list|length }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Approuvées</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="bg-yellow-100 dark:bg-yellow-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ annonces|selectattr('statut', 'equalto', 'en_attente')|list|length }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">En attente</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+                <div class="bg-red-100 dark:bg-red-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-times text-red-600 text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ annonces|selectattr('statut', 'equalto', 'rejete')|list|length }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Rejetées</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des annonces -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Toutes les Annonces</h2>
+        
+        {% if annonces %}
+            <div class="space-y-4">
+                {% for annonce in annonces %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ annonce.titre }}</h3>
+                                <span class="px-2 py-1 text-xs rounded-full
+                                    {% if annonce.statut == 'approuve' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}
+                                    {% if annonce.statut == 'en_attente' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200{% endif %}
+                                    {% if annonce.statut == 'rejete' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200{% endif %}">
+                                    {% if annonce.statut == 'approuve' %}Approuvée{% endif %}
+                                    {% if annonce.statut == 'en_attente' %}En attente{% endif %}
+                                    {% if annonce.statut == 'rejete' %}Rejetée{% endif %}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">{{ annonce.description }}</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <i class="fas fa-calendar text-blue-600 mr-2"></i>
+                                    {{ annonce.date_programme.strftime('%d/%m/%Y') }}
+                                </div>
+                                <div>
+                                    <i class="fas fa-clock text-blue-600 mr-2"></i>
+                                    {{ annonce.heure_programme.strftime('%H:%M') }}
+                                </div>
+                                {% if annonce.lieu %}
+                                <div>
+                                    <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                                    {{ annonce.lieu }}
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <i class="fas fa-user text-blue-600 mr-2"></i>
+                                    {% for user in users %}
+                                        {% if user.id == annonce.cree_par %}{{ user.username }}{% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% if annonce.photo_url %}
+                        <div class="ml-4">
+                            <img src="{{ annonce.photo_url }}" alt="Photo programme" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 mt-4">
+                        {% if annonce.statut == 'en_attente' %}
+                        <form method="POST" action="{{ url_for('announcements.approve_announcement', announcement_id=annonce.id) }}" class="inline">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg transition-colors">
+                                <i class="fas fa-check mr-1"></i>
+                                Approuver
+                            </button>
+                        </form>
+                        <form method="POST" action="{{ url_for('announcements.reject_announcement', announcement_id=annonce.id) }}" class="inline">
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg transition-colors">
+                                <i class="fas fa-times mr-1"></i>
+                                Rejeter
+                            </button>
+                        </form>
+                        {% elif annonce.statut == 'rejete' %}
+                        <form method="POST" action="{{ url_for('announcements.approve_announcement', announcement_id=annonce.id) }}" class="inline">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg transition-colors">
+                                <i class="fas fa-undo mr-1"></i>
+                                Réactiver
+                            </button>
+                        </form>
+                        {% endif %}
+                        
+                        <button onclick="deleteAnnouncement({{ annonce.id }}, '{{ annonce.titre }}')" 
+                                class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 px-3 py-1 rounded-lg transition-colors">
+                            <i class="fas fa-trash mr-1"></i>
+                            Supprimer
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <i class="fas fa-bullhorn text-gray-300 dark:text-gray-600 text-6xl mb-4"></i>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucune annonce</h3>
+                <p class="text-gray-500 dark:text-gray-400">Aucune annonce créée pour le moment</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-6 border border-amber-200 dark:border-amber-800">
+        <h3 class="text-lg font-semibold text-amber-800 dark:text-amber-200 mb-3">
+            <i class="fas fa-info-circle mr-2"></i>
+            Instructions d'administration
+        </h3>
+        <ul class="text-sm text-amber-700 dark:text-amber-300 space-y-1">
+            <li>• Approuvez les annonces créées par les ouvriers pour les rendre visibles</li>
+            <li>• Rejetez les annonces inappropriées ou incomplètes</li>
+            <li>• Vous pouvez réactiver une annonce rejetée en l'approuvant</li>
+            <li>• Seules les annonces approuvées apparaissent sur les dashboards</li>
+            <li>• La suppression d'une annonce est définitive</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function deleteAnnouncement(id, titre) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer définitivement l'annonce "${titre}" ?`)) {
+        fetch(`/announcements/delete/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Erreur lors de la suppression');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erreur lors de la suppression');
+        });
+    }
+}
+</script>
+
+{% endblock %}

@@ -19,7 +19,7 @@ def login_required(f):
 @login_required
 def dashboard():
     user = User.query.get(session['user_id'])
-    announcements = Announcement.query.order_by(Announcement.date_publication.desc()).limit(3).all()
+    announcements = Announcement.query.filter_by(statut='approuve').order_by(Announcement.date_creation.desc()).limit(3).all()
     
     # Get user's financial obligations
     finances = Finance.query.filter_by(user_id=user.id, paye=False).all()

@@ -55,18 +55,28 @@ def create_app():
     from services.translation_service import register_template_context
     register_template_context(app)
     
+    # Add custom Jinja filters
+    import json
+    @app.template_filter('from_json')
+    def from_json_filter(value):
+        if value:
+            return json.loads(value)
+        return []
+    
     # Register blueprints
     from routes.auth import auth_bp
     from routes.dashboard import dashboard_bp
     from routes.admin import admin_bp
     from routes.chef import chef_bp
     from routes.chatbot import chatbot_bp
+    from routes.announcements import announcements_bp
     
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(chef_bp, url_prefix='/chef')
     app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
+    app.register_blueprint(announcements_bp)
     
     # Main routes
     @app.route('/')
@@ -129,9 +139,15 @@ def create_app():
         
         # Create default announcement
         if not Announcement.query.first():
+            from datetime import date, time
             welcome_announcement = Announcement(
                 titre="Bienvenue sur BENJ INSIDE",
-                contenu="Plateforme de gestion chrétienne pour notre communauté. Que Dieu vous bénisse!"
+                description="Plateforme de gestion chrétienne pour notre communauté. Que Dieu vous bénisse!",
+                date_programme=date(2025, 7, 20),
+                heure_programme=time(9, 0),
+                lieu="Église BENJ INSIDE",
+                statut="approuve",
+                cree_par=admin.id  # Admin user
             )
             db.session.add(welcome_announcement)
         
