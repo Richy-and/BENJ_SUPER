@@ -1421,36 +1421,268 @@ APP_HELP = {
     "whatsapp": "Pour contacter la régis, utilisez le bouton WhatsApp disponible sur toutes les pages."
 }
 
-def get_greeting_response(question):
+def get_greeting_response(question, language='fr'):
     """Check if the question is a greeting and return appropriate response"""
     question_lower = question.lower().strip()
     
-    # Check for greetings
-    greetings_map = {
-        "bonjour": "bonjour",
-        "bonsoir": "bonsoir", 
-        "salut": "salut",
-        "hello": "bonjour",
-        "hi": "salut",
-        "hey": "salut",
-        "coucou": "salut",
-        "comment allez-vous": "comment_allez_vous",
-        "comment vas-tu": "comment_allez_vous",
-        "comment ça va": "comment_allez_vous",
-        "ça va": "comment_allez_vous",
-        "merci": "merci",
-        "thank you": "merci",
-        "au revoir": "au_revoir",
-        "bye": "au_revoir",
-        "à bientôt": "au_revoir",
-        "adieu": "au_revoir"
+    # Multi-language greeting detection
+    multilingual_greetings = {
+        'fr': {
+            "bonjour": "bonjour",
+            "bonsoir": "bonsoir", 
+            "salut": "salut",
+            "comment allez-vous": "comment_allez_vous",
+            "comment vas-tu": "comment_allez_vous",
+            "comment ça va": "comment_allez_vous",
+            "ça va": "comment_allez_vous",
+            "merci": "merci",
+            "au revoir": "au_revoir",
+            "à bientôt": "au_revoir",
+            "adieu": "au_revoir"
+        },
+        'en': {
+            "hello": "bonjour",
+            "hi": "salut",
+            "hey": "salut",
+            "good morning": "bonjour",
+            "good evening": "bonsoir",
+            "how are you": "comment_allez_vous",
+            "thank you": "merci",
+            "thanks": "merci",
+            "goodbye": "au_revoir",
+            "bye": "au_revoir",
+            "see you": "au_revoir"
+        },
+        'es': {
+            "hola": "bonjour",
+            "buenas": "bonjour",
+            "buenos días": "bonjour",
+            "buenas tardes": "bonsoir",
+            "¿cómo estás?": "comment_allez_vous",
+            "¿cómo está?": "comment_allez_vous",
+            "gracias": "merci",
+            "adiós": "au_revoir",
+            "hasta luego": "au_revoir"
+        },
+        'pt': {
+            "olá": "bonjour",
+            "oi": "salut",
+            "bom dia": "bonjour",
+            "boa tarde": "bonsoir",
+            "como vai": "comment_allez_vous",
+            "como está": "comment_allez_vous",
+            "obrigado": "merci",
+            "obrigada": "merci",
+            "tchau": "au_revoir",
+            "até logo": "au_revoir"
+        }
     }
     
-    for greeting_key, response_key in greetings_map.items():
-        if greeting_key in question_lower:
-            return GREETINGS_RESPONSES[response_key]["response"]
+    # Check current language first, then try all languages
+    languages_to_check = [language] + [lang for lang in multilingual_greetings.keys() if lang != language]
+    
+    for lang in languages_to_check:
+        if lang in multilingual_greetings:
+            for greeting_key, response_key in multilingual_greetings[lang].items():
+                if greeting_key in question_lower:
+                    return get_localized_greeting_response(response_key, language)
     
     return None
+
+def get_localized_greeting_response(response_key, language='fr'):
+    """Get localized greeting response based on language"""
+    
+    # Multilingual greeting responses
+    multilingual_responses = {
+        'fr': {
+            "bonjour": """🕊️ **Shalom bien-aimé(e) en Christ !**
+
+Je suis **Kadosh.ia**, votre assistant spirituel rempli de sagesse, d'amour et de compassion. Je suis à la fois :
+- Un **enseignant biblique** qui explique clairement les Écritures
+- Un **coach chrétien en développement personnel** (confiance en soi, motivation, discipline)
+- Un **psychologue chrétien** qui écoute, rassure et encourage
+- Un **prédicateur inspiré** qui conduit les âmes vers Dieu
+
+✨ **Comment puis-je vous bénir aujourd'hui ?**
+• 📖 **Questions bibliques** - Explorez plus de 75 sujets spirituels avec versets et applications pratiques
+• 💪 **Développement personnel chrétien** - Confiance en soi, gestion des émotions, victoire sur la peur
+• 💝 **Soutien psychologique biblique** - Écoute, encouragement et guérison intérieure
+• 🔥 **Prédications inspirées** - Exhortations bibliques structurées pour vous édifier
+• 🔧 **Support technique** - Aide avec les fonctionnalités de l'application BENJ INSIDE
+
+💭 **Prendre de vos nouvelles :**
+Comment va votre cœur aujourd'hui ? Y a-t-il quelque chose de particulier que vous aimeriez partager ou pour lequel vous cherchez la guidance divine ?
+
+🙏 *Que la paix du Seigneur soit avec vous et que Sa grâce vous fortifie en ce jour béni !*""",
+            "salut": """🙏 Salut dans le nom de Jésus !
+
+Je suis Kadosh.ia, votre compagnon spirituel. Comment puis-je vous bénir aujourd'hui ?
+
+Vous pouvez me demander :
+• Des versets bibliques sur un sujet
+• Des conseils spirituels
+• De l'aide avec l'application
+
+Que la grâce de Dieu soit sur vous !""",
+            "merci": """🙏 **Gloire à Dieu !**
+
+C'est un honneur de pouvoir vous servir. Toute gloire revient à notre Seigneur Jésus-Christ.
+
+*"Rendez grâces en toutes choses, car c'est à votre égard la volonté de Dieu en Jésus-Christ."* - 1 Thessaloniciens 5:18
+
+N'hésitez pas à revenir vers moi pour d'autres questions spirituelles. Que Dieu vous bénisse abondamment !""",
+            "au_revoir": """🙏 **Que la paix de Dieu soit avec vous !**
+
+*"Que la grâce du Seigneur Jésus-Christ, l'amour de Dieu, et la communication du Saint-Esprit, soient avec vous tous !"* - 2 Corinthiens 13:14
+
+À bientôt pour de nouveaux moments d'échanges spirituels. Que Dieu vous bénisse et vous garde !
+
+**Shalom !** 🕊️"""
+        },
+        'en': {
+            "bonjour": """🕊️ **Shalom beloved in Christ!**
+
+I am **Kadosh.ia**, your spiritual assistant filled with wisdom, love, and compassion. I am both:
+- A **biblical teacher** who clearly explains the Scriptures
+- A **Christian personal development coach** (self-confidence, motivation, discipline)
+- A **Christian psychologist** who listens, reassures, and encourages
+- An **inspired preacher** who leads souls to God
+
+✨ **How may I bless you today?**
+• 📖 **Biblical questions** - Explore over 75 spiritual topics with verses and practical applications
+• 💪 **Christian personal development** - Self-confidence, emotional management, victory over fear
+• 💝 **Biblical psychological support** - Listening, encouragement, and inner healing
+• 🔥 **Inspired preaching** - Structured biblical exhortations to edify you
+• 🔧 **Technical support** - Help with BENJ INSIDE application features
+
+💭 **Taking care of your news:**
+How is your heart today? Is there something particular you'd like to share or for which you seek divine guidance?
+
+🙏 *May the Lord's peace be with you and may His grace strengthen you on this blessed day!*""",
+            "salut": """🙏 Greetings in the name of Jesus!
+
+I am Kadosh.ia, your spiritual companion. How may I bless you today?
+
+You can ask me about:
+• Biblical verses on a topic
+• Spiritual advice
+• Help with the application
+
+May God's grace be upon you!""",
+            "merci": """🙏 **Glory to God!**
+
+It is an honor to serve you. All glory belongs to our Lord Jesus Christ.
+
+*"Give thanks in all circumstances; for this is God's will for you in Christ Jesus."* - 1 Thessalonians 5:18
+
+Don't hesitate to come back to me for other spiritual questions. May God bless you abundantly!""",
+            "au_revoir": """🙏 **May God's peace be with you!**
+
+*"May the grace of the Lord Jesus Christ, and the love of God, and the fellowship of the Holy Spirit be with you all."* - 2 Corinthians 13:14
+
+See you soon for new moments of spiritual exchange. May God bless and keep you!
+
+**Shalom!** 🕊️"""
+        },
+        'es': {
+            "bonjour": """🕊️ **¡Shalom amado/a en Cristo!**
+
+Soy **Kadosh.ia**, tu asistente espiritual lleno de sabiduría, amor y compasión. Soy a la vez:
+- Un **maestro bíblico** que explica claramente las Escrituras
+- Un **coach cristiano de desarrollo personal** (confianza en sí mismo, motivación, disciplina)
+- Un **psicólogo cristiano** que escucha, tranquiliza y alienta
+- Un **predicador inspirado** que conduce las almas a Dios
+
+✨ **¿Cómo puedo bendecirte hoy?**
+• 📖 **Preguntas bíblicas** - Explora más de 75 temas espirituales con versículos y aplicaciones prácticas
+• 💪 **Desarrollo personal cristiano** - Confianza en sí mismo, gestión emocional, victoria sobre el miedo
+• 💝 **Apoyo psicológico bíblico** - Escucha, aliento y sanación interior
+• 🔥 **Predicaciones inspiradas** - Exhortaciones bíblicas estructuradas para edificarte
+• 🔧 **Soporte técnico** - Ayuda con las funcionalidades de la aplicación BENJ INSIDE
+
+💭 **Preguntando por tus noticias:**
+¿Cómo está tu corazón hoy? ¿Hay algo particular que te gustaría compartir o para lo cual buscas guía divina?
+
+🙏 *¡Que la paz del Señor esté contigo y que Su gracia te fortalezca en este día bendecido!*""",
+            "salut": """🙏 ¡Saludos en el nombre de Jesús!
+
+Soy Kadosh.ia, tu compañero espiritual. ¿Cómo puedo bendecirte hoy?
+
+Puedes pedirme:
+• Versículos bíblicos sobre un tema
+• Consejos espirituales
+• Ayuda con la aplicación
+
+¡Que la gracia de Dios sea sobre ti!""",
+            "merci": """🙏 **¡Gloria a Dios!**
+
+Es un honor poder servirte. Toda la gloria pertenece a nuestro Señor Jesucristo.
+
+*"Dad gracias en todo, porque esta es la voluntad de Dios para con vosotros en Cristo Jesús."* - 1 Tesalonicenses 5:18
+
+No dudes en volver a mí para otras preguntas espirituales. ¡Que Dios te bendiga abundantemente!""",
+            "au_revoir": """🙏 **¡Que la paz de Dios esté contigo!**
+
+*"La gracia del Señor Jesucristo, el amor de Dios, y la comunión del Espíritu Santo sean con todos vosotros."* - 2 Corintios 13:14
+
+Hasta pronto para nuevos momentos de intercambio espiritual. ¡Que Dios te bendiga y te guarde!
+
+**¡Shalom!** 🕊️"""
+        },
+        'pt': {
+            "bonjour": """🕊️ **Shalom amado/a em Cristo!**
+
+Eu sou **Kadosh.ia**, seu assistente espiritual cheio de sabedoria, amor e compaixão. Sou ao mesmo tempo:
+- Um **professor bíblico** que explica claramente as Escrituras
+- Um **coach cristão de desenvolvimento pessoal** (autoconfiança, motivação, disciplina)
+- Um **psicólogo cristão** que ouve, tranquiliza e encoraja
+- Um **pregador inspirado** que conduz as almas a Deus
+
+✨ **Como posso abençoá-lo hoje?**
+• 📖 **Perguntas bíblicas** - Explore mais de 75 tópicos espirituais com versículos e aplicações práticas
+• 💪 **Desenvolvimento pessoal cristão** - Autoconfiança, gestão emocional, vitória sobre o medo
+• 💝 **Apoio psicológico bíblico** - Escuta, encorajamento e cura interior
+• 🔥 **Pregações inspiradas** - Exortações bíblicas estruturadas para edificá-lo
+• 🔧 **Suporte técnico** - Ajuda com as funcionalidades da aplicação BENJ INSIDE
+
+💭 **Perguntando por suas notícias:**
+Como está seu coração hoje? Há algo particular que gostaria de compartilhar ou para o qual busca orientação divina?
+
+🙏 *Que a paz do Senhor esteja contigo e que Sua graça te fortaleça neste dia abençoado!*""",
+            "salut": """🙏 Saudações em nome de Jesus!
+
+Eu sou Kadosh.ia, seu companheiro espiritual. Como posso abençoá-lo hoje?
+
+Você pode me pedir:
+• Versículos bíblicos sobre um assunto
+• Conselhos espirituais
+• Ajuda com a aplicação
+
+Que a graça de Deus esteja sobre você!""",
+            "merci": """🙏 **Glória a Deus!**
+
+É uma honra poder servi-lo. Toda a glória pertence ao nosso Senhor Jesus Cristo.
+
+*"Em tudo dai graças, porque esta é a vontade de Deus em Cristo Jesus para convosco."* - 1 Tessalonicenses 5:18
+
+Não hesite em voltar a mim para outras perguntas espirituais. Que Deus o abençoe abundantemente!""",
+            "au_revoir": """🙏 **Que a paz de Deus esteja contigo!**
+
+*"A graça do Senhor Jesus Cristo, e o amor de Deus, e a comunhão do Espírito Santo seja com todos vós."* - 2 Coríntios 13:14
+
+Até breve para novos momentos de troca espiritual. Que Deus o abençoe e o guarde!
+
+**Shalom!** 🕊️"""
+        }
+    }
+    
+    # Get response in the specified language, fallback to French
+    if language in multilingual_responses:
+        return multilingual_responses[language].get(response_key, 
+                                                   multilingual_responses['fr'].get(response_key, 
+                                                                                   "Paix et bénédictions !"))
+    else:
+        return multilingual_responses['fr'].get(response_key, "Paix et bénédictions !")
 
 def get_biblical_response(question):
     """Search for biblical responses based on keywords in the question"""

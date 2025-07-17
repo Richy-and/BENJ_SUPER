@@ -51,6 +51,10 @@ def create_app():
     jwt.init_app(app)
     babel.init_app(app)
     
+    # Initialize translation service
+    from services.translation_service import register_template_context
+    register_template_context(app)
+    
     # Register blueprints
     from routes.auth import auth_bp
     from routes.dashboard import dashboard_bp
@@ -69,6 +73,34 @@ def create_app():
     def index():
         from flask import render_template
         return render_template('index.html')
+    
+    # Language switching route
+    @app.route('/set-language/<language_code>')
+    def set_language(language_code):
+        from flask import redirect, url_for, request, jsonify
+        from services.translation_service import translation_service
+        
+        success = translation_service.set_language(language_code)
+        
+        # Handle AJAX requests
+        if request.headers.get('Content-Type') == 'application/json' or request.is_json:
+            return jsonify({
+                'success': success,
+                'language': language_code,
+                'message': translation_service.translate('language_changed', language_code)
+            })
+        
+        # Handle regular requests
+        return redirect(request.referrer or url_for('index'))
+    
+    # API route for translations
+    @app.route('/api/translations')
+    def get_translations():
+        from flask import jsonify, request
+        from services.translation_service import translation_service
+        
+        language = request.args.get('language', translation_service.get_current_language())
+        return jsonify(translation_service.get_all_translations(language))
     
     with app.app_context():
         from models import User, Department, Announcement

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full">
+<html lang="{{ current_language or 'fr' }}" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,6 +156,7 @@
 
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/language-switcher.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

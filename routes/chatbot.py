@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, session
 from services.chatbot_data import get_biblical_response, get_app_help_response, get_greeting_response
 from services.openai_client import get_openai_response
 from services.chatbot_training import get_training_report, evaluate_chatbot_performance
+from services.translation_service import translation_service
 import logging
 
 chatbot_bp = Blueprint('chatbot', __name__)
@@ -27,8 +28,11 @@ def ask_kadosh():
     user_id = session.get('user_id')
     logging.info(f"User {user_id} asked: {question}")
     
+    # Get user's language preference
+    user_language = translation_service.get_current_language()
+    
     # First, check for greetings (enhanced interactivity)
-    greeting_response = get_greeting_response(question)
+    greeting_response = get_greeting_response(question, user_language)
     if greeting_response:
         return jsonify({
             'response': greeting_response,
@@ -62,7 +66,7 @@ def ask_kadosh():
     # If no pre-loaded response, use OpenAI with enhanced context
     try:
         enhanced_question = enhance_question_with_context(question)
-        openai_response = get_openai_response(enhanced_question)
+        openai_response = get_openai_response(enhanced_question, user_language)
         return jsonify({
             'response': openai_response,
             'source': 'openai',
