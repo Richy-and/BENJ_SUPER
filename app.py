@@ -43,8 +43,8 @@ def create_app():
         'ar': 'العربية'
     }
     
-    # Apply proxy fix for production
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+    # Apply proxy fix for production - Essential for external access
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1, x_port=1)
     
     # Initialize extensions
     db.init_app(app)
@@ -127,6 +127,19 @@ def create_app():
     def pwa_install():
         from flask import render_template
         return render_template('pwa_install.html')
+    
+    # Mobile test endpoint
+    @app.route('/mobile-test')
+    def mobile_test():
+        from flask import request, jsonify
+        return jsonify({
+            'status': 'OK',
+            'message': 'Mobile access working',
+            'user_agent': request.headers.get('User-Agent', 'Unknown'),
+            'remote_addr': request.remote_addr,
+            'host': request.host,
+            'url': request.url
+        })
     
     with app.app_context():
         from models import User, Department, Announcement
