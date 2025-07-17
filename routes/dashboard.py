@@ -26,8 +26,8 @@ def dashboard():
     
     # Bible verse of the day (static for now)
     daily_verse = {
-        'reference': 'Jean 3:16',
-        'text': 'Car Dieu a tant aimé le monde qu\'il a donné son Fils unique, afin que quiconque croit en lui ne périsse point, mais qu\'il ait la vie éternelle.'
+        'reference': 'Ésaïe 51:16',
+        'text': 'Je mets mes paroles dans ta bouche, Et je te couvre de l\'ombre de ma main, Pour étendre de nouveaux cieux et fonder une nouvelle terre, Et pour dire à Sion: Tu es mon peuple!'
     }
     
     return render_template('dashboard/dashboard.html', 

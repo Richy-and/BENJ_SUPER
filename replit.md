@@ -6,6 +6,11 @@ BENJ INSIDE is a comprehensive Christian community management platform built wit
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes
+- Updated biblical verse from Jean 3:16 to Ésaïe 51:16 (Isaiah 51:16) across homepage and dashboard (July 17, 2025)
+- Replaced church icon with custom BENJ INSIDE logo (benj_logo.jpeg) in navigation, login, and registration pages
+- Logo displays as rounded 32x32px image in navigation and 80x80px in auth pages
+
 ## System Architecture
 
 ### Backend Architecture
