@@ -216,7 +216,7 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Département
                     </label>
-                    <select name="departement_id" id="editDepartment"
+                    <select name="department_id" id="editDepartment"
                             class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
                                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                         <option value="">Aucun département</option>
@@ -228,37 +228,21 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Email
-                    </label>
-                    <input type="email" name="email" id="editEmail" required
-                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Langue
-                    </label>
-                    <select name="langue" id="editLangue" required
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                        <option value="fr">Français</option>
-                        <option value="en">English</option>
-                        <option value="es">Español</option>
-                        <option value="pt">Português</option>
-                        <option value="de">Deutsch</option>
-                        <option value="it">Italiano</option>
-                        <option value="ar">العربية</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Nouveau mot de passe (optionnel)
                     </label>
-                    <input type="password" name="password" id="editPassword"
+                    <input type="password" name="new_password" id="editPassword" 
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                           placeholder="Laisser vide pour conserver le mot de passe actuel">
+                </div>
+                
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                        <span class="text-sm text-yellow-800 dark:text-yellow-200">
+                            Attention : Cette action modifiera définitivement les informations de l'utilisateur.
+                        </span>
+                    </div>
                 </div>
             </div>
             
@@ -385,7 +369,7 @@ function editUser(userId, username, email, role, departmentId, langue) {
     document.getElementById('editDepartment').value = departmentId || '';
     document.getElementById('editLangue').value = langue || 'fr';
     document.getElementById('editPassword').value = '';
-    document.getElementById('editUserForm').action = `/admin/members/update/${userId}`;
+    document.getElementById('editUserForm').action = `/admin/members/edit/${userId}`;
     
     const modal = document.getElementById('editUserModal');
     modal.classList.remove('hidden');
