@@ -26,7 +26,7 @@ class PWAManager {
     async registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
-                const registration = await navigator.serviceWorker.register('/static/js/sw.js');
+                const registration = await navigator.serviceWorker.register('/sw.js');
                 console.log('Service Worker enregistré:', registration);
                 
                 // Écouter les mises à jour
@@ -72,16 +72,48 @@ class PWAManager {
         installButton.id = 'pwa-install-btn';
         installButton.innerHTML = `
             <i class="fas fa-download mr-2"></i>
-            Installer l'application
+            <span class="hidden sm:inline">Installer l'application</span>
+            <span class="sm:hidden">Installer</span>
         `;
         installButton.className = `
             fixed bottom-4 right-4 z-50 bg-blue-600 hover:bg-blue-700 
-            text-white px-4 py-3 rounded-lg shadow-lg transition-all duration-300
-            flex items-center space-x-2 font-medium hidden
+            text-white px-3 py-2 sm:px-4 sm:py-3 rounded-lg shadow-lg 
+            transition-all duration-300 flex items-center font-medium hidden
+            backdrop-filter backdrop-blur-sm bg-opacity-90
         `;
         
         installButton.addEventListener('click', () => this.installApp());
         document.body.appendChild(installButton);
+        
+        // Ajouter aussi un indicateur dans la navigation si possible
+        this.addNavInstallIndicator();
+    }
+    
+    addNavInstallIndicator() {
+        // Ajouter un petit indicateur dans la navigation pour l'installation PWA
+        const nav = document.querySelector('nav .flex.items-center.space-x-4');
+        if (nav && !document.getElementById('nav-install-indicator')) {
+            const indicator = document.createElement('a');
+            indicator.id = 'nav-install-indicator';
+            indicator.href = '/install';
+            indicator.className = `
+                hidden lg:flex items-center space-x-2 text-blue-600 hover:text-blue-700 
+                dark:text-blue-400 dark:hover:text-blue-300 transition-colors
+                px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20
+            `;
+            indicator.innerHTML = `
+                <i class="fas fa-mobile-alt text-sm"></i>
+                <span class="text-sm font-medium">Installer l'app</span>
+            `;
+            
+            // Insérer avant le bouton WhatsApp
+            const whatsappBtn = nav.querySelector('a[href*="wa.me"]');
+            if (whatsappBtn) {
+                nav.insertBefore(indicator, whatsappBtn);
+            } else {
+                nav.appendChild(indicator);
+            }
+        }
     }
 
     showInstallButton() {

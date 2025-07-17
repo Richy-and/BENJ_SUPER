@@ -2,11 +2,39 @@
 <html lang="{{ current_language or 'fr' }}" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>{% block title %}BENJ INSIDE{% endblock %}</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="BENJ INSIDE">
+    <meta name="description" content="Plateforme de gestion chrétienne pour notre communauté spirituelle">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="BENJ INSIDE">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    
+    <!-- PWA Icons for different devices -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/icon-192x192.svg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.svg') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='images/icon-152x152.svg') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/icon-192x192.svg') }}">
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="msapplication-TileImage" content="{{ url_for('static', filename='images/icon-144x144.svg') }}">
+    
+    <!-- Splash screens for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='images/icon-512x512.svg') }}">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/pwa-styles.css') }}" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -178,6 +206,7 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/language-switcher.js') }}"></script>
     <script src="{{ url_for('static', filename='js/persistent-audio-player.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pwa.js') }}"></script>
     
     <!-- User Menu Script -->
     <script>
