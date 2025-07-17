@@ -12,6 +12,12 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
+        # Blocked accounts security
+        blocked_accounts = ['Yohann', 'admin', 'test', 'Test']
+        if username in blocked_accounts:
+            flash('Accès interdit. Compte bloqué.', 'error')
+            return render_template('auth/login.html')
+        
         user = User.query.filter_by(username=username).first()
         
         if user and check_password_hash(user.password_hash, password):
@@ -39,6 +45,12 @@ def register():
         # Validation
         if password != confirm_password:
             flash('Les mots de passe ne correspondent pas', 'error')
+            return render_template('auth/register.html')
+        
+        # Blocked accounts security
+        blocked_accounts = ['Yohann', 'admin', 'test', 'Test']
+        if username in blocked_accounts:
+            flash('Ce nom d\'utilisateur est interdit.', 'error')
             return render_template('auth/register.html')
         
         if User.query.filter_by(username=username).first():
