@@ -1411,14 +1411,320 @@ N'hésitez pas à revenir vers moi pour d'autres questions spirituelles. Que Die
 
 # Help responses for app functionality
 APP_HELP = {
-    "connexion": "Pour vous connecter, cliquez sur 'Se connecter' en haut de la page et entrez vos identifiants. Si vous n'avez pas de compte, inscrivez-vous d'abord.",
-    "inscription": "Pour créer un compte, cliquez sur 'S'inscrire' et remplissez le formulaire. Votre compte sera créé avec le rôle 'membre' par défaut.",
-    "profil": "Pour modifier votre profil, allez dans 'Dashboard' puis 'Mon Profil'. Vous pouvez changer votre nom, email et langue.",
-    "témoignage": "Pour soumettre un témoignage, allez dans 'Témoignages' depuis votre dashboard et utilisez le formulaire. Votre témoignage sera examiné par l'administration.",
-    "playlist": "Pour écouter les audios, allez dans 'Playlist' depuis votre dashboard. Les audios sont ajoutés par l'administration.",
-    "finances": "Pour voir vos obligations financières, consultez votre dashboard. Seul l'admin peut ajouter des transactions.",
-    "score": "Les ouvriers peuvent voir leur score attribué par leur chef de département dans leur profil.",
-    "whatsapp": "Pour contacter la régis, utilisez le bouton WhatsApp disponible sur toutes les pages."
+    # Connexion et inscription
+    "connexion": {
+        "response": """🔐 **Connexion à BENJ INSIDE**
+        
+Pour vous connecter à votre compte :
+1. Cliquez sur **'Se connecter'** en haut de la page
+2. Entrez votre **nom d'utilisateur** et **mot de passe**
+3. Cliquez sur **'Se connecter'**
+
+💡 **Problèmes de connexion ?**
+- Vérifiez votre nom d'utilisateur et mot de passe
+- Assurez-vous d'avoir un compte (sinon inscrivez-vous d'abord)
+- Contactez l'administration si les problèmes persistent
+
+🔑 **Première connexion ?** Vous devez d'abord créer un compte via 'S'inscrire'.""",
+        "keywords": ["connexion", "connecter", "login", "mot de passe", "identifiant", "se connecter"]
+    },
+    
+    "inscription": {
+        "response": """📝 **Inscription à BENJ INSIDE**
+        
+Pour créer votre compte :
+1. Cliquez sur **'S'inscrire'** en haut de la page
+2. Remplissez le formulaire avec :
+   - Nom d'utilisateur (unique)
+   - Adresse email (valide)
+   - Mot de passe (sécurisé)
+   - Département (optionnel)
+3. Cliquez sur **'Valider'**
+
+✅ **Après inscription :**
+- Votre compte sera créé avec le rôle **'membre'** par défaut
+- Vous pouvez vous connecter immédiatement
+- L'admin peut modifier votre rôle si nécessaire
+
+💡 **Conseil :** Choisissez un mot de passe fort pour la sécurité.""",
+        "keywords": ["inscription", "inscrire", "créer compte", "compte", "register", "s'inscrire"]
+    },
+    
+    "profil": {
+        "response": """👤 **Gestion de votre profil**
+        
+Pour modifier votre profil :
+1. Connectez-vous à votre compte
+2. Allez dans **'Dashboard'** (tableau de bord)
+3. Cliquez sur **'Mon Profil'**
+4. Modifiez les informations souhaitées :
+   - Nom d'utilisateur
+   - Email
+   - Langue d'interface
+   - Département
+5. Cliquez sur **'Valider'**
+
+🌐 **Changement de langue :**
+- Vous pouvez choisir parmi 7 langues disponibles
+- L'interface se met à jour automatiquement
+- Kadosh.ia vous répondra dans votre langue
+
+📊 **Informations affichées :**
+- Rôle actuel dans l'organisation
+- Score (pour les ouvriers)
+- Statistiques personnelles""",
+        "keywords": ["profil", "modifier profil", "mon profil", "changer", "langue", "email", "nom"]
+    },
+    
+    "témoignage": {
+        "response": """📖 **Système de témoignages**
+        
+**Pour soumettre un témoignage :**
+1. Allez dans **'Témoignages'** depuis votre dashboard
+2. Cliquez sur **'Ajouter un témoignage'**
+3. Rédigez votre témoignage dans le formulaire
+4. Cliquez sur **'Soumettre'**
+
+⏳ **Processus d'approbation :**
+- Votre témoignage sera **'en attente'** après soumission
+- L'administration l'examinera
+- Une fois approuvé, il sera visible par tous les membres
+
+👀 **Voir les témoignages :**
+- Tous les témoignages approuvés sont visibles dans la section
+- Vous pouvez lire les expériences des autres membres
+- Source d'encouragement et de foi partagée
+
+🙏 **Conseil :** Partagez authentiquement les œuvres de Dieu dans votre vie.""",
+        "keywords": ["témoignage", "témoigner", "partager", "expérience", "soumettre", "publier"]
+    },
+    
+    "playlist": {
+        "response": """🎵 **Système de playlist audio**
+        
+**Pour écouter les audios :**
+1. Allez dans **'Playlist'** depuis votre dashboard
+2. Cliquez sur **'Lancer la playlist'** ou sur un titre spécifique
+3. Utilisez les contrôles du lecteur :
+   - ▶️ Play/Pause
+   - ⏭️ Piste suivante
+   - ⏮️ Piste précédente
+   - 🔊 Volume (défini par l'admin)
+
+🎧 **Lecteur persistant :**
+- La musique continue pendant la navigation
+- Mini-lecteur flottant en bas à droite
+- Sauvegarde automatique de la position
+
+⚙️ **Fonctionnalités avancées :**
+- Raccourcis clavier : Ctrl+Space (play/pause)
+- Playlist séquentielle automatique
+- Support des fichiers locaux et URLs
+- Contrôle du volume par l'administration
+
+🎼 **Contenu :** Enseignements, musiques chrétiennes, prédications""",
+        "keywords": ["playlist", "audio", "musique", "écouter", "lecteur", "son", "chanson"]
+    },
+    
+    "finances": {
+        "response": """💰 **Gestion financière**
+        
+**Pour consulter vos finances :**
+1. Connectez-vous à votre compte
+2. Consultez votre **Dashboard** (tableau de bord)
+3. Section **'Mes Finances'** affiche :
+   - Cotisations à payer
+   - Dettes en cours
+   - Montants et échéances
+   - Statut de paiement
+
+📊 **Types de transactions :**
+- **Cotisations :** Contributions régulières
+- **Dettes :** Montants dus
+- **Échéances :** Dates limites de paiement
+
+👨‍💼 **Gestion administrative :**
+- Seul l'**administrateur** peut ajouter des transactions
+- Modification et suppression par l'admin
+- Suivi des paiements et relances
+
+💡 **Conseil :** Vérifiez régulièrement vos obligations financières.""",
+        "keywords": ["finances", "argent", "cotisation", "dette", "payer", "paiement", "montant"]
+    },
+    
+    "score": {
+        "response": """📈 **Système de notation**
+        
+**Pour les ouvriers :**
+- Votre score est visible dans **'Mon Profil'**
+- Attribué par votre **chef de département**
+- Reflète votre performance et engagement
+- Mis à jour régulièrement
+
+**Pour les chefs :**
+- Vous pouvez noter les ouvriers de votre département
+- Système de scoring sur 100 points
+- Ajout de commentaires explicatifs
+- Suivi de l'évolution des équipes
+
+🎯 **Objectifs du système :**
+- Encouragement et motivation
+- Reconnaissance du travail
+- Amélioration continue
+- Développement des talents
+
+📊 **Critères d'évaluation :**
+- Assiduité et ponctualité
+- Qualité du travail
+- Esprit d'équipe
+- Croissance spirituelle""",
+        "keywords": ["score", "notation", "évaluation", "performance", "chef", "ouvrier", "point"]
+    },
+    
+    "whatsapp": {
+        "response": """📱 **Contact WhatsApp**
+        
+**Pour contacter la régis :**
+1. Utilisez le **bouton WhatsApp** disponible sur toutes les pages
+2. Cliquez sur l'icône WhatsApp (généralement en bas de page)
+3. Vous serez redirigé vers WhatsApp
+4. Commencez la conversation avec la régis
+
+📞 **Numéro de contact :** +242 06 426 4500
+
+💬 **Utilisations recommandées :**
+- Questions urgentes
+- Demandes d'informations
+- Problèmes techniques
+- Accompagnement spirituel
+- Coordination d'activités
+
+🕐 **Disponibilité :** Contactez de préférence aux heures ouvrables
+
+🙏 **Conseil :** Soyez respectueux et précis dans vos demandes.""",
+        "keywords": ["whatsapp", "contact", "régis", "téléphone", "appeler", "contacter", "message"]
+    },
+    
+    "dashboard": {
+        "response": """🏠 **Dashboard (Tableau de bord)**
+        
+**Votre tableau de bord contient :**
+- **Annonces :** Informations importantes de l'administration
+- **Mes Finances :** Cotisations et dettes en cours
+- **Accès rapide :** Liens vers toutes les fonctionnalités
+- **Profil :** Vos informations personnelles
+
+📱 **Fonctionnalités accessibles :**
+- Témoignages
+- Playlist audio
+- Chatbot Kadosh.ia
+- Candidature aux départements
+- Gestion du profil
+
+👥 **Selon votre rôle :**
+- **Membre :** Fonctionnalités de base
+- **Ouvrier :** + voir les collègues du département
+- **Chef :** + noter les ouvriers
+- **Admin :** + gestion complète de la plateforme
+
+🔄 **Mise à jour :** Le dashboard se met à jour automatiquement""",
+        "keywords": ["dashboard", "tableau de bord", "accueil", "home", "menu", "navigation"]
+    },
+    
+    "départements": {
+        "response": """🏢 **Système de départements**
+        
+**Départements disponibles :**
+- **Chantres :** Équipe de louange et adoration
+- **Intercesseurs :** Équipe de prière et intercession
+- **Régis :** Équipe d'administration et organisation
+- **Administration :** Gestion générale
+- **Jeunesse :** Activités pour les jeunes
+- **Évangélisation :** Mission et témoignage
+
+**Candidature aux départements :**
+1. Allez dans **'Candidature'** depuis votre dashboard
+2. Choisissez le département souhaité
+3. Sélectionnez le rôle demandé
+4. Rédigez votre motivation
+5. Soumettez votre candidature
+
+✅ **Processus d'approbation :**
+- L'admin examine votre demande
+- Validation ou rejet avec commentaires
+- Mise à jour automatique de votre profil si approuvé
+
+👨‍💼 **Hiérarchie des rôles :**
+- **Chef_[département] :** Responsable du département
+- **Ouvrier :** Membre actif du département
+- **Membre :** Membre général de l'organisation""",
+        "keywords": ["département", "candidature", "chantres", "intercesseurs", "régis", "équipe", "service"]
+    },
+    
+    "annonces": {
+        "response": """📢 **Système d'annonces**
+        
+**Pour consulter les annonces :**
+- Visibles sur votre **Dashboard**
+- Informations importantes de l'administration
+- Événements, programmes, activités
+
+**Contenu des annonces :**
+- Titre et description
+- Date et heure de l'événement
+- Lieu de l'activité
+- Intervenants/orateurs
+- Photo illustrative (optionnel)
+
+**Pour les ouvriers :**
+- Vous pouvez créer des annonces de programmes
+- Soumission pour approbation administrative
+- Sélection des intervenants
+- Ajout de photos
+
+**Workflow d'approbation :**
+1. Création par les ouvriers
+2. Examen par l'administration
+3. Approbation ou rejet
+4. Publication sur tous les dashboards
+
+🎯 **Objectif :** Informer et coordonner les activités communautaires""",
+        "keywords": ["annonces", "programme", "événement", "activité", "information", "actualité"]
+    },
+    
+    "roles": {
+        "response": """👤 **Système de rôles**
+        
+**Hiérarchie des rôles (du plus élevé au plus bas) :**
+
+🔴 **ADMIN :**
+- Gestion complète de la plateforme
+- Modification de tous les utilisateurs
+- Gestion des finances, témoignages, annonces
+- Validation des candidatures
+- Accès à toutes les fonctionnalités
+
+🟠 **CHEF_[DÉPARTEMENT] :**
+- Responsable d'un département spécifique
+- Notation des ouvriers de son département
+- Gestion des équipes
+- Coordination des activités
+
+🟡 **OUVRIER :**
+- Membre actif d'un département
+- Création d'annonces (avec approbation)
+- Accès aux fonctionnalités avancées
+- Collaboration avec l'équipe
+
+🟢 **MEMBRE :**
+- Rôle par défaut à l'inscription
+- Accès aux fonctionnalités de base
+- Consultation des contenus
+- Soumission de témoignages
+
+💡 **Promotion :** Seul l'admin peut modifier les rôles des utilisateurs""",
+        "keywords": ["rôle", "admin", "chef", "ouvrier", "membre", "hiérarchie", "permission", "accès"]
+    }
 }
 
 def get_greeting_response(question, language='fr'):
@@ -1871,31 +2177,77 @@ def get_biblical_response(question):
 
 def get_app_help_response(question):
     """Search for app functionality help"""
-    question_lower = question.lower()
+    question_lower = question.lower().strip()
     
-    for keyword, response in APP_HELP.items():
-        if keyword in question_lower:
-            return f"**Aide sur {keyword}:**\n{response}"
+    # First, check for exact keyword matches in the detailed help
+    for help_key, help_data in APP_HELP.items():
+        if isinstance(help_data, dict) and "keywords" in help_data:
+            for keyword in help_data["keywords"]:
+                if keyword in question_lower:
+                    return f"🔧 **{help_key.upper()} - BENJ INSIDE**\n\n{help_data['response']}"
     
-    # General app help keywords
-    if any(word in question_lower for word in ["comment", "utiliser", "fonctionnement", "aide", "help"]):
-        if any(word in question_lower for word in ["application", "app", "benj", "inside"]):
-            return """**Guide d'utilisation de BENJ INSIDE:**
+    # Check for broader app functionality questions
+    app_keywords = ["comment", "utiliser", "fonctionnement", "aide", "help", "guide", "utilisation", "mode d'emploi"]
+    app_context = ["application", "app", "benj", "inside", "plateforme", "système", "site", "interface"]
+    
+    if any(word in question_lower for word in app_keywords):
+        if any(word in question_lower for word in app_context):
+            return """🔧 **GUIDE D'UTILISATION - BENJ INSIDE**
 
-**Fonctionnalités principales:**
-- **Dashboard:** Vue d'ensemble avec annonces et finances
-- **Profil:** Modification de vos informations personnelles
-- **Témoignages:** Partage et lecture de témoignages
-- **Playlist:** Écoute d'enseignements et musiques
-- **Chatbot Kadosh.ia:** Questions bibliques et aide
-- **Contact WhatsApp:** Lien direct avec la régis
+**Fonctionnalités principales disponibles :**
 
-**Selon votre rôle:**
-- **Membre:** Accès aux fonctionnalités de base
-- **Ouvrier:** Voir les collègues du département + score personnel
-- **Chef:** Noter les ouvriers de son département
-- **Admin:** Gestion complète de la plateforme
+📊 **Dashboard :** Vue d'ensemble avec annonces et finances
+👤 **Profil :** Modification de vos informations personnelles  
+📖 **Témoignages :** Partage et lecture de témoignages
+🎵 **Playlist :** Écoute d'enseignements et musiques spirituelles
+🤖 **Chatbot Kadosh.ia :** Questions bibliques et aide technique
+📱 **Contact WhatsApp :** Lien direct avec la régis
+🏢 **Départements :** Candidature et gestion des équipes
+📢 **Annonces :** Informations et événements communautaires
 
-Pour plus d'aide spécifique, posez une question sur une fonctionnalité particulière."""
+**Accès selon votre rôle :**
+- **🟢 Membre :** Accès aux fonctionnalités de base
+- **🟡 Ouvrier :** + Voir les collègues du département + score personnel
+- **🟠 Chef :** + Noter les ouvriers de son département  
+- **🔴 Admin :** + Gestion complète de la plateforme
+
+💡 **Pour une aide spécifique :** Posez-moi une question sur une fonctionnalité particulière !
+Exemple : "Comment utiliser la playlist ?" ou "Comment soumettre un témoignage ?"
+
+🙏 **Je suis là pour vous aider dans votre utilisation de BENJ INSIDE !**"""
+    
+    # Check for specific functionality mentions
+    functionality_mapping = {
+        "connexion": ["connecter", "login", "se connecter"],
+        "playlist": ["musique", "audio", "écouter", "son"],
+        "témoignage": ["témoigner", "partager", "expérience"],
+        "profil": ["modifier", "changer", "langue"],
+        "finances": ["argent", "cotisation", "dette", "payer"],
+        "dashboard": ["tableau de bord", "accueil", "home"],
+        "whatsapp": ["contacter", "appeler", "téléphone"],
+        "départements": ["candidature", "équipe", "service"],
+        "annonces": ["événement", "programme", "actualité"],
+        "roles": ["rôle", "admin", "chef", "ouvrier"]
+    }
+    
+    for help_key, synonyms in functionality_mapping.items():
+        if any(synonym in question_lower for synonym in synonyms):
+            if help_key in APP_HELP:
+                return f"🔧 **{help_key.upper()} - BENJ INSIDE**\n\n{APP_HELP[help_key]['response']}"
     
     return None
+
+def get_help_categories():
+    """Get available help categories for the chatbot"""
+    return [
+        "🔐 Connexion et inscription",
+        "👤 Gestion du profil",
+        "📖 Témoignages",
+        "🎵 Playlist audio",
+        "💰 Finances",
+        "🏢 Départements",
+        "📢 Annonces",
+        "👥 Système de rôles",
+        "📱 Contact WhatsApp",
+        "📊 Dashboard"
+    ]
