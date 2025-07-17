@@ -9,7 +9,8 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes
 - **SECURITY ENHANCEMENT**: Removed test admin account "Yohann" and blocked access to prevent unauthorized login (July 17, 2025)
 - **FINANCES INTEGRATION**: Integrated complete financial management directly into dashboard with statistics cards and detailed transaction table (July 17, 2025)
-- **AUTHENTICATION SECURITY**: Added blocked accounts list to prevent creation/login of test accounts (admin, test, Yohann) (July 17, 2025)
+- **AUTHENTICATION SECURITY**: Added blocked accounts list to prevent creation/login of test accounts (admin, test, Test) - removed Yohann from blocked list (July 17, 2025)
+- **LOGIN PAGE CLEANUP**: Removed demo credentials information from login page for cleaner interface (July 17, 2025)
 - Updated biblical verse from Jean 3:16 to Ésaïe 51:16 (Isaiah 51:16) across homepage and dashboard (July 17, 2025)
 - Replaced church icon with custom BENJ INSIDE logo (benj_logo.jpeg) in navigation, login, and registration pages
 - Logo displays as rounded 32x32px image in navigation and 80x80px in auth pages
