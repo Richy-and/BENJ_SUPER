@@ -170,7 +170,7 @@ def my_department_requests():
     user = get_current_user()
     
     # Récupérer toutes les demandes de l'utilisateur
-    mes_demandes = DepartmentRequest.query.filter_by(user_id=user.id).join(Department).order_by(
+    mes_demandes = DepartmentRequest.query.filter_by(user_id=user.id).order_by(
         DepartmentRequest.created_at.desc()
     ).all()
     
@@ -186,7 +186,7 @@ def department_candidatures():
     departments = Department.query.all()
     
     # Récupérer les candidatures existantes de l'utilisateur
-    mes_candidatures = DepartmentRequest.query.filter_by(user_id=user.id).join(Department).order_by(
+    mes_candidatures = DepartmentRequest.query.filter_by(user_id=user.id).order_by(
         DepartmentRequest.created_at.desc()
     ).all()
     
