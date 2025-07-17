@@ -95,7 +95,7 @@ class DepartmentRequest(db.Model):
     # Relations
     user = db.relationship('User', foreign_keys=[user_id], backref='department_requests')
     department = db.relationship('Department', backref='requests')
-    reviewer = db.relationship('User', foreign_keys=[reviewed_by])
+    reviewer = db.relationship('User', foreign_keys=[reviewed_by], backref='reviewed_requests')
     
     def __repr__(self):
         return f'<DepartmentRequest {self.user.username} -> {self.department.nom}>'
