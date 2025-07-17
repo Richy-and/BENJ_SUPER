@@ -212,6 +212,10 @@
                     <i class="fas fa-plus mr-1"></i>
                     Ajouter
                 </button>
+                <button onclick="testSystemAudio()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                    <i class="fas fa-volume-up mr-1"></i>
+                    Test Son
+                </button>
                 <a href="{{ url_for('admin.playlist_admin') }}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
                     <i class="fas fa-cog mr-1"></i>
                     Gérer
@@ -243,7 +247,7 @@
                     </div>
                 </div>
                 <div class="flex space-x-2">
-                    <button onclick="playAudio('{{ item.fichier_audio_url }}', '{{ item.titre }}', '{{ item.description or '' }}', {{ item.volume }})" 
+                    <button onclick="testAudio('{{ item.fichier_audio_url }}', '{{ item.titre }}', '{{ item.description or '' }}', {{ item.volume }})" 
                             class="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1 rounded text-sm transition-colors">
                         <i class="fas fa-play mr-1"></i>
                         Test
@@ -366,6 +370,64 @@ function updateVolumeDisplay(value) {
     document.getElementById('volume-display').textContent = percentage + '%';
 }
 
+// Function to test system audio
+function testSystemAudio() {
+    // Create a simple beep sound using Web Audio API
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 800; // 800 Hz beep
+    gainNode.gain.value = 0.3; // 30% volume
+    
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.5); // Play for 0.5 seconds
+    
+    alert('Si vous avez entendu un bip, l\'audio fonctionne. Sinon, vérifiez le volume de votre système.');
+}
+
+// Function to test audio with enhanced debugging
+function testAudio(url, title, description, volume) {
+    console.log('Test audio called with:', { url, title, description, volume });
+    
+    // Create a simple audio test first
+    const testAudio = new Audio();
+    testAudio.volume = Math.min(1.0, volume * 0.8); // Set volume to 80% of admin setting
+    testAudio.src = url;
+    testAudio.preload = 'auto';
+    
+    testAudio.addEventListener('loadeddata', () => {
+        console.log('Audio loaded successfully');
+        testAudio.play().then(() => {
+            console.log('Audio test playback started');
+            // Show notification
+            if (window.showNotification) {
+                window.showNotification(`Test audio: ${title}`, 'success');
+            }
+        }).catch(error => {
+            console.error('Audio test failed:', error);
+            alert(`Erreur test audio: ${error.message}\nVérifiez votre volume système et réessayez.`);
+        });
+    });
+    
+    testAudio.addEventListener('error', (e) => {
+        console.error('Audio test error:', e);
+        alert('Erreur: impossible de charger le fichier audio\nVérifiez que le fichier existe et est accessible.');
+    });
+    
+    testAudio.addEventListener('canplaythrough', () => {
+        console.log('Audio ready to play through');
+    });
+    
+    // Use the main audio player as fallback
+    if (window.playAudio) {
+        window.playAudio(url, title, description, volume);
+    }
+}
+
 // Function to delete audio
 function deleteAudio(audioId, audioTitle) {
     if (confirm(`Êtes-vous sûr de vouloir supprimer "${audioTitle}" ?`)) {
@@ -445,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-volume-down text-gray-500 dark:text-gray-400"></i>
-                    <input type="range" id="volume-control" min="0" max="100" value="50" 
+                    <input type="range" id="volume-control" min="0" max="100" value="80" 
                            class="w-20 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer">
                 </div>
             </div>

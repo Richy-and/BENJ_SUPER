@@ -113,6 +113,8 @@
         play: function(url, title, description = '', adminVolume = 0.7) {
             if (!this.audioElement) return;
             
+            console.log('Playing audio:', { url, title, adminVolume });
+            
             this.currentTrack = { url, title, description, adminVolume };
             
             // Update UI
@@ -123,23 +125,34 @@
             this.audioElement.src = url;
             this.audioElement.load();
             
+            // Set volume immediately
+            const userVolumeMultiplier = this.volume; // User's volume preference (0.0 - 1.0)
+            const finalVolume = Math.min(1.0, adminVolume * userVolumeMultiplier);
+            this.audioElement.volume = finalVolume;
+            
+            console.log('Volume set to:', finalVolume, 'Admin:', adminVolume, 'User:', userVolumeMultiplier);
+            
             // Play when ready
             this.audioElement.addEventListener('canplay', () => {
-                // Set volume based on admin setting and user preference
-                const userVolumeMultiplier = this.volume; // User's volume preference (0.0 - 1.0)
-                const finalVolume = adminVolume * userVolumeMultiplier;
-                this.audioElement.volume = finalVolume;
+                console.log('Audio can play, attempting to start playback');
                 
                 this.audioElement.play()
                     .then(() => {
+                        console.log('Audio playback started successfully');
                         this.isPlaying = true;
                         this.updatePlayPauseButton();
                         this.saveCurrentTrack();
                     })
                     .catch(error => {
                         console.error('Error playing audio:', error);
-                        this.showError('Erreur lors de la lecture audio');
+                        this.showError('Erreur lors de la lecture audio: ' + error.message);
                     });
+            }, { once: true });
+            
+            // Add error handling
+            this.audioElement.addEventListener('error', (e) => {
+                console.error('Audio error:', e);
+                this.showError('Erreur de chargement audio');
             }, { once: true });
         },
         
@@ -437,6 +450,15 @@
                     }
                 } catch (e) {
                     console.error('Error loading audio settings:', e);
+                }
+            } else {
+                // Set default volume to 0.8 (80%) for better audibility
+                this.volume = 0.8;
+                if (this.volumeControl) {
+                    this.volumeControl.value = 80;
+                }
+                if (this.audioElement) {
+                    this.audioElement.volume = this.volume;
                 }
             }
         },
