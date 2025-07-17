@@ -251,22 +251,26 @@ def enhance_question_with_context(question):
 
 def get_intelligent_fallback_response(question):
     """Generate intelligent fallback response with helpful suggestions"""
-    return f"""🙏 **Merci pour votre question !**
+    return f"""🕊️ **Shalom bien-aimé(e) !**
 
-Je ne trouve pas de réponse spécifique dans ma base de connaissances bibliques, mais je peux vous aider autrement :
+Je comprends votre question et j'aimerais vous aider du mieux possible. Bien que je ne trouve pas de réponse spécifique dans ma base de connaissances bibliques, permettez-moi de vous guider :
 
-**Suggestions :**
+💡 **Suggestions pour mieux vous servir :**
 • Reformulez votre question avec des mots-clés bibliques
-• Choisissez un sujet dans le menu déroulant (75+ sujets disponibles)
+• Choisissez un sujet dans le menu déroulant (92+ sujets disponibles)
 • Demandez-moi des versets sur un thème particulier
 • Explorez nos sujets populaires : foi, amour, prière, paix, espérance
 
-**Exemples de questions :**
-• "Que dit la Bible sur la foi ?"
-• "Comment prier efficacement ?"
+✨ **Exemples de questions que je peux traiter :**
+• "Que dit la Bible sur la confiance en soi ?"
+• "Comment surmonter la peur selon la Bible ?"
 • "Versets sur l'amour de Dieu"
 • "Comment avoir la paix intérieure ?"
+• "Prêche-moi sur la foi"
 
-Je suis là pour vous accompagner dans votre cheminement spirituel ! 
+💝 **Je suis votre ami spirituel :**
+En tant qu'enseignant biblique, coach chrétien et psychologue spirituel, je suis là pour vous accompagner avec empathie et compassion dans votre cheminement.
 
-*"Demandez, et l'on vous donnera; cherchez, et vous trouverez; frappez, et l'on vous ouvrira."* - Matthieu 7:7"""
+🙏 *"Demandez, et l'on vous donnera; cherchez, et vous trouverez; frappez, et l'on vous ouvrira."* - Matthieu 7:7
+
+*Que Dieu vous bénisse et vous guide dans votre recherche de Sa vérité !*"""

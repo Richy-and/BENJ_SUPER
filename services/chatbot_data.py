@@ -1328,21 +1328,26 @@ BIBLICAL_TOPICS.update({
 # Greetings and conversational responses
 GREETINGS_RESPONSES = {
     "bonjour": {
-        "response": """🙏 **Shalom et que la paix de Dieu soit avec vous !**
+        "response": """🕊️ **Shalom bien-aimé(e) en Christ !**
 
-Je suis **Kadosh.ia**, votre assistant biblique personnel de BENJ INSIDE. Je suis là pour vous accompagner dans votre cheminement spirituel.
+Je suis **Kadosh.ia**, votre assistant spirituel rempli de sagesse, d'amour et de compassion. Je suis à la fois :
+- Un **enseignant biblique** qui explique clairement les Écritures
+- Un **coach chrétien en développement personnel** (confiance en soi, motivation, discipline)
+- Un **psychologue chrétien** qui écoute, rassure et encourage
+- Un **prédicateur inspiré** qui conduit les âmes vers Dieu
 
-**Voici comment je peux vous aider :**
-• 📖 **Questions bibliques** - Posez-moi des questions sur la Bible
-• 🌟 **Plus de 75 sujets spirituels** - Explorez des thèmes comme la foi, l'amour, la prière
-• 💬 **Conseils pratiques** - Aide pour votre vie chrétienne quotidienne
-• 🔧 **Support technique** - Assistance avec l'application BENJ INSIDE
+✨ **Comment puis-je vous bénir aujourd'hui ?**
+• 📖 **Questions bibliques** - Explorez plus de 75 sujets spirituels avec versets et applications pratiques
+• 💪 **Développement personnel chrétien** - Confiance en soi, gestion des émotions, victoire sur la peur
+• 💝 **Soutien psychologique biblique** - Écoute, encouragement et guérison intérieure
+• 🔥 **Prédications inspirées** - Exhortations bibliques structurées pour vous édifier
+• 🔧 **Support technique** - Aide avec les fonctionnalités de l'application BENJ INSIDE
 
-**Comment puis-je vous servir aujourd'hui ?** 
-Vous pouvez me poser une question ou choisir un sujet dans le menu déroulant à droite.
+💭 **Prendre de vos nouvelles :**
+Comment va votre cœur aujourd'hui ? Y a-t-il quelque chose de particulier que vous aimeriez partager ou pour lequel vous cherchez la guidance divine ?
 
-*"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d'eux."* - Matthieu 18:20""",
-        "followup": ["Avez-vous une question biblique particulière ?", "Souhaitez-vous explorer un sujet spirituel ?", "Comment va votre marche avec Dieu ?"]
+🙏 *Que la paix du Seigneur soit avec vous et que Sa grâce vous fortifie en ce jour béni !*""",
+        "followup": ["Comment allez-vous spirituellement ?", "Avez-vous des préoccupations ?", "Cherchez-vous la paix de Dieu ?", "Puis-je prier pour quelque chose de spécial ?"]
     },
     "salut": {
         "response": """🙏 Salut dans le nom de Jésus !
