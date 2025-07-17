@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Finances - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                <i class="fas fa-money-bill-wave mr-3 text-green-600"></i>
+                Mes Finances
+            </h1>
+            <p class="text-gray-600 dark:text-gray-300 mt-2">
+                Consultez vos cotisations et obligations financières
+            </p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Total Dû -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-red-100 dark:bg-red-900 rounded-full">
+                        <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-400"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Total Dû</h3>
+                        <p class="text-2xl font-bold text-red-600 dark:text-red-400">{{ total_du }} FCFA</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cotisations -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                        <i class="fas fa-calendar-check text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Cotisations</h3>
+                        <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ total_cotisations }} FCFA</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dettes -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-orange-100 dark:bg-orange-900 rounded-full">
+                        <i class="fas fa-credit-card text-orange-600 dark:text-orange-400"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Dettes</h3>
+                        <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">{{ total_dettes }} FCFA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    <i class="fas fa-list mr-2"></i>
+                    Détail des Transactions
+                </h2>
+            </div>
+
+            {% if transactions %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-900">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Type
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Montant
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Échéance
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Statut
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Date de Création
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        {% for transaction in transactions %}
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    {% if transaction.type == 'cotisation' %}
+                                    <div class="p-2 bg-blue-100 dark:bg-blue-900 rounded-full mr-3">
+                                        <i class="fas fa-calendar-check text-blue-600 dark:text-blue-400"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 dark:text-blue-400">Cotisation</span>
+                                    {% else %}
+                                    <div class="p-2 bg-orange-100 dark:bg-orange-900 rounded-full mr-3">
+                                        <i class="fas fa-credit-card text-orange-600 dark:text-orange-400"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-orange-600 dark:text-orange-400">Dette</span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-sm font-bold text-gray-900 dark:text-white">{{ transaction.montant }} FCFA</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {% if transaction.deadline %}
+                                <span class="text-sm text-gray-900 dark:text-white">
+                                    {{ transaction.deadline.strftime('%d/%m/%Y') }}
+                                </span>
+                                {% else %}
+                                <span class="text-sm text-gray-500 dark:text-gray-400">Non définie</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {% if transaction.paye %}
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    Payé
+                                </span>
+                                {% else %}
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+                                    <i class="fas fa-times-circle mr-1"></i>
+                                    Non payé
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                                {{ transaction.date_creation.strftime('%d/%m/%Y') }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="px-6 py-12 text-center">
+                <i class="fas fa-money-bill-wave text-gray-400 text-6xl mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Aucune transaction</h3>
+                <p class="text-gray-500 dark:text-gray-400">Vous n'avez actuellement aucune obligation financière.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a href="{{ url_for('dashboard.dashboard') }}" 
+               class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Retour au Dashboard
+            </a>
+            
+            <a href="https://wa.me/+242064264500" 
+               target="_blank"
+               class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+                <i class="fab fa-whatsapp mr-2"></i>
+                Contacter pour Paiement
+            </a>
+        </div>
+
+        <!-- Information Box -->
+        <div class="mt-8 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-6">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-blue-600 dark:text-blue-400 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-lg font-medium text-blue-900 dark:text-blue-100">
+                        Information sur les Paiements
+                    </h3>
+                    <div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
+                        <p class="mb-2">
+                            <strong>Mode de paiement :</strong> Contactez la régis via WhatsApp pour organiser le paiement.
+                        </p>
+                        <p class="mb-2">
+                            <strong>Délais :</strong> Respectez les échéances pour éviter les pénalités.
+                        </p>
+                        <p>
+                            <strong>Questions :</strong> Pour toute question concernant vos finances, contactez l'administration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -149,6 +149,7 @@
                                 <li><a href="{{ url_for('dashboard.dashboard') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Dashboard</a></li>
                                 <li><a href="{{ url_for('dashboard.chatbot') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Kadosh.ia</a></li>
                                 <li><a href="{{ url_for('dashboard.playlist') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Playlist</a></li>
+                                <li><a href="{{ url_for('finances.finances') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Mes Finances</a></li>
                                 {% if session.user_role == 'admin' %}
                                 <li><a href="{{ url_for('department_requests.admin_department_requests') }}" class="text-gray-600 dark:text-gray-400 hover:text-primary-600">Gestion Candidatures</a></li>
                                 {% elif session.user_role == 'membre' %}

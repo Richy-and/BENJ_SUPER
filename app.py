@@ -71,6 +71,7 @@ def create_app():
     from routes.chatbot import chatbot_bp
     from routes.announcements import announcements_bp
     from routes.department_requests import department_requests_bp
+    from routes.finances import finances_bp
     
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
@@ -79,6 +80,7 @@ def create_app():
     app.register_blueprint(chef_bp, url_prefix='/chef')
     app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
     app.register_blueprint(announcements_bp)
+    app.register_blueprint(finances_bp)
     
     # Main routes
     @app.route('/')
