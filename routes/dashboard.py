@@ -24,6 +24,11 @@ def dashboard():
     # Get user's financial obligations
     finances = Finance.query.filter_by(user_id=user.id, paye=False).all()
     
+    # Get playlist data for admin
+    playlist_items = None
+    if user.role == 'admin':
+        playlist_items = Playlist.query.order_by(Playlist.date_ajout.desc()).limit(5).all()
+    
     # Bible verse of the day (static for now)
     daily_verse = {
         'reference': 'Ésaïe 51:16',
@@ -34,7 +39,8 @@ def dashboard():
                          user=user, 
                          announcements=announcements,
                          finances=finances,
-                         daily_verse=daily_verse)
+                         daily_verse=daily_verse,
+                         playlist_items=playlist_items)
 
 @dashboard_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
