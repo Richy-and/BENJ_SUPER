@@ -28,8 +28,8 @@ def ouvrier_required(f):
             return redirect(url_for('auth.login'))
         
         user_role = session.get('user_role')
-        # Autoriser ouvriers, chefs et admin
-        allowed_roles = ['ouvrier', 'chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis']
+        # Autoriser ouvriers (tous types), chefs et admin
+        allowed_roles = ['ouvrier', 'chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis', 'chantres', 'intercesseurs', 'régis']
         if user_role not in allowed_roles:
             flash('Accès refusé.', 'error')
             return redirect(url_for('dashboard.dashboard'))
@@ -44,13 +44,12 @@ def workers():
     chef = User.query.get(session['user_id'])
     
     if chef.role == 'admin':
-        # Admin can see all workers
-        workers = User.query.filter_by(role='ouvrier').all()
+        # Admin can see all workers (tous types d'ouvriers)
+        workers = User.query.filter(User.role.in_(['ouvrier', 'chantres', 'intercesseurs', 'régis'])).all()
     else:
-        # Chef can only see workers from their department
-        # Support all types of chef roles
+        # Chef can only see workers from their department (tous types d'ouvriers)
         workers = User.query.filter(
-            User.role == 'ouvrier',
+            User.role.in_(['ouvrier', 'chantres', 'intercesseurs', 'régis']),
             User.departement_id == chef.departement_id
         ).all()
     
@@ -73,7 +72,7 @@ def assign_score(worker_id):
         flash('Vous ne pouvez noter que les ouvriers de votre département', 'error')
         return redirect(url_for('chef.workers'))
     
-    if worker.role != 'ouvrier':
+    if worker.role not in ['ouvrier', 'chantres', 'intercesseurs', 'régis']:
         flash('Vous ne pouvez noter que les ouvriers', 'error')
         return redirect(url_for('chef.workers'))
     
@@ -205,10 +204,10 @@ def department_members():
         User.id != user.id  # Exclure l'utilisateur actuel
     ).all()
     
-    # Récupérer les dernières notes pour chaque membre
+    # Récupérer les dernières notes pour chaque membre qui peut être noté
     member_scores = {}
     for member in members:
-        if member.role == 'ouvrier':
+        if member.role in ['ouvrier', 'chantres', 'intercesseurs', 'régis']:
             latest_score = Score.query.filter_by(user_id=member.id).order_by(Score.date_attribution.desc()).first()
             member_scores[member.id] = latest_score
     

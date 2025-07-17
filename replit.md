@@ -7,6 +7,9 @@ BENJ INSIDE is a comprehensive Christian community management platform built wit
 Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
+- **COMPLETE OUVRIER SYSTEM**: Extended worker management and department viewing to all worker types (ouvrier, chantres, intercesseurs, régis) with color-coded role badges (July 17, 2025)
+- **CHEF DEPARTMENT MANAGEMENT**: All department heads (chef_chantres, chef_intercesseurs, chef_régis) can now manage and rate workers in their specific departments (July 17, 2025)
+- **ENHANCED NAVIGATION MENU**: Fixed dropdown menu stability with JavaScript control - menu stays open until clicked elsewhere (July 17, 2025)
 - **OUVRIERS PERMISSION UPDATE**: Restricted ouvriers from creating announcements, added "Mon Département" page for viewing department members and their scores (July 17, 2025)
 - **UNIVERSAL CONTENT ACCESS**: Added "Toutes les annonces" and "Tous les témoignages" pages for all users to view approved announcements and testimonials (July 17, 2025)
 - **NAVIGATION ENHANCEMENT**: Added quick access links to all announcements and testimonials in main navigation menu (July 17, 2025)
