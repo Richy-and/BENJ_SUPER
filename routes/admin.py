@@ -308,27 +308,47 @@ def delete_user_admin(user_id):
     
     try:
         # Supprimer d'abord tous les scores associés (reçus et donnés)
-        Score.query.filter_by(user_id=user_id).delete()
-        Score.query.filter_by(chef_id=user_id).delete()
+        scores_user = Score.query.filter_by(user_id=user_id).all()
+        for score in scores_user:
+            db.session.delete(score)
+        
+        scores_chef = Score.query.filter_by(chef_id=user_id).all()
+        for score in scores_chef:
+            db.session.delete(score)
         
         # Supprimer tous les témoignages associés
-        Temoignage.query.filter_by(user_id=user_id).delete()
+        temoignages = Temoignage.query.filter_by(user_id=user_id).all()
+        for temoignage in temoignages:
+            db.session.delete(temoignage)
         
         # Supprimer toutes les finances associées
-        Finance.query.filter_by(user_id=user_id).delete()
+        finances = Finance.query.filter_by(user_id=user_id).all()
+        for finance in finances:
+            db.session.delete(finance)
         
         # Supprimer toutes les demandes de département associées
-        DepartmentRequest.query.filter_by(user_id=user_id).delete()
-        DepartmentRequest.query.filter_by(reviewed_by=user_id).delete()
+        dept_requests_user = DepartmentRequest.query.filter_by(user_id=user_id).all()
+        for request in dept_requests_user:
+            db.session.delete(request)
+            
+        dept_requests_reviewer = DepartmentRequest.query.filter_by(reviewed_by=user_id).all()
+        for request in dept_requests_reviewer:
+            request.reviewed_by = None
+            request.admin_notes = f"Révisé par utilisateur supprimé - {request.admin_notes or ''}"
         
         # Supprimer les annonces créées par cet utilisateur
-        Announcement.query.filter_by(cree_par=user_id).delete()
+        announcements_created = Announcement.query.filter_by(cree_par=user_id).all()
+        for announcement in announcements_created:
+            db.session.delete(announcement)
         
         # Mettre à jour les annonces approuvées par cet utilisateur (remettre à null)
         announcements_approved = Announcement.query.filter_by(approuve_par=user_id).all()
         for announcement in announcements_approved:
             announcement.approuve_par = None
             announcement.date_approbation = None
+        
+        # Commit toutes les modifications des relations avant de supprimer l'utilisateur
+        db.session.commit()
         
         # Supprimer l'utilisateur
         db.session.delete(user)
@@ -339,5 +359,7 @@ def delete_user_admin(user_id):
         db.session.rollback()
         flash('Erreur lors de la suppression du membre', 'error')
         print(f"Erreur suppression utilisateur: {e}")
+        import traceback
+        traceback.print_exc()
     
     return redirect(url_for('admin.members'))
