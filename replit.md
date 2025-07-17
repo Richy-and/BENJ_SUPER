@@ -7,6 +7,9 @@ BENJ INSIDE is a comprehensive Christian community management platform built wit
 Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
+- **PROGRESSIVE WEB APP (PWA) INTEGRATION**: Transformed the application into a fully functional PWA installable on Android, iPhone and desktop with offline capabilities (July 17, 2025)
+- **MOBILE-FIRST RESPONSIVE DESIGN**: Enhanced responsiveness for all mobile devices with touch-optimized interfaces and safe area support for notched devices (July 17, 2025)  
+- **PWA INSTALLATION SYSTEM**: Added automatic installation prompts, custom installation page (/install), and service worker for offline functionality (July 17, 2025)
 - **DEPLOYMENT CONFIGURATION FIX**: Created requirements.txt with all necessary Python dependencies to resolve deployment build errors (July 17, 2025)
 - **COMPLETE OUVRIER SYSTEM**: Extended worker management and department viewing to all worker types (ouvrier, chantres, intercesseurs, régis) with color-coded role badges (July 17, 2025)
 - **CHEF DEPARTMENT MANAGEMENT**: All department heads (chef_chantres, chef_intercesseurs, chef_régis) can now manage and rate workers in their specific departments (July 17, 2025)

@@ -116,6 +116,18 @@ def create_app():
         language = request.args.get('language', translation_service.get_current_language())
         return jsonify(translation_service.get_all_translations(language))
     
+    # PWA Service Worker route
+    @app.route('/sw.js')
+    def service_worker():
+        from flask import send_from_directory
+        return send_from_directory('static/js', 'sw.js', mimetype='application/javascript')
+    
+    # PWA Installation page
+    @app.route('/install')
+    def pwa_install():
+        from flask import render_template
+        return render_template('pwa_install.html')
+    
     with app.app_context():
         from models import User, Department, Announcement
         from werkzeug.security import generate_password_hash

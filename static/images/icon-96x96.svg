@@ -1,0 +1,20 @@
+<svg width="96" height="96" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="16" fill="url(#bgGradient)"/>
+  <g transform="translate(64, 64)">
+    <!-- Shield/Protection symbol -->
+    <path d="M192 48L96 80V224C96 320 168 400 192 416C216 400 288 320 288 224V80L192 48Z" 
+          fill="white" opacity="0.9"/>
+    <!-- Cross inside shield -->
+    <rect x="180" y="120" width="24" height="180" fill="#3b82f6" rx="4"/>
+    <rect x="120" y="180" width="144" height="24" fill="#3b82f6" rx="4"/>
+    <!-- Text BENJ -->
+    <text x="192" y="340" text-anchor="middle" fill="white" 
+          font-family="Arial, sans-serif" font-size="48" font-weight="bold">BENJ</text>
+  </g>
+</svg>

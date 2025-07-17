@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Installer l'application - BENJ INSIDE{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-xl shadow-lg p-8 text-center">
+        <div class="mb-6">
+            <img src="{{ url_for('static', filename='images/icon-192x192.svg') }}" alt="BENJ INSIDE Icon" class="w-24 h-24 mx-auto mb-4 rounded-2xl shadow-lg">
+        </div>
+        <h1 class="text-4xl font-bold mb-4">Installer BENJ INSIDE</h1>
+        <p class="text-xl text-blue-100">Accédez à votre plateforme chrétienne directement depuis votre écran d'accueil</p>
+    </div>
+
+    <!-- Installation Benefits -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-mobile-alt text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Accès rapide</h3>
+            <p class="text-gray-600 dark:text-gray-400">Lancez l'application directement depuis votre écran d'accueil</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-wifi text-blue-600 text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Mode hors ligne</h3>
+            <p class="text-gray-600 dark:text-gray-400">Continuez à utiliser l'app même sans connexion internet</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+            <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-bell text-purple-600 text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Notifications</h3>
+            <p class="text-gray-600 dark:text-gray-400">Recevez des alertes pour les nouvelles annonces et messages</p>
+        </div>
+    </div>
+
+    <!-- Installation Instructions -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Comment installer l'application</h2>
+        
+        <!-- Mobile Instructions -->
+        <div class="space-y-8">
+            <!-- Android -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fab fa-android text-green-600 text-3xl mr-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Android (Chrome/Edge)</h3>
+                </div>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>Ouvrez cette page dans Chrome ou Edge sur votre téléphone</li>
+                    <li>Appuyez sur le bouton "Installer l'application" qui apparaît</li>
+                    <li>Ou utilisez le menu ⋮ → "Installer l'application" ou "Ajouter à l'écran d'accueil"</li>
+                    <li>Confirmez l'installation</li>
+                    <li>L'icône BENJ INSIDE apparaîtra sur votre écran d'accueil</li>
+                </ol>
+            </div>
+
+            <!-- iOS -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fab fa-apple text-gray-600 text-3xl mr-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">iPhone/iPad (Safari)</h3>
+                </div>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>Ouvrez cette page dans Safari sur votre iPhone/iPad</li>
+                    <li>Appuyez sur le bouton de partage <i class="fas fa-share"></i> en bas de l'écran</li>
+                    <li>Faites défiler et sélectionnez "Sur l'écran d'accueil"</li>
+                    <li>Modifiez le nom si souhaité et appuyez sur "Ajouter"</li>
+                    <li>L'icône BENJ INSIDE apparaîtra sur votre écran d'accueil</li>
+                </ol>
+            </div>
+
+            <!-- Desktop -->
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-desktop text-blue-600 text-3xl mr-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Ordinateur (Chrome/Edge/Firefox)</h3>
+                </div>
+                <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>Ouvrez cette page dans Chrome, Edge ou Firefox</li>
+                    <li>Cliquez sur l'icône d'installation dans la barre d'adresse</li>
+                    <li>Ou utilisez le menu → "Installer BENJ INSIDE"</li>
+                    <li>Confirmez l'installation</li>
+                    <li>L'application sera accessible depuis votre bureau ou menu démarrer</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Installation Button -->
+    <div class="text-center">
+        <button id="manual-install-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg shadow-lg transition-colors hidden">
+            <i class="fas fa-download mr-3"></i>
+            Installer maintenant
+        </button>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+            Le bouton d'installation apparaîtra automatiquement si votre navigateur le supporte
+        </p>
+    </div>
+
+    <!-- Features Preview -->
+    <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Fonctionnalités de l'application</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="text-center">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-tachometer-alt text-blue-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-900 dark:text-white">Dashboard</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Vue d'ensemble personnalisée</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <img src="{{ url_for('static', filename='images/kadosh_logo.png') }}" alt="Kadosh.ia" class="w-8 h-8 rounded-full">
+                </div>
+                <h4 class="font-semibold text-gray-900 dark:text-white">Kadosh.ia</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Assistant biblique IA</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-music text-purple-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-900 dark:text-white">Playlist</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Musique chrétienne</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-users text-orange-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-900 dark:text-white">Communauté</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Gestion des membres</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Intégrer avec le PWA Manager existant
+    if (window.pwaManager) {
+        const manualBtn = document.getElementById('manual-install-btn');
+        
+        // Utiliser l'événement beforeinstallprompt du PWA Manager
+        window.addEventListener('beforeinstallprompt', (e) => {
+            manualBtn.classList.remove('hidden');
+            manualBtn.addEventListener('click', () => {
+                if (window.pwaManager.deferredPrompt) {
+                    window.pwaManager.installApp();
+                }
+            });
+        });
+        
+        // Masquer le bouton si déjà installé
+        if (window.pwaManager.isInstalled) {
+            manualBtn.style.display = 'none';
+        }
+    }
+});
+</script>
+{% endblock %}

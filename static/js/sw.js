@@ -2,14 +2,21 @@
 const CACHE_NAME = 'benj-inside-v1.0.0';
 const urlsToCache = [
   '/',
-  '/static/css/style.css',
-  '/static/js/app.js',
+  '/static/css/styles.css',
+  '/static/css/pwa-styles.css',
+  '/static/js/theme.js',
+  '/static/js/main.js',
+  '/static/js/language-switcher.js',
+  '/static/js/persistent-audio-player.js',
+  '/static/js/pwa.js',
   '/static/images/benj_logo.jpeg',
   '/static/images/kadosh_logo.png',
-  '/static/images/icon-192x192.png',
-  '/static/images/icon-512x512.png',
-  'https://cdn.tailwindcss.com/3.3.0',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+  '/static/images/icon-72x72.svg',
+  '/static/images/icon-192x192.svg',
+  '/static/images/icon-512x512.svg',
+  '/static/manifest.json',
+  'https://cdn.tailwindcss.com',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
 ];
 
 // Installation du Service Worker
