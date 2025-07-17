@@ -1,0 +1,10 @@
+email-validator
+flask
+flask-babel
+flask-jwt-extended
+flask-sqlalchemy
+gunicorn
+openai
+psycopg2-binary
+sqlalchemy
+werkzeug
