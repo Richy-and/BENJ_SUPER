@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}Candidature Département{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-green-600 to-green-800 text-white rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">
+                        <i class="fas fa-building mr-3"></i>
+                        Candidature aux Départements
+                    </h1>
+                    <p class="text-green-100">
+                        Rejoignez un département et servez dans la communauté
+                    </p>
+                </div>
+                <div class="hidden md:block">
+                    <i class="fas fa-hands-helping text-6xl opacity-20"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statut des candidatures existantes -->
+        {% if mes_candidatures %}
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <i class="fas fa-history mr-2"></i>
+                Mes candidatures en cours
+            </h2>
+            <div class="space-y-3">
+                {% for candidature in mes_candidatures %}
+                <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-building text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-900 dark:text-white">
+                                {{ candidature.department.nom }}
+                            </h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                Rôle: {{ candidature.role_requested }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="px-3 py-1 text-xs font-medium rounded-full
+                            {% if candidature.statut == 'en_attente' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200{% endif %}
+                            {% if candidature.statut == 'approuve' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}
+                            {% if candidature.statut == 'rejete' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200{% endif %}">
+                            {% if candidature.statut == 'en_attente' %}En attente{% endif %}
+                            {% if candidature.statut == 'approuve' %}Approuvée{% endif %}
+                            {% if candidature.statut == 'rejete' %}Rejetée{% endif %}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Départements disponibles -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <i class="fas fa-users mr-2"></i>
+                Départements disponibles
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for department in departments %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-building text-blue-600 text-sm"></i>
+                        </div>
+                        <h3 class="font-medium text-gray-900 dark:text-white">
+                            {{ department.nom }}
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                        {{ department.description or "Département " + department.nom }}
+                    </p>
+                    <button onclick="openCandidatureModal({{ department.id }}, '{{ department.nom }}')"
+                            class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Postuler
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Processus de candidature -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-4">
+                <i class="fas fa-info-circle mr-2"></i>
+                Processus de candidature
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-blue-600 dark:text-blue-300 font-bold">1</span>
+                    </div>
+                    <h3 class="font-medium text-blue-900 dark:text-blue-100 mb-1">Choisir</h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300">Sélectionnez le département qui vous intéresse</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-blue-600 dark:text-blue-300 font-bold">2</span>
+                    </div>
+                    <h3 class="font-medium text-blue-900 dark:text-blue-100 mb-1">Postuler</h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300">Remplissez le formulaire de candidature</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-blue-600 dark:text-blue-300 font-bold">3</span>
+                    </div>
+                    <h3 class="font-medium text-blue-900 dark:text-blue-100 mb-1">Évaluation</h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300">L'admin examine votre candidature</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-blue-600 dark:text-blue-300 font-bold">4</span>
+                    </div>
+                    <h3 class="font-medium text-blue-900 dark:text-blue-100 mb-1">Intégration</h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300">Vous rejoignez le département</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de candidature -->
+<div id="candidatureModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+        <div class="mt-3">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    Candidature au département
+                </h3>
+                <button onclick="closeCandidatureModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="candidatureForm" method="POST" action="{{ url_for('department_requests.create_department_request') }}">
+                <input type="hidden" id="department_id" name="department_id">
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Département sélectionné
+                    </label>
+                    <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <span id="selectedDepartment" class="text-gray-900 dark:text-white font-medium"></span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="role_requested" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Rôle souhaité *
+                    </label>
+                    <select name="role_requested" id="role_requested" required
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white">
+                        <option value="">Sélectionnez un rôle</option>
+                        <option value="ouvrier">Ouvrier</option>
+                        <option value="chef">Chef</option>
+                        <option value="chantres">Chantre</option>
+                        <option value="intercesseurs">Intercesseur</option>
+                        <option value="régis">Régisseur</option>
+                        <option value="chef_chantres">Chef Chantres</option>
+                        <option value="chef_intercesseurs">Chef Intercesseurs</option>
+                        <option value="chef_régis">Chef Régisseurs</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="motivation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Lettre de motivation *
+                    </label>
+                    <textarea name="motivation" id="motivation" rows="4" required
+                              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white"
+                              placeholder="Expliquez pourquoi vous souhaitez rejoindre ce département..."></textarea>
+                </div>
+                
+                <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-3 mb-4">
+                    <p class="text-sm text-green-800 dark:text-green-200">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Votre candidature sera examinée par l'administrateur dans les plus brefs délais.
+                    </p>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeCandidatureModal()"
+                            class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+                        Annuler
+                    </button>
+                    <button type="submit"
+                            class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Soumettre
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function openCandidatureModal(departmentId, departmentName) {
+    document.getElementById('department_id').value = departmentId;
+    document.getElementById('selectedDepartment').textContent = departmentName;
+    document.getElementById('candidatureModal').classList.remove('hidden');
+}
+
+function closeCandidatureModal() {
+    document.getElementById('candidatureModal').classList.add('hidden');
+    document.getElementById('candidatureForm').reset();
+}
+
+// Fermer le modal en cliquant à l'extérieur
+document.getElementById('candidatureModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeCandidatureModal();
+    }
+});
+</script>
+{% endblock %}

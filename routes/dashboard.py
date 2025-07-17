@@ -27,9 +27,13 @@ def dashboard():
     # Get playlist data for admin
     playlist_items = None
     pending_requests_count = 0
+    pending_requests = []
     if user.role == 'admin':
         playlist_items = Playlist.query.order_by(Playlist.date_ajout.desc()).limit(5).all()
         pending_requests_count = DepartmentRequest.query.filter_by(statut='en_attente').count()
+        pending_requests = DepartmentRequest.query.filter_by(statut='en_attente').join(User).join(Department).order_by(
+            DepartmentRequest.created_at.desc()
+        ).limit(3).all()
     
     # Bible verse of the day (static for now)
     daily_verse = {
@@ -44,7 +48,8 @@ def dashboard():
                          finances=finances,
                          daily_verse=daily_verse,
                          playlist_items=playlist_items,
-                         pending_requests_count=pending_requests_count)
+                         pending_requests_count=pending_requests_count,
+                         pending_requests=pending_requests)
 
 @dashboard_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
