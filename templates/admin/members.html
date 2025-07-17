@@ -276,7 +276,7 @@
 
 <!-- Add Member Modal -->
 <div id="addMemberModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center z-50 hidden" style="display: none;">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full max-h-[90vh] overflow-y-auto">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ajouter un nouveau membre</h3>
         <form method="POST" action="{{ url_for('admin.add_member') }}">
             <div class="space-y-4">
@@ -359,13 +359,14 @@
                 </div>
             </div>
             
-            <div class="flex justify-end space-x-3 mt-6">
+            <div class="flex justify-end space-x-3 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <button type="button" onclick="closeAddModal()"
-                        class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                        class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 rounded-lg border border-gray-300 dark:border-gray-600">
+                    <i class="fas fa-times mr-2"></i>
                     Annuler
                 </button>
                 <button type="submit"
-                        class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors font-medium shadow-md">
                     <i class="fas fa-check mr-2"></i>
                     Valider
                 </button>
@@ -398,6 +399,14 @@ function openAddModal() {
     // Reset the form
     modal.querySelector('form').reset();
     console.log('Modal should be visible now');
+    
+    // Force scroll to top of modal
+    setTimeout(() => {
+        const modalContent = modal.querySelector('.bg-white');
+        if (modalContent) {
+            modalContent.scrollTop = 0;
+        }
+    }, 100);
 }
 
 function closeAddModal() {
