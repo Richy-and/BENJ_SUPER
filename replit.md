@@ -76,6 +76,11 @@ Preferred communication style: Simple, everyday language.
 - **CANDIDATURE WIDGET**: Integrated dashboard widget showing candidature status and quick actions for both members and admins
 - **NAVIGATION INTEGRATION**: Added candidature links to footer navigation for easy access across all pages
 - **CANDIDATURE WORKFLOW**: Complete workflow from member application to admin approval with automatic profile updates
+- **CHEF WORKER MANAGEMENT**: Complete system for department heads to view and rate workers in their department (July 17, 2025)
+- **WORKER RATING SYSTEM**: Interactive rating system (0-20) with comments and score history tracking
+- **CHEF DASHBOARD INTEGRATION**: Dashboard widget for all chef roles (chef, chef_chantres, chef_intercesseurs, chef_régis) to access worker management
+- **WORKER STATISTICS**: Comprehensive statistics dashboard showing total workers, evaluated workers, average scores, and top performers
+- **SCORE HISTORY TRACKING**: Detailed history of all worker evaluations with comments and statistics
 
 ## System Architecture
 
