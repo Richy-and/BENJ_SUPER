@@ -57,6 +57,22 @@
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Écouter les enseignements</p>
         </a>
 
+        <a href="{{ url_for('dashboard.all_announcements') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="bg-indigo-100 dark:bg-indigo-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-calendar-alt text-indigo-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Toutes les annonces</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Voir tous les événements</p>
+        </a>
+
+        <a href="{{ url_for('dashboard.all_temoignages') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="bg-pink-100 dark:bg-pink-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-heart text-pink-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Tous les témoignages</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Lire les témoignages</p>
+        </a>
+
         <a href="{{ url_for('dashboard.chatbot') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
             <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <img src="{{ url_for('static', filename='images/kadosh_logo.png') }}" alt="Kadosh.ia Logo" class="w-12 h-12 rounded-full object-contain">

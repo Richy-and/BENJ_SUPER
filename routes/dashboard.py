@@ -126,6 +126,31 @@ def playlist():
     playlist_items = Playlist.query.order_by(Playlist.date_ajout.desc()).all()
     return render_template('dashboard/playlist.html', playlist_items=playlist_items)
 
+@dashboard_bp.route('/all_announcements')
+@login_required
+def all_announcements():
+    """Page pour afficher toutes les annonces approuvées"""
+    announcements = Announcement.query.filter_by(statut='approuve').order_by(Announcement.date_creation.desc()).all()
+    
+    # Enrichir les données des annonces
+    for announcement in announcements:
+        # Récupérer les intervenants
+        if announcement.intervenants:
+            import json
+            intervenant_ids = json.loads(announcement.intervenants)
+            announcement.intervenants_list = User.query.filter(User.id.in_(intervenant_ids)).all()
+        else:
+            announcement.intervenants_list = []
+    
+    return render_template('dashboard/all_announcements.html', announcements=announcements)
+
+@dashboard_bp.route('/all_temoignages')
+@login_required
+def all_temoignages():
+    """Page pour afficher tous les témoignages approuvés"""
+    temoignages = Temoignage.query.filter_by(statut='valide').order_by(Temoignage.date_soumission.desc()).all()
+    return render_template('dashboard/all_temoignages.html', temoignages=temoignages)
+
 @dashboard_bp.route('/chatbot')
 @login_required
 def chatbot():
