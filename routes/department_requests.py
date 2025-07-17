@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from datetime import datetime
 from app import db
 from models import DepartmentRequest, User, Department
-from sqlalchemy import func
+from sqlalchemy import func, case
 from services.auth_service import require_login, get_current_user
 
 department_requests_bp = Blueprint('department_requests', __name__)
@@ -18,7 +18,7 @@ def admin_department_requests():
         return redirect(url_for('dashboard.dashboard'))
     
     # Récupérer toutes les demandes avec les informations nécessaires
-    demandes = DepartmentRequest.query.join(User).join(Department).order_by(
+    demandes = DepartmentRequest.query.order_by(
         DepartmentRequest.created_at.desc()
     ).all()
     
@@ -45,28 +45,45 @@ def candidature_stats():
     if total_candidatures > 0:
         taux_approbation = round((candidatures_approuvees / total_candidatures) * 100, 1)
     
-    # Statistiques par département
-    stats_par_departement = db.session.query(
-        Department.nom,
-        func.count(DepartmentRequest.id).label('total'),
-        func.sum(func.case([(DepartmentRequest.statut == 'en_attente', 1)], else_=0)).label('en_attente'),
-        func.sum(func.case([(DepartmentRequest.statut == 'approuve', 1)], else_=0)).label('approuvees'),
-        func.sum(func.case([(DepartmentRequest.statut == 'rejete', 1)], else_=0)).label('rejetees')
-    ).join(DepartmentRequest).group_by(Department.nom).all()
+    # Statistiques par département - approche simplifiée
+    departments = Department.query.all()
+    stats_par_departement = []
     
-    # Statistiques par rôle
-    stats_par_role = db.session.query(
-        DepartmentRequest.role_requested.label('role'),
-        func.count(DepartmentRequest.id).label('total'),
-        func.sum(func.case([(DepartmentRequest.statut == 'approuve', 1)], else_=0)).label('approuvees')
-    ).group_by(DepartmentRequest.role_requested).all()
+    for dept in departments:
+        dept_requests = DepartmentRequest.query.filter_by(department_id=dept.id).all()
+        total = len(dept_requests)
+        en_attente = len([r for r in dept_requests if r.statut == 'en_attente'])
+        approuvees = len([r for r in dept_requests if r.statut == 'approuve'])
+        rejetees = len([r for r in dept_requests if r.statut == 'rejete'])
+        
+        stats_par_departement.append({
+            'nom': dept.nom,
+            'total': total,
+            'en_attente': en_attente,
+            'approuvees': approuvees,
+            'rejetees': rejetees
+        })
     
-    # Calculer le taux d'approbation par rôle
-    for stat in stats_par_role:
-        if stat.total > 0:
-            stat.taux_approbation = round((stat.approuvees / stat.total) * 100, 1)
-        else:
-            stat.taux_approbation = 0
+    # Statistiques par rôle - approche simplifiée
+    roles = ['ouvrier', 'chef', 'chantres', 'intercesseurs', 'régis', 'chef_chantres', 'chef_intercesseurs', 'chef_régis']
+    stats_par_role = []
+    
+    for role in roles:
+        role_requests = DepartmentRequest.query.filter_by(role_requested=role).all()
+        total = len(role_requests)
+        approuvees = len([r for r in role_requests if r.statut == 'approuve'])
+        
+        taux_approbation = 0
+        if total > 0:
+            taux_approbation = round((approuvees / total) * 100, 1)
+        
+        if total > 0:  # Seulement inclure les rôles qui ont des demandes
+            stats_par_role.append({
+                'role': role,
+                'total': total,
+                'approuvees': approuvees,
+                'taux_approbation': taux_approbation
+            })
     
     return render_template('admin/candidature_stats.html',
                          total_candidatures=total_candidatures,
