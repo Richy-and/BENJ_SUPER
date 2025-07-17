@@ -53,6 +53,15 @@ Preferred communication style: Simple, everyday language.
 - Fixed chatbot topic response formatting to display verses and interpretations properly
 - Enhanced error handling for OpenAI API key issues with user-friendly messages
 - Updated dashboard Kadosh.ia icon to use new logo instead of robot icon
+- **ANNOUNCEMENTS SYSTEM**: Complete program announcements system for workers with photo upload support (July 17, 2025)
+- **ADMIN ANNOUNCEMENT MANAGEMENT**: Full admin control over announcements with approval/rejection workflow
+- **ANNOUNCEMENT EDITING**: Admin can modify existing announcements with all fields (title, description, date, time, location, speakers, photo)
+- **ANNOUNCEMENT DELETION**: Admin can delete announcements with confirmation dialog
+- **WORKER ANNOUNCEMENT CREATION**: Ouvriers can create program announcements with photo, date, time, location and speaker selection
+- **ANNOUNCEMENT APPROVAL WORKFLOW**: Announcements require admin approval before being visible on dashboards
+- **ANNOUNCEMENT PHOTO UPLOADS**: Support for image uploads (PNG, JPG, JPEG, GIF, WebP) with file validation
+- **ANNOUNCEMENT SPEAKER SELECTION**: Multi-select functionality for choosing speakers from available workers
+- **DASHBOARD ANNOUNCEMENT DISPLAY**: Approved announcements shown on all user dashboards with full details
 
 ## System Architecture
 
