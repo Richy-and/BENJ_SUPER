@@ -12,15 +12,47 @@
                     <i class="fas fa-music text-orange-600 text-2xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gestion de la Playlist</h1>
-                    <p class="text-gray-600 dark:text-gray-400">Gérez les audios disponibles pour les membres</p>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gestion Audio Cloud</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Système intégré Google Drive + Base Render</p>
                 </div>
             </div>
-            <div class="text-right">
-                <div class="text-2xl font-bold text-orange-600">{{ playlist_items|length }}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Audios total</div>
+            <div class="grid grid-cols-2 gap-4 text-right">
+                <div>
+                    <div class="text-2xl font-bold text-orange-600">{{ playlist_items|length }}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Total Audios</div>
+                </div>
+                {% if storage_stats %}
+                <div>
+                    <div class="text-2xl font-bold text-blue-600">{{ storage_stats.google_drive_audios }}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Google Drive</div>
+                </div>
+                {% endif %}
             </div>
         </div>
+        
+        <!-- Statistics Row -->
+        {% if storage_stats %}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                <div class="text-lg font-semibold text-gray-900 dark:text-white">{{ storage_stats.total_size_mb }} MB</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">Stockage total</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                <div class="text-lg font-semibold text-gray-900 dark:text-white">{{ storage_stats.local_audios }}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">Fichiers locaux</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                <div class="text-lg font-semibold {% if storage_stats.google_drive_service_status %}text-green-600{% else %}text-red-600{% endif %}">
+                    {% if storage_stats.google_drive_service_status %}✅ Actif{% else %}❌ Inactif{% endif %}
+                </div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">Google Drive</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                <div class="text-lg font-semibold text-green-600">Render DB</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">Base connectée</div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 
     <!-- Add Audio Form -->
@@ -62,7 +94,10 @@
                         <label class="inline-flex items-center">
                             <input type="radio" name="audio_source" value="local" checked
                                    class="form-radio text-orange-600" onchange="toggleAudioSource()">
-                            <span class="ml-2 text-gray-700 dark:text-gray-300">Fichier local (recommandé)</span>
+                            <span class="ml-2 text-gray-700 dark:text-gray-300">
+                                <i class="fab fa-google-drive text-blue-500 mr-1"></i>
+                                Upload vers Google Drive (recommandé)
+                            </span>
                         </label>
                     </div>
                     <div>
