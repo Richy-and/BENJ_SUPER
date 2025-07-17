@@ -297,40 +297,116 @@ def delete_announcement(announcement_id):
 @admin_bp.route('/members/delete/<int:user_id>', methods=['POST'])
 @admin_required
 def delete_user_admin(user_id):
-    user = User.query.get_or_404(user_id)
-    username = user.username
+    # Récupérer le nom d'utilisateur avant de faire quoi que ce soit
+    try:
+        result = db.session.execute(db.text("SELECT username FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
+        user_data = result.fetchone()
+        if not user_data:
+            flash('Utilisateur non trouvé', 'error')
+            return redirect(url_for('admin.members'))
+        username = user_data[0]
+    except Exception as e:
+        flash('Erreur lors de la récupération de l\'utilisateur', 'error')
+        return redirect(url_for('admin.members'))
     
     # Vérifier que l'utilisateur n'est pas l'admin actuel
-    if user.id == session['user_id']:
+    if user_id == session['user_id']:
         flash('Vous ne pouvez pas supprimer votre propre compte', 'error')
         return redirect(url_for('admin.members'))
     
     try:
-        # Fermer complètement la session SQLAlchemy pour éviter les conflits
-        db.session.close()
+        # Utiliser psycopg2 directement pour éviter complètement SQLAlchemy
+        import psycopg2
+        import os
         
-        # Utiliser une nouvelle connexion complètement indépendante
-        engine = db.get_engine()
-        with engine.connect() as connection:
-            with connection.begin() as trans:
-                # Supprimer dans l'ordre pour éviter les violations de contraintes
-                connection.execute(db.text("DELETE FROM score WHERE user_id = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("DELETE FROM score WHERE chef_id = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("DELETE FROM temoignage WHERE user_id = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("DELETE FROM finance WHERE user_id = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("DELETE FROM department_request WHERE user_id = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("DELETE FROM announcement WHERE cree_par = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = :user_id"), {'user_id': user_id})
-                connection.execute(db.text("DELETE FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
-                
-                # Transaction validée automatiquement à la fin du bloc with
+        # Connexion directe à la base de données
+        conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
+        cursor = conn.cursor()
         
-        flash(f'Membre {username} supprimé avec succès', 'success')
+        try:
+            # Supprimer dans l'ordre pour éviter les violations de contraintes
+            cursor.execute("DELETE FROM score WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM score WHERE chef_id = %s", (user_id,))
+            cursor.execute("DELETE FROM temoignage WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM finance WHERE user_id = %s", (user_id,))
+            cursor.execute("DELETE FROM department_request WHERE user_id = %s", (user_id,))
+            cursor.execute("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = %s", (user_id,))
+            cursor.execute("DELETE FROM announcement WHERE cree_par = %s", (user_id,))
+            cursor.execute("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = %s", (user_id,))
+            cursor.execute("DELETE FROM \"user\" WHERE id = %s", (user_id,))
+            
+            # Valider la transaction
+            conn.commit()
+            flash(f'Membre {username} supprimé avec succès', 'success')
+            
+        except Exception as e:
+            conn.rollback()
+            raise e
+        finally:
+            cursor.close()
+            conn.close()
             
     except Exception as e:
         flash('Erreur lors de la suppression du membre', 'error')
         print(f"Erreur suppression utilisateur: {e}")
+        import traceback
+        traceback.print_exc()
+    
+    return redirect(url_for('admin.members'))
+
+@admin_bp.route('/members/edit/<int:user_id>', methods=['POST'])
+@admin_required
+def edit_user_admin(user_id):
+    user = User.query.get_or_404(user_id)
+    
+    # Récupérer les données du formulaire
+    username = request.form.get('username', '').strip()
+    email = request.form.get('email', '').strip()
+    role = request.form.get('role', '').strip()
+    department_id = request.form.get('department_id')
+    new_password = request.form.get('new_password', '').strip()
+    
+    # Validation des données
+    if not username or not email or not role:
+        flash('Tous les champs obligatoires doivent être remplis', 'error')
+        return redirect(url_for('admin.members'))
+    
+    # Vérifier que l'username n'est pas déjà pris par un autre utilisateur
+    existing_user = User.query.filter(User.username == username, User.id != user_id).first()
+    if existing_user:
+        flash('Ce nom d\'utilisateur est déjà pris', 'error')
+        return redirect(url_for('admin.members'))
+    
+    # Vérifier que l'email n'est pas déjà pris par un autre utilisateur
+    existing_email = User.query.filter(User.email == email, User.id != user_id).first()
+    if existing_email:
+        flash('Cette adresse email est déjà utilisée', 'error')
+        return redirect(url_for('admin.members'))
+    
+    try:
+        # Mettre à jour les informations de l'utilisateur
+        user.username = username
+        user.email = email
+        user.role = role
+        
+        # Mettre à jour le département si fourni
+        if department_id and department_id != '':
+            user.department_id = int(department_id)
+        else:
+            user.department_id = None
+        
+        # Mettre à jour le mot de passe si fourni
+        if new_password:
+            from werkzeug.security import generate_password_hash
+            user.password_hash = generate_password_hash(new_password)
+        
+        db.session.commit()
+        flash(f'Membre {username} modifié avec succès', 'success')
+        
+    except Exception as e:
+        db.session.rollback()
+        flash('Erreur lors de la modification du membre', 'error')
+        print(f"Erreur modification utilisateur: {e}")
         import traceback
         traceback.print_exc()
     
