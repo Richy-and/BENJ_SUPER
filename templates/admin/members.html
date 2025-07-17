@@ -275,7 +275,7 @@
 </div>
 
 <!-- Add Member Modal -->
-<div id="addMemberModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 hidden">
+<div id="addMemberModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 items-center justify-center z-50 hidden" style="display: none;">
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Ajouter un nouveau membre</h3>
         <form method="POST" action="{{ url_for('admin.add_member') }}">
@@ -392,14 +392,18 @@ function closeEditModal() {
 
 function openAddModal() {
     const modal = document.getElementById('addMemberModal');
+    console.log('Opening modal:', modal);
     modal.classList.remove('hidden');
+    modal.style.display = 'flex';
     // Reset the form
     modal.querySelector('form').reset();
+    console.log('Modal should be visible now');
 }
 
 function closeAddModal() {
     const modal = document.getElementById('addMemberModal');
     modal.classList.add('hidden');
+    modal.style.display = 'none';
 }
 
 // Close modals on outside click
