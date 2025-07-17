@@ -43,22 +43,37 @@
     </div>
 
     <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
         {% set admin_count = users|selectattr('role', 'equalto', 'admin')|list|length %}
         {% set ouvrier_count = users|selectattr('role', 'equalto', 'ouvrier')|list|length %}
         {% set membre_count = users|selectattr('role', 'equalto', 'membre')|list|length %}
+        {% set chef_chantres_count = users|selectattr('role', 'equalto', 'chef_chantres')|list|length %}
+        {% set chef_intercesseurs_count = users|selectattr('role', 'equalto', 'chef_intercesseurs')|list|length %}
+        {% set chef_regis_count = users|selectattr('role', 'equalto', 'chef_régis')|list|length %}
         
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <div class="text-3xl font-bold text-red-600 mb-2">{{ admin_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Administrateurs</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-red-600 mb-2">{{ admin_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Admins</div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <div class="text-3xl font-bold text-orange-600 mb-2">{{ ouvrier_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Ouvriers</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-orange-600 mb-2">{{ ouvrier_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Ouvriers</div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <div class="text-3xl font-bold text-green-600 mb-2">{{ membre_count }}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Membres</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-pink-600 mb-2">{{ chef_chantres_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Chef Chantres</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-indigo-600 mb-2">{{ chef_intercesseurs_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Chef Intercesseurs</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-yellow-600 mb-2">{{ chef_regis_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Chef Régis</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 text-center">
+            <div class="text-2xl font-bold text-green-600 mb-2">{{ membre_count }}</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">Membres</div>
         </div>
     </div>
 
@@ -110,9 +125,15 @@
                             <span class="px-2 py-1 text-xs font-semibold rounded-full
                                 {% if user.role == 'admin' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
                                 {% elif user.role == 'ouvrier' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
+                                {% elif user.role == 'chef_chantres' %}bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200
+                                {% elif user.role == 'chef_intercesseurs' %}bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200
+                                {% elif user.role == 'chef_régis' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
                                 {% else %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}">
                                 {% if user.role == 'admin' %}Admin
                                 {% elif user.role == 'ouvrier' %}Ouvrier
+                                {% elif user.role == 'chef_chantres' %}Chef des Chantres
+                                {% elif user.role == 'chef_intercesseurs' %}Chef des Intercesseurs
+                                {% elif user.role == 'chef_régis' %}Chef de la Régis
                                 {% else %}Membre{% endif %}
                             </span>
                         </td>
@@ -184,6 +205,9 @@
                                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                         <option value="membre">Membre</option>
                         <option value="ouvrier">Ouvrier</option>
+                        <option value="chef_chantres">Chef des Chantres</option>
+                        <option value="chef_intercesseurs">Chef des Intercesseurs</option>
+                        <option value="chef_régis">Chef de la Régis</option>
                         <option value="admin">Admin</option>
                     </select>
                 </div>
@@ -296,6 +320,9 @@
                                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                         <option value="membre">Membre</option>
                         <option value="ouvrier">Ouvrier</option>
+                        <option value="chef_chantres">Chef des Chantres</option>
+                        <option value="chef_intercesseurs">Chef des Intercesseurs</option>
+                        <option value="chef_régis">Chef de la Régis</option>
                         <option value="admin">Admin</option>
                     </select>
                 </div>
