@@ -297,8 +297,6 @@ def delete_announcement(announcement_id):
 @admin_bp.route('/members/delete/<int:user_id>', methods=['POST'])
 @admin_required
 def delete_user_admin(user_id):
-    from models import Score, Temoignage, Finance, Announcement, DepartmentRequest
-    
     user = User.query.get_or_404(user_id)
     username = user.username
     
@@ -308,50 +306,31 @@ def delete_user_admin(user_id):
         return redirect(url_for('admin.members'))
     
     try:
-        # Supprimer toutes les relations en utilisant des requêtes SQL directes
-        # Ceci évite les problèmes de contraintes NOT NULL
+        # Utiliser une session SQL brute pour éviter les problèmes d'ORM
+        connection = db.engine.connect()
+        trans = connection.begin()
         
-        # Supprimer tous les scores où l'utilisateur est noté
-        db.session.execute(db.text("DELETE FROM score WHERE user_id = :user_id"), {'user_id': user_id})
-        
-        # Supprimer tous les scores où l'utilisateur est le chef qui note
-        db.session.execute(db.text("DELETE FROM score WHERE chef_id = :user_id"), {'user_id': user_id})
-        
-        # Supprimer tous les témoignages de l'utilisateur
-        db.session.execute(db.text("DELETE FROM temoignage WHERE user_id = :user_id"), {'user_id': user_id})
-        
-        # Supprimer toutes les finances de l'utilisateur
-        db.session.execute(db.text("DELETE FROM finance WHERE user_id = :user_id"), {'user_id': user_id})
-        
-        # Supprimer toutes les demandes de département de l'utilisateur
-        db.session.execute(db.text("DELETE FROM department_request WHERE user_id = :user_id"), {'user_id': user_id})
-        
-        # Mettre à jour les demandes révisées par cet utilisateur
-        db.session.execute(db.text("""
-            UPDATE department_request 
-            SET reviewed_by = NULL, admin_notes = 'Révisé par utilisateur supprimé - ' || COALESCE(admin_notes, '')
-            WHERE reviewed_by = :user_id
-        """), {'user_id': user_id})
-        
-        # Supprimer toutes les annonces créées par l'utilisateur
-        db.session.execute(db.text("DELETE FROM announcement WHERE cree_par = :user_id"), {'user_id': user_id})
-        
-        # Mettre à jour les annonces approuvées par cet utilisateur
-        db.session.execute(db.text("""
-            UPDATE announcement 
-            SET approuve_par = NULL, date_approbation = NULL
-            WHERE approuve_par = :user_id
-        """), {'user_id': user_id})
-        
-        # Supprimer l'utilisateur
-        db.session.execute(db.text("DELETE FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
-        
-        # Commit toutes les modifications
-        db.session.commit()
-        
-        flash(f'Membre {username} supprimé avec succès', 'success')
+        try:
+            # Supprimer dans l'ordre pour éviter les violations de contraintes
+            connection.execute(db.text("DELETE FROM score WHERE user_id = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("DELETE FROM score WHERE chef_id = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("DELETE FROM temoignage WHERE user_id = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("DELETE FROM finance WHERE user_id = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("DELETE FROM department_request WHERE user_id = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("DELETE FROM announcement WHERE cree_par = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = :user_id"), {'user_id': user_id})
+            connection.execute(db.text("DELETE FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
+            
+            trans.commit()
+            flash(f'Membre {username} supprimé avec succès', 'success')
+        except Exception as e:
+            trans.rollback()
+            raise e
+        finally:
+            connection.close()
+            
     except Exception as e:
-        db.session.rollback()
         flash('Erreur lors de la suppression du membre', 'error')
         print(f"Erreur suppression utilisateur: {e}")
         import traceback
