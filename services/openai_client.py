@@ -8,6 +8,10 @@ openai_client = OpenAI(api_key=OPENAI_API_KEY)
 def get_openai_response(question):
     """Get response from OpenAI for biblical questions"""
     try:
+        # Check if API key is properly set
+        if not OPENAI_API_KEY or OPENAI_API_KEY == "your-openai-key-here":
+            return "⚠️ **API OpenAI non configurée**\n\nLa clé API OpenAI n'est pas configurée correctement. Veuillez contacter l'administrateur.\n\nEn attendant, vous pouvez utiliser nos **50 sujets bibliques prédéfinis** disponibles dans la liste déroulante."
+        
         # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
         # do not change this unless explicitly requested by the user
         response = openai_client.chat.completions.create(
@@ -38,4 +42,4 @@ Si la question n'est pas liée à la Bible ou à la spiritualité chrétienne, r
         
     except Exception as e:
         print(f"Erreur OpenAI: {e}")
-        return "Je suis désolé, je ne peux pas répondre à cette question pour le moment. Vous pouvez explorer nos sujets prédéfinis ou réessayer plus tard."
+        return "⚠️ **Erreur de connexion à OpenAI**\n\nIl semble y avoir un problème avec la clé API ou la connexion à OpenAI.\n\nVeuillez utiliser nos **50 sujets bibliques prédéfinis** disponibles dans la liste déroulante ci-dessus, ou réessayer plus tard."

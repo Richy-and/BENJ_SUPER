@@ -116,8 +116,8 @@
                 `;
             } else {
                 messageDiv.innerHTML = `
-                    <div class="bg-green-600 w-8 h-8 rounded-full flex items-center justify-center">
-                        <i class="fas fa-robot text-white text-sm"></i>
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center">
+                        <img src="/static/images/kadosh_logo.png" alt="Kadosh.ia Logo" class="w-8 h-8 rounded-full object-contain">
                     </div>
                     <div class="bg-white dark:bg-gray-800 rounded-lg p-3 max-w-md">
                         <div class="text-gray-900 dark:text-white text-sm">${this.formatMessage(content)}</div>
@@ -175,8 +175,8 @@
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'flex items-start space-x-3 loading-message';
             loadingDiv.innerHTML = `
-                <div class="bg-green-600 w-8 h-8 rounded-full flex items-center justify-center">
-                    <i class="fas fa-robot text-white text-sm"></i>
+                <div class="w-8 h-8 rounded-full flex items-center justify-center">
+                    <img src="/static/images/kadosh_logo.png" alt="Kadosh.ia Logo" class="w-8 h-8 rounded-full object-contain">
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-lg p-3 max-w-md">
                     <div class="flex items-center space-x-2">
@@ -293,6 +293,36 @@
     window.askHelp = function(question) {
         Chatbot.addMessage(question, 'user');
         Chatbot.sendToServer(question);
+    };
+    
+    // Function for selected topic dropdown
+    window.askSelectedTopic = function() {
+        const dropdown = document.getElementById('topic-dropdown');
+        if (dropdown && dropdown.value) {
+            const topic = dropdown.value;
+            const topicDisplayName = dropdown.options[dropdown.selectedIndex].text;
+            
+            // Add user message showing selected topic
+            Chatbot.addMessage(`Sujet sélectionné: ${topicDisplayName}`, 'user');
+            
+            // Send topic request
+            fetch(`/chatbot/topic/${topic}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        Chatbot.addMessage(`Erreur: ${data.error}`, 'bot', 'error');
+                    } else {
+                        Chatbot.addMessage(data.response, 'bot', 'pre-loaded');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error asking topic:', error);
+                    Chatbot.addMessage('Erreur lors de la récupération du sujet', 'bot', 'error');
+                });
+                
+            // Reset dropdown
+            dropdown.value = '';
+        }
     };
     
     // Initialize when DOM is ready
