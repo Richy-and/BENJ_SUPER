@@ -24,6 +24,18 @@ def dashboard():
     # Get user's financial obligations
     finances = Finance.query.filter_by(user_id=user.id, paye=False).all()
     
+    # Calculate financial totals
+    total_du = 0
+    total_cotisations = 0
+    total_dettes = 0
+    
+    for finance in finances:
+        total_du += finance.montant
+        if finance.type == 'cotisation':
+            total_cotisations += finance.montant
+        elif finance.type == 'dette':
+            total_dettes += finance.montant
+    
     # Get playlist data for admin
     playlist_items = None
     pending_requests_count = 0
@@ -46,6 +58,9 @@ def dashboard():
                          current_user=user,
                          announcements=announcements,
                          finances=finances,
+                         total_du=total_du,
+                         total_cotisations=total_cotisations,
+                         total_dettes=total_dettes,
                          daily_verse=daily_verse,
                          playlist_items=playlist_items,
                          pending_requests_count=pending_requests_count,
