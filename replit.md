@@ -7,6 +7,9 @@ BENJ INSIDE is a comprehensive Christian community management platform built wit
 Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
+- **OUVRIERS PERMISSION UPDATE**: Restricted ouvriers from creating announcements, added "Mon Département" page for viewing department members and their scores (July 17, 2025)
+- **UNIVERSAL CONTENT ACCESS**: Added "Toutes les annonces" and "Tous les témoignages" pages for all users to view approved announcements and testimonials (July 17, 2025)
+- **NAVIGATION ENHANCEMENT**: Added quick access links to all announcements and testimonials in main navigation menu (July 17, 2025)
 - **SECURITY ENHANCEMENT**: Removed test admin account "Yohann" and blocked access to prevent unauthorized login (July 17, 2025)
 - **FINANCES INTEGRATION**: Integrated complete financial management directly into dashboard with statistics cards and detailed transaction table (July 17, 2025)
 - **AUTHENTICATION SECURITY**: Added blocked accounts list to prevent creation/login of test accounts (admin, test, Test) - removed Yohann from blocked list (July 17, 2025)
