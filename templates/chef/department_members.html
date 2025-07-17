@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Membres du département - {{ user.departement.nom }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-users text-blue-600 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Membres du département</h1>
+                    <p class="text-gray-600 dark:text-gray-400">{{ user.departement.nom if user.departement else 'Votre département' }}</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="text-2xl font-bold text-blue-600">{{ members|length }}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">Membres</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Members Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for member in members %}
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-primary-100 dark:bg-primary-900 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-user text-primary-600 text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ member.username }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ member.email }}</p>
+                </div>
+            </div>
+            
+            <!-- Role Badge -->
+            <div class="mb-4">
+                <span class="px-2 py-1 text-xs font-semibold rounded-full
+                    {% if member.role == 'admin' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
+                    {% elif member.role == 'ouvrier' %}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
+                    {% elif member.role == 'chef_chantres' %}bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200
+                    {% elif member.role == 'chef_intercesseurs' %}bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200
+                    {% elif member.role == 'chef_régis' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                    {% else %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200{% endif %}">
+                    {% if member.role == 'admin' %}Admin
+                    {% elif member.role == 'ouvrier' %}Ouvrier
+                    {% elif member.role == 'chef_chantres' %}Chef des Chantres
+                    {% elif member.role == 'chef_intercesseurs' %}Chef des Intercesseurs
+                    {% elif member.role == 'chef_régis' %}Chef de la Régis
+                    {% else %}Membre{% endif %}
+                </span>
+            </div>
+
+            <!-- Score (only for ouvriers) -->
+            {% if member.role == 'ouvrier' %}
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Score actuel</span>
+                    <span class="text-lg font-bold text-orange-600">
+                        {{ member.score if member.score and member.score > 0 else 'Non évalué' }}{% if member.score and member.score > 0 %}/20{% endif %}
+                    </span>
+                </div>
+                
+                {% if member_scores[member.id] %}
+                <div class="text-xs text-gray-500 dark:text-gray-400">
+                    Dernière évaluation: {{ member_scores[member.id].date_attribution.strftime('%d/%m/%Y') }}
+                    {% if member_scores[member.id].commentaire %}
+                    <br>{{ member_scores[member.id].commentaire[:50] }}{% if member_scores[member.id].commentaire|length > 50 %}...{% endif %}
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-xs text-gray-500 dark:text-gray-400">
+                    Aucune évaluation disponible
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Member Info -->
+            <div class="text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex items-center mb-1">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    Inscrit le {{ member.date_inscription.strftime('%d/%m/%Y') }}
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-globe mr-2"></i>
+                    {{ member.langue.upper() if member.langue else 'FR' }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not members %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
+        <i class="fas fa-users text-gray-400 text-4xl mb-4"></i>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucun autre membre</h3>
+        <p class="text-gray-500 dark:text-gray-400">
+            Il n'y a pas d'autres membres dans votre département pour le moment.
+        </p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

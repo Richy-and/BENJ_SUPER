@@ -21,6 +21,23 @@ def chef_required(f):
     wrapper.__name__ = f.__name__
     return wrapper
 
+def ouvrier_required(f):
+    def wrapper(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Vous devez être connecté pour accéder à cette page', 'error')
+            return redirect(url_for('auth.login'))
+        
+        user_role = session.get('user_role')
+        # Autoriser ouvriers, chefs et admin
+        allowed_roles = ['ouvrier', 'chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis']
+        if user_role not in allowed_roles:
+            flash('Accès refusé.', 'error')
+            return redirect(url_for('dashboard.dashboard'))
+        
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
+
 @chef_bp.route('/workers')
 @chef_required
 def workers():
@@ -171,3 +188,31 @@ def clear_worker_history(worker_id):
         print(f"Erreur suppression historique: {e}")
     
     return redirect(url_for('chef.workers'))
+
+@chef_bp.route('/department_members')
+@ouvrier_required
+def department_members():
+    """Page pour que les ouvriers voient les membres de leur département"""
+    user = User.query.get(session['user_id'])
+    
+    if not user.departement_id:
+        flash('Vous devez être assigné à un département pour accéder à cette page', 'error')
+        return redirect(url_for('dashboard.dashboard'))
+    
+    # Récupérer tous les membres du même département
+    members = User.query.filter(
+        User.departement_id == user.departement_id,
+        User.id != user.id  # Exclure l'utilisateur actuel
+    ).all()
+    
+    # Récupérer les dernières notes pour chaque membre
+    member_scores = {}
+    for member in members:
+        if member.role == 'ouvrier':
+            latest_score = Score.query.filter_by(user_id=member.id).order_by(Score.date_attribution.desc()).first()
+            member_scores[member.id] = latest_score
+    
+    return render_template('chef/department_members.html', 
+                         members=members, 
+                         member_scores=member_scores, 
+                         user=user)
