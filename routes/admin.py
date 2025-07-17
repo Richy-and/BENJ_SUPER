@@ -205,37 +205,41 @@ def update_testimonial(testimonial_id):
 @admin_bp.route('/playlist')
 @admin_required
 def playlist_admin():
+    from services.cloud_audio_service import cloud_audio_service
+    
     playlist_items = Playlist.query.order_by(Playlist.date_ajout.desc()).all()
-    return render_template('admin/playlist_admin.html', playlist_items=playlist_items)
+    storage_stats = cloud_audio_service.get_storage_stats()
+    
+    return render_template('admin/playlist_admin.html', 
+                         playlist_items=playlist_items,
+                         storage_stats=storage_stats)
 
 @admin_bp.route('/playlist/add', methods=['POST'])
 @admin_required
 def add_playlist_item():
+    from services.cloud_audio_service import cloud_audio_service
+    
     titre = request.form['titre']
     description = request.form.get('description', '')
     volume = float(request.form.get('volume', 0.7))
     
-    # Vérifier si c'est un fichier local ou une URL
+    # Vérifier si c'est un fichier uploadé ou une URL
     if 'fichier_audio' in request.files and request.files['fichier_audio'].filename:
-        # Fichier local uploadé
+        # Upload vers Google Drive
         fichier_audio = request.files['fichier_audio']
-        if fichier_audio and fichier_audio.filename:
-            # Sauvegarder le fichier localement
-            filename = secure_filename(fichier_audio.filename)
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
-            filename = timestamp + filename
-            filepath = os.path.join('static/audio', filename)
-            fichier_audio.save(filepath)
-            
-            playlist_item = Playlist(
-                titre=titre,
-                fichier_audio_url=f'/static/audio/{filename}',
-                description=description,
-                volume=volume,
-                is_local=True
-            )
+        result = cloud_audio_service.upload_audio_to_cloud(
+            file=fichier_audio,
+            title=titre,
+            description=description,
+            volume=volume
+        )
+        
+        if result['success']:
+            flash(result['message'], 'success')
+        else:
+            flash(f"Erreur upload: {result['error']}", 'error')
     else:
-        # URL externe
+        # URL externe (méthode classique)
         fichier_audio_url = request.form['fichier_audio_url']
         playlist_item = Playlist(
             titre=titre,
@@ -244,22 +248,72 @@ def add_playlist_item():
             volume=volume,
             is_local=False
         )
+        db.session.add(playlist_item)
+        db.session.commit()
+        flash('Audio URL ajouté à la playlist avec succès!', 'success')
     
-    db.session.add(playlist_item)
-    db.session.commit()
-    
-    flash('Audio ajouté à la playlist avec succès!', 'success')
     return redirect(url_for('admin.playlist_admin'))
 
 @admin_bp.route('/playlist/delete/<int:playlist_id>', methods=['POST'])
 @admin_required
 def delete_playlist_item(playlist_id):
-    playlist_item = Playlist.query.get_or_404(playlist_id)
-    db.session.delete(playlist_item)
-    db.session.commit()
+    from services.cloud_audio_service import cloud_audio_service
     
-    flash('Audio supprimé de la playlist', 'success')
+    result = cloud_audio_service.delete_audio_from_cloud(playlist_id)
+    
+    if result['success']:
+        flash(result['message'], 'success')
+    else:
+        flash(f"Erreur suppression: {result['error']}", 'error')
+    
     return redirect(url_for('admin.playlist_admin'))
+
+@admin_bp.route('/playlist/edit/<int:playlist_id>', methods=['POST'])
+@admin_required
+def edit_playlist_item(playlist_id):
+    from services.cloud_audio_service import cloud_audio_service
+    
+    titre = request.form.get('titre')
+    description = request.form.get('description')
+    volume = request.form.get('volume')
+    
+    # Convertir le volume en float si fourni
+    if volume:
+        volume = float(volume)
+    
+    result = cloud_audio_service.update_audio_metadata(
+        playlist_id=playlist_id,
+        title=titre,
+        description=description,
+        volume=volume
+    )
+    
+    if result['success']:
+        flash(result['message'], 'success')
+    else:
+        flash(f"Erreur mise à jour: {result['error']}", 'error')
+    
+    return redirect(url_for('admin.playlist_admin'))
+
+@admin_bp.route('/playlist/info/<int:playlist_id>')
+@admin_required
+def playlist_item_info(playlist_id):
+    from services.cloud_audio_service import cloud_audio_service
+    
+    audio_info = cloud_audio_service.get_audio_info(playlist_id)
+    if not audio_info:
+        flash('Audio non trouvé', 'error')
+        return redirect(url_for('admin.playlist_admin'))
+    
+    return jsonify(audio_info)
+
+@admin_bp.route('/playlist/stats')
+@admin_required
+def playlist_stats():
+    from services.cloud_audio_service import cloud_audio_service
+    
+    stats = cloud_audio_service.get_storage_stats()
+    return jsonify(stats)
 
 @admin_bp.route('/announcements')
 @admin_required

@@ -65,6 +65,12 @@ class Playlist(db.Model):
     volume = db.Column(db.Float, default=0.7)  # Volume par défaut (0.0 - 1.0)
     is_local = db.Column(db.Boolean, default=False)  # True si fichier local
     date_ajout = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # Intégration Google Drive
+    google_drive_file_id = db.Column(db.String(255))  # ID du fichier sur Google Drive
+    google_drive_url = db.Column(db.Text)  # URL publique pour streaming
+    file_size = db.Column(db.BigInteger)  # Taille du fichier en bytes
+    upload_date = db.Column(db.DateTime, default=datetime.utcnow)  # Date d'upload
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
