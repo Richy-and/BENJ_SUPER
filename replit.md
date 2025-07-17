@@ -41,6 +41,15 @@ Preferred communication style: Simple, everyday language.
 - **INTEGRATED DASHBOARD AUDIO**: Audio management section directly in admin dashboard with quick add, test, and delete functions
 - **AUDIO DELETION CAPABILITY**: Added delete button with confirmation for audio removal from dashboard
 - **DASHBOARD AUDIO PLAYER**: Integrated audio player interface in dashboard for immediate testing
+- **PERSISTENT AUDIO PLAYER**: Implemented cross-page audio streaming with floating mini-player (July 17, 2025)
+- **CONTINUOUS PLAYBACK**: Music continues playing when navigating between pages without interruption
+- **MINI-PLAYER INTERFACE**: Floating player with play/pause, next/prev, progress bar, and close controls
+- **PLAYLIST MANAGEMENT**: Complete playlist functionality with sequential playback and track navigation
+- **SESSION PERSISTENCE**: Audio state saved/restored across page reloads and browser sessions
+- **VOLUME CONTROL LOCKDOWN**: Users can't modify volume - only admin-defined volume levels apply
+- **ENHANCED PLAYLIST UI**: Added "Lancer la playlist" and "Playlist" buttons for full playlist experience
+- **KEYBOARD SHORTCUTS**: Ctrl+Space (play/pause), Ctrl+Arrow keys (next/prev) for power users
+- **AUDIO DIAGNOSTICS**: System audio test with beep sound and enhanced error reporting
 - Fixed chatbot topic response formatting to display verses and interpretations properly
 - Enhanced error handling for OpenAI API key issues with user-friendly messages
 - Updated dashboard Kadosh.ia icon to use new logo instead of robot icon

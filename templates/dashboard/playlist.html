@@ -57,7 +57,16 @@
 
     <!-- Playlist Items -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Audios disponibles</h2>
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Audios disponibles</h2>
+            {% if playlist_items %}
+            <button onclick="playFullPlaylist()" 
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                <i class="fas fa-play mr-2"></i>
+                Lancer la playlist
+            </button>
+            {% endif %}
+        </div>
         
         {% if playlist_items %}
             <div class="space-y-4">
@@ -76,10 +85,15 @@
                         </p>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button onclick="playAudio('{{ item.fichier_audio_url }}', '{{ item.titre }}', '{{ item.description or '' }}', {{ item.volume }})" 
+                        <button onclick="playPersistentAudio('{{ item.fichier_audio_url }}', '{{ item.titre }}', '{{ item.description or '' }}', {{ item.volume }})" 
                                 class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg transition-colors">
                             <i class="fas fa-play mr-2"></i>
                             Écouter
+                        </button>
+                        <button onclick="playFromPlaylist({{ loop.index0 }})" 
+                                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-list mr-2"></i>
+                            Playlist
                         </button>
                     </div>
                 </div>
@@ -101,14 +115,44 @@
             Instructions d'utilisation
         </h3>
         <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
-            <li>• Cliquez sur "Écouter" pour démarrer la lecture d'un audio</li>
-            <li>• Utilisez les contrôles de lecture pour mettre en pause, arrêter et naviguer</li>
-            <li>• La barre de progression vous permet de naviguer dans l'audio</li>
+            <li>• Cliquez sur "Écouter" pour démarrer la lecture d'un audio seul</li>
+            <li>• Cliquez sur "Playlist" pour lancer la playlist complète depuis ce morceau</li>
+            <li>• Utilisez "Lancer la playlist" pour démarrer depuis le début</li>
+            <li>• Le mini-player continue à jouer même si vous changez de page</li>
             <li>• Le volume est optimisé automatiquement par l'administration</li>
-            <li>• Seuls les audios ajoutés par l'administration sont disponibles</li>
+            <li>• Utilisez les flèches du mini-player pour passer d'un morceau à l'autre</li>
         </ul>
     </div>
 </div>
 
 <script src="{{ url_for('static', filename='js/audio-player.js') }}"></script>
+
+<script>
+// Prepare playlist data for JavaScript
+const playlistData = [
+    {% for item in playlist_items %}
+    {
+        url: '{{ item.fichier_audio_url }}',
+        title: '{{ item.titre }}',
+        description: '{{ item.description or '' }}',
+        adminVolume: {{ item.volume }}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+];
+
+// Function to play full playlist from beginning
+function playFullPlaylist() {
+    if (playlistData.length > 0) {
+        playPersistentPlaylist(playlistData, 0);
+    }
+}
+
+// Function to play playlist from specific index
+function playFromPlaylist(index) {
+    if (playlistData.length > 0 && index >= 0 && index < playlistData.length) {
+        playPersistentPlaylist(playlistData, index);
+    }
+}
+</script>
+
 {% endblock %}
