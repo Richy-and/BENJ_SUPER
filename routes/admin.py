@@ -300,6 +300,7 @@ def delete_user_admin(user_id):
     from models import Score, Temoignage, Finance, Announcement, DepartmentRequest
     
     user = User.query.get_or_404(user_id)
+    username = user.username
     
     # Vérifier que l'utilisateur n'est pas l'admin actuel
     if user.id == session['user_id']:
@@ -307,54 +308,48 @@ def delete_user_admin(user_id):
         return redirect(url_for('admin.members'))
     
     try:
-        # Supprimer d'abord tous les scores associés (reçus et donnés)
-        scores_user = Score.query.filter_by(user_id=user_id).all()
-        for score in scores_user:
-            db.session.delete(score)
+        # Supprimer toutes les relations en utilisant des requêtes SQL directes
+        # Ceci évite les problèmes de contraintes NOT NULL
         
-        scores_chef = Score.query.filter_by(chef_id=user_id).all()
-        for score in scores_chef:
-            db.session.delete(score)
+        # Supprimer tous les scores où l'utilisateur est noté
+        db.session.execute(db.text("DELETE FROM score WHERE user_id = :user_id"), {'user_id': user_id})
         
-        # Supprimer tous les témoignages associés
-        temoignages = Temoignage.query.filter_by(user_id=user_id).all()
-        for temoignage in temoignages:
-            db.session.delete(temoignage)
+        # Supprimer tous les scores où l'utilisateur est le chef qui note
+        db.session.execute(db.text("DELETE FROM score WHERE chef_id = :user_id"), {'user_id': user_id})
         
-        # Supprimer toutes les finances associées
-        finances = Finance.query.filter_by(user_id=user_id).all()
-        for finance in finances:
-            db.session.delete(finance)
+        # Supprimer tous les témoignages de l'utilisateur
+        db.session.execute(db.text("DELETE FROM temoignage WHERE user_id = :user_id"), {'user_id': user_id})
         
-        # Supprimer toutes les demandes de département associées
-        dept_requests_user = DepartmentRequest.query.filter_by(user_id=user_id).all()
-        for request in dept_requests_user:
-            db.session.delete(request)
-            
-        dept_requests_reviewer = DepartmentRequest.query.filter_by(reviewed_by=user_id).all()
-        for request in dept_requests_reviewer:
-            request.reviewed_by = None
-            request.admin_notes = f"Révisé par utilisateur supprimé - {request.admin_notes or ''}"
+        # Supprimer toutes les finances de l'utilisateur
+        db.session.execute(db.text("DELETE FROM finance WHERE user_id = :user_id"), {'user_id': user_id})
         
-        # Supprimer les annonces créées par cet utilisateur
-        announcements_created = Announcement.query.filter_by(cree_par=user_id).all()
-        for announcement in announcements_created:
-            db.session.delete(announcement)
+        # Supprimer toutes les demandes de département de l'utilisateur
+        db.session.execute(db.text("DELETE FROM department_request WHERE user_id = :user_id"), {'user_id': user_id})
         
-        # Mettre à jour les annonces approuvées par cet utilisateur (remettre à null)
-        announcements_approved = Announcement.query.filter_by(approuve_par=user_id).all()
-        for announcement in announcements_approved:
-            announcement.approuve_par = None
-            announcement.date_approbation = None
+        # Mettre à jour les demandes révisées par cet utilisateur
+        db.session.execute(db.text("""
+            UPDATE department_request 
+            SET reviewed_by = NULL, admin_notes = 'Révisé par utilisateur supprimé - ' || COALESCE(admin_notes, '')
+            WHERE reviewed_by = :user_id
+        """), {'user_id': user_id})
         
-        # Commit toutes les modifications des relations avant de supprimer l'utilisateur
-        db.session.commit()
+        # Supprimer toutes les annonces créées par l'utilisateur
+        db.session.execute(db.text("DELETE FROM announcement WHERE cree_par = :user_id"), {'user_id': user_id})
+        
+        # Mettre à jour les annonces approuvées par cet utilisateur
+        db.session.execute(db.text("""
+            UPDATE announcement 
+            SET approuve_par = NULL, date_approbation = NULL
+            WHERE approuve_par = :user_id
+        """), {'user_id': user_id})
         
         # Supprimer l'utilisateur
-        db.session.delete(user)
+        db.session.execute(db.text("DELETE FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
+        
+        # Commit toutes les modifications
         db.session.commit()
         
-        flash(f'Membre {user.username} supprimé avec succès', 'success')
+        flash(f'Membre {username} supprimé avec succès', 'success')
     except Exception as e:
         db.session.rollback()
         flash('Erreur lors de la suppression du membre', 'error')
