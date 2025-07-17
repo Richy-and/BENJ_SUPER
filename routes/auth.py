@@ -13,7 +13,7 @@ def login():
         password = request.form['password']
         
         # Blocked accounts security
-        blocked_accounts = ['Yohann', 'admin', 'test', 'Test']
+        blocked_accounts = ['admin', 'test', 'Test']
         if username in blocked_accounts:
             flash('Accès interdit. Compte bloqué.', 'error')
             return render_template('auth/login.html')
@@ -48,7 +48,7 @@ def register():
             return render_template('auth/register.html')
         
         # Blocked accounts security
-        blocked_accounts = ['Yohann', 'admin', 'test', 'Test']
+        blocked_accounts = ['admin', 'test', 'Test']
         if username in blocked_accounts:
             flash('Ce nom d\'utilisateur est interdit.', 'error')
             return render_template('auth/register.html')
