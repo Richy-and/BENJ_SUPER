@@ -60,29 +60,39 @@ def assign_score(worker_id):
         flash('Vous ne pouvez noter que les ouvriers', 'error')
         return redirect(url_for('chef.workers'))
     
-    score_value = float(request.form['score'])
-    commentaire = request.form.get('commentaire', '')
+    try:
+        score_value = float(request.form.get('score', 0))
+        commentaire = request.form.get('commentaire', '').strip()
+        
+        # Validate score range
+        if not (0 <= score_value <= 20):
+            flash('La note doit être entre 0 et 20', 'error')
+            return redirect(url_for('chef.workers'))
+        
+        # Create new score record
+        score = Score(
+            user_id=worker_id,
+            chef_id=chef.id,
+            score=score_value,
+            commentaire=commentaire
+        )
+        
+        # Update user's current score
+        worker.score = score_value
+        
+        db.session.add(score)
+        db.session.commit()
+        
+        flash(f'Note de {score_value}/20 attribuée à {worker.username} avec succès!', 'success')
+        
+    except (ValueError, TypeError) as e:
+        flash('Erreur lors de la saisie de la note. Veuillez réessayer.', 'error')
+        print(f"Erreur scoring: {e}")
+    except Exception as e:
+        db.session.rollback()
+        flash('Erreur lors de l\'attribution de la note. Veuillez réessayer.', 'error')
+        print(f"Erreur DB: {e}")
     
-    # Validate score range
-    if not (0 <= score_value <= 20):
-        flash('La note doit être entre 0 et 20', 'error')
-        return redirect(url_for('chef.workers'))
-    
-    # Create new score record
-    score = Score(
-        user_id=worker_id,
-        chef_id=chef.id,
-        score=score_value,
-        commentaire=commentaire
-    )
-    
-    # Update user's current score
-    worker.score = score_value
-    
-    db.session.add(score)
-    db.session.commit()
-    
-    flash(f'Note attribuée à {worker.username} avec succès!', 'success')
     return redirect(url_for('chef.workers'))
 
 @chef_bp.route('/score_history/<int:worker_id>')

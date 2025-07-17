@@ -106,13 +106,20 @@
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Score actuel</span>
                     <span class="text-lg font-bold text-orange-600">
-                        {{ worker.score if worker.score else 'N/A' }}/20
+                        {{ worker.score if worker.score and worker.score > 0 else 'Non évalué' }}{% if worker.score and worker.score > 0 %}/20{% endif %}
                     </span>
                 </div>
                 
                 {% if worker_scores[worker.id] %}
                 <div class="text-xs text-gray-500 dark:text-gray-400">
                     Dernière évaluation: {{ worker_scores[worker.id].date_attribution.strftime('%d/%m/%Y') }}
+                    {% if worker_scores[worker.id].commentaire %}
+                    <br>{{ worker_scores[worker.id].commentaire[:50] }}{% if worker_scores[worker.id].commentaire|length > 50 %}...{% endif %}
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-xs text-gray-500 dark:text-gray-400">
+                    Aucune évaluation disponible
                 </div>
                 {% endif %}
             </div>
@@ -205,9 +212,11 @@
 
 <script>
 function openScoreModal(workerId, workerName, currentScore) {
+    console.log('Opening score modal for:', workerName, 'Current score:', currentScore);
+    
     document.getElementById('workerName').textContent = workerName;
-    document.getElementById('scoreRange').value = currentScore;
-    document.getElementById('scoreDisplay').textContent = currentScore;
+    document.getElementById('scoreRange').value = currentScore || 10;
+    document.getElementById('scoreDisplay').textContent = currentScore || 10;
     document.getElementById('scoreForm').action = `/chef/score/${workerId}`;
     document.getElementById('scoreModal').classList.remove('hidden');
 }
@@ -221,11 +230,34 @@ function updateScoreDisplay() {
     document.getElementById('scoreDisplay').textContent = value;
 }
 
+// Ensure the form is submitted properly
+document.getElementById('scoreForm').addEventListener('submit', function(e) {
+    const score = document.getElementById('scoreRange').value;
+    const comment = document.querySelector('textarea[name="commentaire"]').value;
+    
+    console.log('Submitting score:', score, 'Comment:', comment);
+    
+    // Validation
+    if (score < 0 || score > 20) {
+        e.preventDefault();
+        alert('La note doit être entre 0 et 20');
+        return false;
+    }
+    
+    // The form will submit normally
+    return true;
+});
+
 // Close modal on outside click
 document.getElementById('scoreModal').addEventListener('click', function(e) {
     if (e.target === this) {
         closeScoreModal();
     }
+});
+
+// Initialize display on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateScoreDisplay();
 });
 </script>
 {% endblock %}
