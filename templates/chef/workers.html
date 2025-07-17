@@ -133,17 +133,26 @@
             </div>
             
             <!-- Actions -->
-            <div class="flex space-x-2">
-                <button onclick="openScoreModal({{ worker.id }}, '{{ worker.username }}', {{ worker.score if worker.score else 0 }})"
-                        class="flex-1 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-                    <i class="fas fa-star mr-1"></i>
-                    Noter
+            <div class="flex flex-col space-y-2">
+                <div class="flex space-x-2">
+                    <button onclick="openScoreModal({{ worker.id }}, '{{ worker.username }}', {{ worker.score if worker.score else 0 }})"
+                            class="flex-1 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                        <i class="fas fa-star mr-1"></i>
+                        Noter
+                    </button>
+                    <a href="{{ url_for('chef.score_history', worker_id=worker.id) }}"
+                       class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-colors text-center">
+                        <i class="fas fa-history mr-1"></i>
+                        Historique
+                    </a>
+                </div>
+                {% if worker.score %}
+                <button onclick="confirmClearHistory({{ worker.id }}, '{{ worker.username }}')"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                    <i class="fas fa-trash mr-1"></i>
+                    Effacer l'historique
                 </button>
-                <a href="{{ url_for('chef.score_history', worker_id=worker.id) }}"
-                   class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-colors text-center">
-                    <i class="fas fa-history mr-1"></i>
-                    Historique
-                </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -177,10 +186,17 @@
                         Note (0-20)
                     </label>
                     <div class="flex items-center space-x-4">
-                        <input type="range" name="score" id="scoreRange" min="0" max="20" value="10" 
+                        <input type="range" name="score" id="scoreRange" min="0" max="20" value="10" step="0.5"
                                class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                                oninput="updateScoreDisplay()">
-                        <div class="text-2xl font-bold text-orange-600 w-12 text-center" id="scoreDisplay">10</div>
+                        <div class="text-2xl font-bold text-orange-600 w-16 text-center" id="scoreDisplay">10</div>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-2">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Saisie directe :</span>
+                        <input type="number" id="scoreInput" min="0" max="20" step="0.5" value="10"
+                               class="w-20 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded 
+                                      bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                               oninput="updateScoreFromInput()">
                     </div>
                 </div>
                 
@@ -214,9 +230,11 @@
 function openScoreModal(workerId, workerName, currentScore) {
     console.log('Opening score modal for:', workerName, 'Current score:', currentScore);
     
+    const scoreValue = currentScore || 10;
     document.getElementById('workerName').textContent = workerName;
-    document.getElementById('scoreRange').value = currentScore || 10;
-    document.getElementById('scoreDisplay').textContent = currentScore || 10;
+    document.getElementById('scoreRange').value = scoreValue;
+    document.getElementById('scoreDisplay').textContent = scoreValue;
+    document.getElementById('scoreInput').value = scoreValue;
     document.getElementById('scoreForm').action = `/chef/score/${workerId}`;
     document.getElementById('scoreModal').classList.remove('hidden');
 }
@@ -228,6 +246,15 @@ function closeScoreModal() {
 function updateScoreDisplay() {
     const value = document.getElementById('scoreRange').value;
     document.getElementById('scoreDisplay').textContent = value;
+    document.getElementById('scoreInput').value = value;
+}
+
+function updateScoreFromInput() {
+    const value = document.getElementById('scoreInput').value;
+    if (value >= 0 && value <= 20) {
+        document.getElementById('scoreRange').value = value;
+        document.getElementById('scoreDisplay').textContent = value;
+    }
 }
 
 // Ensure the form is submitted properly
@@ -259,5 +286,28 @@ document.getElementById('scoreModal').addEventListener('click', function(e) {
 document.addEventListener('DOMContentLoaded', function() {
     updateScoreDisplay();
 });
+
+// Function to confirm history clearing
+function confirmClearHistory(workerId, workerName) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer tout l'historique de ${workerName} ?\n\nCette action est irréversible et supprimera toutes les évaluations.`)) {
+        fetch(`/chef/clear_history/${workerId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Erreur lors de la suppression de l\'historique');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la suppression de l\'historique');
+        });
+    }
+}
 </script>
 {% endblock %}

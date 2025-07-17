@@ -109,3 +109,65 @@ def score_history(worker_id):
     scores = Score.query.filter_by(user_id=worker_id).order_by(Score.date_attribution.desc()).all()
     
     return render_template('chef/score_history.html', worker=worker, scores=scores)
+
+@chef_bp.route('/delete_score/<int:score_id>', methods=['POST'])
+@chef_required
+def delete_score(score_id):
+    """Supprimer une note spécifique"""
+    chef = User.query.get(session['user_id'])
+    score = Score.query.get_or_404(score_id)
+    
+    # Verify chef can delete this score
+    if chef.role != 'admin' and score.chef_id != chef.id:
+        flash('Vous ne pouvez supprimer que vos propres évaluations', 'error')
+        return redirect(url_for('chef.workers'))
+    
+    try:
+        worker_id = score.user_id
+        worker = User.query.get(worker_id)
+        
+        # Delete the score
+        db.session.delete(score)
+        
+        # Update user's current score to the latest remaining score
+        latest_score = Score.query.filter_by(user_id=worker_id).order_by(Score.date_attribution.desc()).first()
+        worker.score = latest_score.score if latest_score else None
+        
+        db.session.commit()
+        flash('Évaluation supprimée avec succès', 'success')
+        
+    except Exception as e:
+        db.session.rollback()
+        flash('Erreur lors de la suppression', 'error')
+        print(f"Erreur suppression score: {e}")
+    
+    return redirect(url_for('chef.score_history', worker_id=worker_id))
+
+@chef_bp.route('/clear_history/<int:worker_id>', methods=['POST'])
+@chef_required
+def clear_worker_history(worker_id):
+    """Supprimer tout l'historique d'un ouvrier"""
+    chef = User.query.get(session['user_id'])
+    worker = User.query.get_or_404(worker_id)
+    
+    # Verify chef can clear this worker's history
+    if chef.role != 'admin' and worker.departement_id != chef.departement_id:
+        flash('Vous ne pouvez supprimer que les historiques de votre département', 'error')
+        return redirect(url_for('chef.workers'))
+    
+    try:
+        # Delete all scores for this worker
+        Score.query.filter_by(user_id=worker_id).delete()
+        
+        # Reset worker's current score
+        worker.score = None
+        
+        db.session.commit()
+        flash(f'Historique de {worker.username} supprimé avec succès', 'success')
+        
+    except Exception as e:
+        db.session.rollback()
+        flash('Erreur lors de la suppression de l\'historique', 'error')
+        print(f"Erreur suppression historique: {e}")
+    
+    return redirect(url_for('chef.workers'))
