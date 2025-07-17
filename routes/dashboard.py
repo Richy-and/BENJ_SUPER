@@ -36,7 +36,8 @@ def dashboard():
     }
     
     return render_template('dashboard/dashboard.html', 
-                         user=user, 
+                         user=user,
+                         current_user=user,
                          announcements=announcements,
                          finances=finances,
                          daily_verse=daily_verse,

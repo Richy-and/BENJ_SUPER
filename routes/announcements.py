@@ -278,3 +278,54 @@ def reject_announcement(announcement_id):
         flash(f'Erreur lors du rejet : {str(e)}', 'error')
     
     return redirect(url_for('announcements.admin_announcements'))
+
+@announcements_bp.route('/admin/announcements/edit/<int:announcement_id>', methods=['POST'])
+@require_login
+def admin_edit_announcement(announcement_id):
+    """Modifier une annonce depuis l'administration"""
+    user = get_current_user()
+    
+    if user.role != 'admin':
+        flash('Accès non autorisé', 'error')
+        return redirect(url_for('dashboard.dashboard'))
+    
+    try:
+        annonce = Announcement.query.get_or_404(announcement_id)
+        
+        # Récupérer les données du formulaire
+        annonce.titre = request.form.get('titre')
+        annonce.description = request.form.get('description')
+        annonce.date_programme = datetime.strptime(request.form.get('date_programme'), '%Y-%m-%d').date()
+        annonce.heure_programme = datetime.strptime(request.form.get('heure_programme'), '%H:%M').time()
+        annonce.lieu = request.form.get('lieu')
+        
+        intervenants_ids = request.form.getlist('intervenants')
+        annonce.intervenants = json.dumps(intervenants_ids) if intervenants_ids else None
+        
+        # Traiter la nouvelle photo si fournie
+        if 'photo' in request.files:
+            file = request.files['photo']
+            if file and file.filename and allowed_file(file.filename):
+                # Créer le dossier s'il n'existe pas
+                os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+                
+                # Supprimer l'ancienne photo
+                if annonce.photo_url:
+                    old_filepath = os.path.join('static', annonce.photo_url.lstrip('/static/'))
+                    if os.path.exists(old_filepath):
+                        os.remove(old_filepath)
+                
+                # Sauvegarder la nouvelle photo
+                filename = secure_filename(f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{file.filename}")
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filepath)
+                annonce.photo_url = f"/static/uploads/announcements/{filename}"
+        
+        db.session.commit()
+        flash('Annonce modifiée avec succès', 'success')
+        
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Erreur lors de la modification : {str(e)}', 'error')
+    
+    return redirect(url_for('announcements.admin_announcements'))
