@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Mon Profil - BENJ INSIDE{% endblock %}
+{% block title %}{{ t('profile') }} - BENJ INSIDE{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto space-y-8">
@@ -11,8 +11,8 @@
                 <i class="fas fa-user text-primary-600 text-2xl"></i>
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mon Profil</h1>
-                <p class="text-gray-600 dark:text-gray-400">Gérez vos informations personnelles</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white" data-translate="profile">{{ t('profile') }}</h1>
+                <p class="text-gray-600 dark:text-gray-400" data-translate="manage_profile">{{ t('manage_profile') if t('manage_profile') else 'Gérez vos informations personnelles' }}</p>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
                 <!-- Username -->
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Nom d'utilisateur
+                        <span data-translate="username">{{ t('username') }}</span>
                     </label>
                     <input type="text" id="username" name="username" value="{{ user.username }}" required
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
@@ -35,7 +35,7 @@
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Adresse email
+                        <span data-translate="email">{{ t('email') }}</span>
                     </label>
                     <input type="email" id="email" name="email" value="{{ user.email }}" required
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
@@ -46,10 +46,10 @@
                 <!-- Language -->
                 <div>
                     <label for="langue" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Langue préférée
+                        <span data-translate="preferred_language">{{ t('preferred_language') }}</span>
                     </label>
                     <select id="langue" name="langue" required
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                            class="language-selector w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
                                    bg-white dark:bg-gray-700 text-gray-900 dark:text-white
                                    focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors">
                         <option value="fr" {% if user.langue == 'fr' %}selected{% endif %}>Français</option>
@@ -60,6 +60,12 @@
                         <option value="it" {% if user.langue == 'it' %}selected{% endif %}>Italiano</option>
                         <option value="ar" {% if user.langue == 'ar' %}selected{% endif %}>العربية</option>
                     </select>
+                    <div class="language-loading hidden mt-2">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-500 mr-2"></div>
+                            <span data-translate="loading">{{ t('loading') }}</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Department (if applicable) -->
