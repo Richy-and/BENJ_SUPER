@@ -65,13 +65,23 @@
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Assistant biblique</p>
         </a>
         
-        {% if current_user.role in ['ouvrier', 'chef', 'admin'] %}
+        {% if current_user.role in ['chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis'] %}
         <a href="{{ url_for('announcements.announcements') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
             <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <i class="fas fa-bullhorn text-blue-600 text-xl"></i>
             </div>
             <h3 class="font-semibold text-gray-900 dark:text-white">Annonces</h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Créer des annonces</p>
+        </a>
+        {% endif %}
+        
+        {% if current_user.role == 'ouvrier' %}
+        <a href="{{ url_for('chef.department_members') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+            <div class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-users text-teal-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Mon Département</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Voir les membres et leurs scores</p>
         </a>
         {% endif %}
         

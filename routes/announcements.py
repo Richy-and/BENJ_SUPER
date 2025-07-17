@@ -32,12 +32,12 @@ def allowed_file(filename):
 @announcements_bp.route('/announcements')
 @require_login
 def announcements():
-    """Page des annonces pour les ouvriers"""
+    """Page des annonces pour les chefs"""
     user = get_current_user()
     
-    # Vérifier si l'utilisateur est ouvrier ou plus
-    if user.role not in ['ouvrier', 'chef', 'admin']:
-        flash('Accès non autorisé', 'error')
+    # Vérifier si l'utilisateur est chef ou admin (pas ouvrier)
+    if user.role not in ['chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis']:
+        flash('Accès non autorisé. Seuls les chefs peuvent créer des annonces.', 'error')
         return redirect(url_for('dashboard.dashboard'))
     
     # Récupérer les annonces créées par l'utilisateur
@@ -56,9 +56,9 @@ def create_announcement():
     """Créer une nouvelle annonce"""
     user = get_current_user()
     
-    # Vérifier si l'utilisateur est ouvrier ou plus
-    if user.role not in ['ouvrier', 'chef', 'admin']:
-        flash('Accès non autorisé', 'error')
+    # Vérifier si l'utilisateur est chef ou admin (pas ouvrier)
+    if user.role not in ['chef', 'admin', 'chef_chantres', 'chef_intercesseurs', 'chef_régis']:
+        flash('Accès non autorisé. Seuls les chefs peuvent créer des annonces.', 'error')
         return redirect(url_for('dashboard.dashboard'))
     
     try:
