@@ -28,6 +28,11 @@ Preferred communication style: Simple, everyday language.
 - **ADMIN CAPABILITIES**: Full CRUD operations for members - add, edit, delete with role management
 - **VALIDATION BUTTONS**: Updated all forms to use "Valider" buttons for consistency across registration and admin interfaces
 - **ENHANCED DEPARTMENTS**: Added more default departments (Administration, Jeunesse, Évangélisation)
+- **FINANCIAL TRANSACTIONS MANAGEMENT**: Complete CRUD operations for financial transactions (July 17, 2025)
+- **TRANSACTION EDITING**: Admin can now modify existing transactions with all fields (member, type, amount, deadline)
+- **TRANSACTION DELETION**: Admin can delete transactions with confirmation dialog
+- **IMPROVED FINANCE UI**: Enhanced finance management interface with edit/delete buttons and modal forms
+- **FINANCIAL VALIDATION**: All financial forms now use consistent "Valider" buttons
 - Fixed chatbot topic response formatting to display verses and interpretations properly
 - Enhanced error handling for OpenAI API key issues with user-friendly messages
 - Updated dashboard Kadosh.ia icon to use new logo instead of robot icon

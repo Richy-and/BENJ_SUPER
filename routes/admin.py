@@ -149,6 +149,35 @@ def toggle_payment(finance_id):
     flash(f'Transaction marquée comme {status}', 'success')
     return redirect(url_for('admin.finances'))
 
+@admin_bp.route('/finances/update/<int:finance_id>', methods=['POST'])
+@admin_required
+def update_finance(finance_id):
+    finance = Finance.query.get_or_404(finance_id)
+    
+    finance.user_id = request.form['user_id']
+    finance.montant = float(request.form['montant'])
+    finance.type = request.form['type']
+    
+    deadline_str = request.form.get('deadline')
+    if deadline_str:
+        finance.deadline = datetime.strptime(deadline_str, '%Y-%m-%d')
+    else:
+        finance.deadline = None
+    
+    db.session.commit()
+    flash('Transaction mise à jour avec succès!', 'success')
+    return redirect(url_for('admin.finances'))
+
+@admin_bp.route('/finances/delete/<int:finance_id>', methods=['POST'])
+@admin_required
+def delete_finance(finance_id):
+    finance = Finance.query.get_or_404(finance_id)
+    db.session.delete(finance)
+    db.session.commit()
+    
+    flash('Transaction supprimée avec succès!', 'success')
+    return redirect(url_for('admin.finances'))
+
 @admin_bp.route('/testimonials')
 @admin_required
 def testimonials_admin():
