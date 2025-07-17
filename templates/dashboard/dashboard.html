@@ -76,12 +76,25 @@
         {% endif %}
         
         {% if current_user.role == 'membre' %}
-        <a href="{{ url_for('department_requests.create_department_request') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
+        <a href="{{ url_for('department_requests.my_department_requests') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center">
             <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <i class="fas fa-building text-green-600 text-xl"></i>
             </div>
-            <h3 class="font-semibold text-gray-900 dark:text-white">Demande Département</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Rejoindre un département</p>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Candidatures</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Postuler aux départements</p>
+        </a>
+        {% endif %}
+        
+        {% if current_user.role == 'admin' and pending_requests_count > 0 %}
+        <a href="{{ url_for('department_requests.admin_department_requests') }}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center relative">
+            <div class="bg-red-100 dark:bg-red-900 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">Candidatures à traiter</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ pending_requests_count }} demande(s) en attente</p>
+            <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                {{ pending_requests_count }}
+            </div>
         </a>
         {% endif %}
     </div>
