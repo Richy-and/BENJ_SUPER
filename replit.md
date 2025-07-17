@@ -67,6 +67,11 @@ Preferred communication style: Simple, everyday language.
 - **DEPARTMENT REQUEST CREATION**: Members can submit requests with department selection, role choice, and motivation
 - **DEPARTMENT REQUEST APPROVAL**: Admin can approve requests which automatically updates member role and department
 - **DEPARTMENT REQUEST TRACKING**: Complete tracking of request status, review dates, and admin notes
+- **DASHBOARD CANDIDATURE INTERFACE**: Created dedicated candidature page for members with modal forms and process explanation (July 17, 2025)
+- **ADMIN CANDIDATURE NOTIFICATIONS**: Dashboard notifications for admins showing pending candidatures with counts and quick access
+- **CANDIDATURE WIDGET**: Integrated dashboard widget showing candidature status and quick actions for both members and admins
+- **NAVIGATION INTEGRATION**: Added candidature links to footer navigation for easy access across all pages
+- **CANDIDATURE WORKFLOW**: Complete workflow from member application to admin approval with automatic profile updates
 
 ## System Architecture
 

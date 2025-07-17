@@ -176,6 +176,24 @@ def my_department_requests():
     
     return render_template('dashboard/my_department_requests.html', mes_demandes=mes_demandes)
 
+@department_requests_bp.route('/candidatures')
+@require_login
+def department_candidatures():
+    """Page principale des candidatures pour les membres"""
+    user = get_current_user()
+    
+    # Récupérer les départements disponibles
+    departments = Department.query.all()
+    
+    # Récupérer les candidatures existantes de l'utilisateur
+    mes_candidatures = DepartmentRequest.query.filter_by(user_id=user.id).join(Department).order_by(
+        DepartmentRequest.created_at.desc()
+    ).all()
+    
+    return render_template('dashboard/department_candidature.html', 
+                         departments=departments, 
+                         mes_candidatures=mes_candidatures)
+
 @department_requests_bp.route('/department-request', methods=['GET', 'POST'])
 @require_login
 def create_department_request():
