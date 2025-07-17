@@ -70,9 +70,11 @@ def create_app():
     from routes.chef import chef_bp
     from routes.chatbot import chatbot_bp
     from routes.announcements import announcements_bp
+    from routes.department_requests import department_requests_bp
     
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
+    app.register_blueprint(department_requests_bp, url_prefix='/department-requests')
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(chef_bp, url_prefix='/chef')
     app.register_blueprint(chatbot_bp, url_prefix='/chatbot')

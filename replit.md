@@ -62,6 +62,11 @@ Preferred communication style: Simple, everyday language.
 - **ANNOUNCEMENT PHOTO UPLOADS**: Support for image uploads (PNG, JPG, JPEG, GIF, WebP) with file validation
 - **ANNOUNCEMENT SPEAKER SELECTION**: Multi-select functionality for choosing speakers from available workers
 - **DASHBOARD ANNOUNCEMENT DISPLAY**: Approved announcements shown on all user dashboards with full details
+- **DEPARTMENT REQUEST SYSTEM**: Complete system for members to request department roles with admin approval workflow (July 17, 2025)
+- **DEPARTMENT REQUEST MANAGEMENT**: Admin page to validate, reject, and delete member department requests
+- **DEPARTMENT REQUEST CREATION**: Members can submit requests with department selection, role choice, and motivation
+- **DEPARTMENT REQUEST APPROVAL**: Admin can approve requests which automatically updates member role and department
+- **DEPARTMENT REQUEST TRACKING**: Complete tracking of request status, review dates, and admin notes
 
 ## System Architecture
 

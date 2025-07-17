@@ -77,3 +77,25 @@ class Score(db.Model):
     # Relationships
     user = db.relationship('User', foreign_keys=[user_id], backref='scores_recus')
     chef = db.relationship('User', foreign_keys=[chef_id], backref='scores_donnes')
+
+class DepartmentRequest(db.Model):
+    __tablename__ = 'department_request'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=False)
+    role_requested = db.Column(db.String(50), nullable=False)  # 'ouvrier', 'chef', etc.
+    motivation = db.Column(db.Text)
+    statut = db.Column(db.String(20), default='en_attente')  # 'en_attente', 'approuve', 'rejete'
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    reviewed_at = db.Column(db.DateTime)
+    reviewed_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    admin_notes = db.Column(db.Text)
+    
+    # Relations
+    user = db.relationship('User', foreign_keys=[user_id], backref='department_requests')
+    department = db.relationship('Department', backref='requests')
+    reviewer = db.relationship('User', foreign_keys=[reviewed_by])
+    
+    def __repr__(self):
+        return f'<DepartmentRequest {self.user.username} -> {self.department.nom}>'
