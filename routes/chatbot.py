@@ -63,8 +63,23 @@ def get_topic_response(topic_name):
     from services.chatbot_data import BIBLICAL_TOPICS
     
     if topic_name in BIBLICAL_TOPICS:
+        topic_data = BIBLICAL_TOPICS[topic_name]
+        
+        # Format the response properly
+        formatted_response = f"## {topic_name.title()}\n\n"
+        
+        # Add verses
+        formatted_response += "### Versets bibliques:\n"
+        for verse in topic_data['versets']:
+            formatted_response += f"**{verse['reference']}**: {verse['text']}\n\n"
+        
+        # Add interpretations
+        formatted_response += "### Interprétations:\n"
+        for interpretation in topic_data['interpretations']:
+            formatted_response += f"• {interpretation}\n\n"
+        
         return jsonify({
-            'response': BIBLICAL_TOPICS[topic_name],
+            'response': formatted_response,
             'topic': topic_name
         })
     else:
