@@ -1325,6 +1325,85 @@ BIBLICAL_TOPICS.update({
 
 })
 
+# Greetings and conversational responses
+GREETINGS_RESPONSES = {
+    "bonjour": {
+        "response": """🙏 **Shalom et que la paix de Dieu soit avec vous !**
+
+Je suis **Kadosh.ia**, votre assistant biblique personnel de BENJ INSIDE. Je suis là pour vous accompagner dans votre cheminement spirituel.
+
+**Voici comment je peux vous aider :**
+• 📖 **Questions bibliques** - Posez-moi des questions sur la Bible
+• 🌟 **Plus de 75 sujets spirituels** - Explorez des thèmes comme la foi, l'amour, la prière
+• 💬 **Conseils pratiques** - Aide pour votre vie chrétienne quotidienne
+• 🔧 **Support technique** - Assistance avec l'application BENJ INSIDE
+
+**Comment puis-je vous servir aujourd'hui ?** 
+Vous pouvez me poser une question ou choisir un sujet dans le menu déroulant à droite.
+
+*"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d'eux."* - Matthieu 18:20""",
+        "followup": ["Avez-vous une question biblique particulière ?", "Souhaitez-vous explorer un sujet spirituel ?", "Comment va votre marche avec Dieu ?"]
+    },
+    "salut": {
+        "response": """🙏 Salut dans le nom de Jésus !
+
+Je suis Kadosh.ia, votre compagnon spirituel. Comment puis-je vous bénir aujourd'hui ?
+
+Vous pouvez me demander :
+• Des versets bibliques sur un sujet
+• Des conseils spirituels
+• De l'aide avec l'application
+
+Que la grâce de Dieu soit sur vous !""",
+        "followup": ["Dans quel domaine spirituel cherchez-vous de l'aide ?", "Comment puis-je vous accompagner dans votre foi ?"]
+    },
+    "bonsoir": {
+        "response": """🌙 **Bonsoir et que Dieu vous bénisse !**
+
+Je suis Kadosh.ia, prêt à vous accompagner dans ce moment de soirée. 
+
+*"Je me couche et je m'endors en paix, Car toi seul, ô Éternel ! tu me donnes la sécurité dans ma demeure."* - Psaume 4:8
+
+Comment puis-je vous aider ce soir ?""",
+        "followup": ["Avez-vous besoin de réconfort pour la soirée ?", "Souhaitez-vous un verset d'encouragement ?"]
+    },
+    "comment_allez_vous": {
+        "response": """🙏 Merci de prendre des nouvelles !
+
+Par la grâce de Dieu, je vais bien et je suis béni de pouvoir vous servir. Mon cœur est rempli de joie de pouvoir partager la Parole de Dieu avec vous.
+
+*"Mais moi, par ta grande miséricorde, Je vais à ta maison"* - Psaume 5:7
+
+**Et vous, comment allez-vous spirituellement ?** 
+• Avez-vous des préoccupations ?
+• Cherchez-vous la paix de Dieu ?
+• Puis-je prier pour quelque chose de spécial ?
+
+Je suis là pour vous écouter et vous accompagner.""",
+        "followup": ["Comment va votre relation avec Dieu ?", "Y a-t-il quelque chose pour lequel vous aimeriez que je prie ?"]
+    },
+    "merci": {
+        "response": """🙏 **Gloire à Dieu !**
+
+C'est un honneur de pouvoir vous servir. Toute gloire revient à notre Seigneur Jésus-Christ.
+
+*"Rendez grâces en toutes choses, car c'est à votre égard la volonté de Dieu en Jésus-Christ."* - 1 Thessaloniciens 5:18
+
+N'hésitez pas à revenir vers moi pour d'autres questions spirituelles. Que Dieu vous bénisse abondamment !""",
+        "followup": ["Y a-t-il autre chose pour laquelle je peux vous aider ?", "Souhaitez-vous explorer un autre sujet biblique ?"]
+    },
+    "au_revoir": {
+        "response": """🙏 **Que la paix de Dieu soit avec vous !**
+
+*"Que la grâce du Seigneur Jésus-Christ, l'amour de Dieu, et la communication du Saint-Esprit, soient avec vous tous !"* - 2 Corinthiens 13:14
+
+À bientôt pour de nouveaux moments d'échanges spirituels. Que Dieu vous bénisse et vous garde !
+
+**Shalom !** 🕊️""",
+        "followup": []
+    }
+}
+
 # Help responses for app functionality
 APP_HELP = {
     "connexion": "Pour vous connecter, cliquez sur 'Se connecter' en haut de la page et entrez vos identifiants. Si vous n'avez pas de compte, inscrivez-vous d'abord.",
@@ -1337,69 +1416,219 @@ APP_HELP = {
     "whatsapp": "Pour contacter la régis, utilisez le bouton WhatsApp disponible sur toutes les pages."
 }
 
+def get_greeting_response(question):
+    """Check if the question is a greeting and return appropriate response"""
+    question_lower = question.lower().strip()
+    
+    # Check for greetings
+    greetings_map = {
+        "bonjour": "bonjour",
+        "bonsoir": "bonsoir", 
+        "salut": "salut",
+        "hello": "bonjour",
+        "hi": "salut",
+        "hey": "salut",
+        "coucou": "salut",
+        "comment allez-vous": "comment_allez_vous",
+        "comment vas-tu": "comment_allez_vous",
+        "comment ça va": "comment_allez_vous",
+        "ça va": "comment_allez_vous",
+        "merci": "merci",
+        "thank you": "merci",
+        "au revoir": "au_revoir",
+        "bye": "au_revoir",
+        "à bientôt": "au_revoir",
+        "adieu": "au_revoir"
+    }
+    
+    for greeting_key, response_key in greetings_map.items():
+        if greeting_key in question_lower:
+            return GREETINGS_RESPONSES[response_key]["response"]
+    
+    return None
+
 def get_biblical_response(question):
     """Search for biblical responses based on keywords in the question"""
     question_lower = question.lower()
     
+    # First check for greetings
+    greeting_response = get_greeting_response(question)
+    if greeting_response:
+        return greeting_response
+    
     # Direct topic match
     for topic, content in BIBLICAL_TOPICS.items():
         if topic in question_lower:
-            response = f"**{topic.upper()}**\n\n"
+            response = f"## {topic.upper()}\n\n"
             
             # Add verses
-            response += "**Versets bibliques:**\n"
-            for i, verset in enumerate(content["versets"][:5], 1):  # Limit to 5 verses
-                response += f"{i}. {verset['reference']}: \"{verset['text']}\"\n\n"
+            response += "### Versets bibliques:\n"
+            for i, verset in enumerate(content["versets"][:4], 1):  # Limit to 4 verses
+                response += f"**{i}. {verset['reference']}:** \"{verset['text']}\"\n\n"
             
             # Add interpretations
-            response += "**Interprétations:**\n"
+            response += "### Interprétations:\n"
             for i, interpretation in enumerate(content["interpretations"], 1):
-                response += f"{i}. {interpretation}\n"
+                response += f"**{i}.** {interpretation}\n\n"
+            
+            response += "\n*Que cette Parole vous bénisse et vous fortifie dans votre marche avec Dieu !* 🙏"
             
             return response
     
-    # Keyword matching for related topics
-    keywords_mapping = {
-        "dieu": ["amour", "foi", "prière"],
-        "jésus": ["amour", "foi", "paix"],
-        "christ": ["amour", "foi", "paix"],
-        "bible": ["sagesse", "foi", "prière"],
-        "église": ["amour", "prière", "humilité"],
-        "péché": ["pardon", "foi", "amour"],
-        "salut": ["foi", "amour", "espérance"],
-        "vie": ["espérance", "paix", "sagesse"],
-        "mort": ["espérance", "foi", "paix"],
-        "argent": ["dîme", "sagesse", "humilité"],
-        "famille": ["mariage", "amour", "patience"],
-        "travail": ["patience", "sagesse", "humilité"],
-        "maladie": ["guérison", "foi", "prière"],
-        "problème": ["prière", "patience", "espérance"],
-        "difficulté": ["espérance", "patience", "foi"],
-        "tristesse": ["paix", "espérance", "prière"],
-        "joie": ["reconnaissance", "paix", "amour"],
-        "peur": ["foi", "paix", "prière"],
-        "colère": ["patience", "pardon", "humilité"],
-        "merci": ["reconnaissance", "prière", "humilité"]
+    # Enhanced keyword search with more spiritual terms
+    spiritual_keywords = {
+        "dieu": "foi",
+        "jésus": "foi", 
+        "christ": "foi",
+        "bible": "foi",
+        "prière": "prière",
+        "prier": "prière",
+        "foi": "foi",
+        "amour": "amour",
+        "paix": "paix",
+        "espoir": "espérance",
+        "espérance": "espérance",
+        "pardon": "pardon",
+        "pardonner": "pardon",
+        "guérison": "guérison",
+        "guérir": "guérison",
+        "mariage": "mariage",
+        "famille": "famille",
+        "travail": "travail",
+        "argent": "richesse",
+        "richesse": "richesse",
+        "pauvreté": "pauvreté",
+        "pauvre": "pauvreté",
+        "mort": "mort",
+        "mourir": "mort",
+        "résurrection": "résurrection",
+        "salut": "salut",
+        "sauvé": "salut",
+        "baptême": "baptême",
+        "baptiser": "baptême",
+        "communion": "communion",
+        "péché": "péché",
+        "pécher": "péché",
+        "repentance": "repentance",
+        "repentir": "repentance",
+        "saint-esprit": "saint-esprit",
+        "esprit saint": "saint-esprit",
+        "anges": "anges",
+        "ange": "anges",
+        "démon": "démons",
+        "démons": "démons",
+        "satan": "satan",
+        "diable": "satan",
+        "tentation": "tentation",
+        "tenter": "tentation",
+        "jeûne": "jeûne",
+        "jeûner": "jeûne",
+        "adoration": "adoration",
+        "adorer": "adoration",
+        "louange": "louange",
+        "louer": "louange",
+        "bénédiction": "bénédiction",
+        "bénir": "bénédiction",
+        "miracle": "miracles",
+        "miracles": "miracles",
+        "prophétie": "prophétie",
+        "prophète": "prophétie",
+        "vision": "vision",
+        "rêve": "vision",
+        "église": "église",
+        "pasteur": "ministère",
+        "servir": "ministère",
+        "service": "ministère",
+        "témoin": "témoignage",
+        "témoigner": "témoignage",
+        "évangile": "évangélisation",
+        "évangéliser": "évangélisation",
+        "disciples": "disciple",
+        "disciple": "disciple",
+        "obéissance": "obéissance",
+        "obéir": "obéissance",
+        "humilité": "humilité",
+        "humble": "humilité",
+        "patience": "patience",
+        "patient": "patience",
+        "persévérance": "persévérance",
+        "persévérer": "persévérance",
+        "confiance": "confiance",
+        "confier": "confiance",
+        "espoir": "espérance",
+        "espérer": "espérance",
+        "reconnaissance": "reconnaissance",
+        "reconnaissant": "reconnaissance",
+        "louange": "louange",
+        "louer": "louange",
+        "adoration": "adoration",
+        "adorer": "adoration",
+        "crainte": "crainte",
+        "respect": "crainte",
+        "sagesse": "sagesse",
+        "sage": "sagesse",
+        "connaissance": "connaissance",
+        "connaître": "connaissance",
+        "vérité": "vérité",
+        "vrai": "vérité",
+        "mensonge": "vérité",
+        "mentir": "vérité",
+        "justice": "justice",
+        "juste": "justice",
+        "injustice": "justice",
+        "paix": "paix",
+        "guerre": "paix",
+        "conflit": "paix",
+        "réconciliation": "réconciliation",
+        "réconcilier": "réconciliation",
+        "unité": "unité",
+        "unis": "unité",
+        "division": "unité",
+        "communion": "communion",
+        "partage": "communion",
+        "solidarité": "communion",
+        "fraternité": "communion",
+        "amitié": "amour",
+        "ami": "amour",
+        "prochain": "amour",
+        "ennemi": "amour",
+        "haine": "amour",
+        "colère": "colère",
+        "en colère": "colère",
+        "irrité": "colère",
+        "furieux": "colère",
+        "pardonner": "pardon",
+        "pardon": "pardon",
+        "rancune": "pardon",
+        "vengeance": "pardon",
+        "miséricorde": "miséricorde",
+        "compassion": "miséricorde",
+        "pitié": "miséricorde",
+        "bonté": "bonté",
+        "bon": "bonté",
+        "méchant": "bonté",
+        "méchanceté": "bonté"
     }
     
-    for keyword, related_topics in keywords_mapping.items():
-        if keyword in question_lower:
-            topic = related_topics[0]  # Take the first related topic
-            if topic in BIBLICAL_TOPICS:
-                content = BIBLICAL_TOPICS[topic]
-                response = f"**{topic.upper()}** (en rapport avec votre question)\n\n"
-                
-                # Add verses
-                response += "**Versets bibliques:**\n"
-                for i, verset in enumerate(content["versets"][:3], 1):  # Limit to 3 verses
-                    response += f"{i}. {verset['reference']}: \"{verset['text']}\"\n\n"
-                
-                # Add interpretations
-                response += "**Interprétations:**\n"
-                for i, interpretation in enumerate(content["interpretations"], 1):
-                    response += f"{i}. {interpretation}\n"
-                
-                return response
+    for keyword, topic in spiritual_keywords.items():
+        if keyword in question_lower and topic in BIBLICAL_TOPICS:
+            content = BIBLICAL_TOPICS[topic]
+            response = f"## {topic.upper()}\n\n"
+            response += f"Voici des versets sur **{keyword}** :\n\n"
+            
+            # Add 3 verses
+            response += "### Versets bibliques:\n"
+            for i, verset in enumerate(content["versets"][:3], 1):
+                response += f"**{i}. {verset['reference']}:** \"{verset['text']}\"\n\n"
+            
+            # Add spiritual insight
+            response += "### Interprétation spirituelle:\n"
+            response += f"**💡 Conseil spirituel:** {content['interpretations'][0]}\n\n"
+            
+            response += "Pour plus de détails, utilisez le menu déroulant pour explorer ce sujet ou posez-moi une question plus spécifique.\n\n"
+            response += "*Que cette Parole vous bénisse et vous fortifie dans votre marche avec Dieu !* 🙏"
+            
+            return response
     
     return None
 
