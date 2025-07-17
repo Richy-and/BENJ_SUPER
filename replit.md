@@ -23,6 +23,11 @@ Preferred communication style: Simple, everyday language.
 - **CHATBOT MULTILINGUAL**: Kadosh.ia now responds in user's selected language with localized greetings and personality context
 - **TRANSLATION SERVICE**: Created comprehensive translation service with 80+ UI text translations and OpenAI multilingual prompts
 - **ENHANCED UX**: Language selection in profile page now works dynamically with visual feedback and success notifications
+- **MEMBER MANAGEMENT SYSTEM**: Complete admin interface for managing members with all hierarchical roles (July 17, 2025)
+- **NEW ROLE HIERARCHY**: Added chantres, intercesseurs, régis, chef_chantres, chef_intercesseurs, chef_régis roles
+- **ADMIN CAPABILITIES**: Full CRUD operations for members - add, edit, delete with role management
+- **VALIDATION BUTTONS**: Updated all forms to use "Valider" buttons for consistency across registration and admin interfaces
+- **ENHANCED DEPARTMENTS**: Added more default departments (Administration, Jeunesse, Évangélisation)
 - Fixed chatbot topic response formatting to display verses and interpretations properly
 - Enhanced error handling for OpenAI API key issues with user-friendly messages
 - Updated dashboard Kadosh.ia icon to use new logo instead of robot icon
