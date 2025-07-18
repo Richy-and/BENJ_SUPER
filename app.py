@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_babel import Babel
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.engine.url import make_url
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Configure logging
@@ -32,6 +33,15 @@ def create_app():
     if not db_url:
         logger.warning("DATABASE_URL not set. Using local SQLite database.")
         db_url = "sqlite:///local.db"
+    else:
+        # Parse URL and force psycopg2 driver + SSL
+        try:
+            url = make_url(db_url)
+            url = url.set(drivername="postgresql+psycopg2")
+            db_url = str(url)
+            logger.info(f"Using DATABASE_URL: {db_url}")
+        except Exception as e:
+            logger.error(f"Error parsing DATABASE_URL: {e}")
 
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
@@ -40,7 +50,8 @@ def create_app():
         "pool_pre_ping": True,
     }
 
-    app.secret_key = os.environ.get("SESSION_SECRET", "your-secret-key-here")
+    # Set secret keys securely
+    app.secret_key = os.environ.get("SESSION_SECRET") or os.urandom(24)
     app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "jwt-secret-string")
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
     app.config["BABEL_DEFAULT_LOCALE"] = "fr"
@@ -108,6 +119,13 @@ def create_app():
         response.headers['Pragma'] = 'no-cache'
         response.headers['Expires'] = '0'
         return response
+
+    # Google Drive credentials
+    if os.path.exists('credentials.json'):
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
+        logger.info("Google Drive credentials loaded.")
+    else:
+        logger.warning("credentials.json not found. Google Drive API might not work.")
 
     # Health check endpoint
     @app.route('/health')
