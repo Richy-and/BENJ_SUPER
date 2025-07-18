@@ -467,6 +467,7 @@ def edit_user_admin(user_id):
     email = request.form.get('email', '').strip()
     role = request.form.get('role', '').strip()
     department_id = request.form.get('department_id')
+    langue = request.form.get('langue', 'fr').strip()
     new_password = request.form.get('new_password', '').strip()
     
     # Validation des données
@@ -491,6 +492,7 @@ def edit_user_admin(user_id):
         user.username = username
         user.email = email
         user.role = role
+        user.langue = langue
         
         # Mettre à jour le département si fourni
         if department_id and department_id != '':
