@@ -178,4 +178,4 @@ dist/
 tmp/
 temp/
 *.tmp
-*.temp
+*.temp"google_credentials.json" 
