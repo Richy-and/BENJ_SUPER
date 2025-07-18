@@ -1,6 +1,5 @@
 import os
 import logging
-import psycopg2
 from datetime import timedelta
 
 from flask import Flask
@@ -25,19 +24,19 @@ babel = Babel()
 def create_app():
     app = Flask(__name__)
 
-    # Force SSL for PostgreSQL connections on Render
-    os.environ['PGSSLMODE'] = 'require'
-
     # Get DATABASE_URL from environment or fallback to SQLite local DB for dev
     db_url = os.environ.get("DATABASE_URL")
     if not db_url:
         logger.warning("DATABASE_URL not set. Using local SQLite database.")
         db_url = "sqlite:///local.db"
     else:
-        # Parse URL and force psycopg2 driver + SSL
+        # Parse and ensure driver and sslmode for PostgreSQL
         try:
             url = make_url(db_url)
             url = url.set(drivername="postgresql+psycopg2")
+            # Add sslmode=require query param if not present
+            if not url.query.get("sslmode"):
+                url = url.set(query={**url.query, "sslmode": "require"})
             db_url = str(url)
             logger.info(f"Using DATABASE_URL: {db_url}")
         except Exception as e:
@@ -45,7 +44,6 @@ def create_app():
 
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "connect_args": {"sslmode": "require"},  # Force SSL mode for psycopg2
         "pool_recycle": 300,
         "pool_pre_ping": True,
     }
@@ -74,53 +72,7 @@ def create_app():
     jwt.init_app(app)
     babel.init_app(app)
 
-    # Initialize translation service
-    from services.translation_service import register_template_context
-    register_template_context(app)
-
-    # Custom Jinja filter for JSON parsing
-    import json
-    @app.template_filter('from_json')
-    def from_json_filter(value):
-        if value:
-            return json.loads(value)
-        return []
-
-    # Register blueprints
-    from routes.auth import auth_bp
-    from routes.dashboard import dashboard_bp
-    from routes.admin import admin_bp
-    from routes.chef import chef_bp
-    from routes.chatbot import chatbot_bp
-    from routes.announcements import announcements_bp
-    from routes.department_requests import department_requests_bp
-    from routes.finances import finances_bp
-
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
-    app.register_blueprint(department_requests_bp, url_prefix='/department-requests')
-    app.register_blueprint(admin_bp, url_prefix='/admin')
-    app.register_blueprint(chef_bp, url_prefix='/chef')
-    app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
-    app.register_blueprint(announcements_bp)
-    app.register_blueprint(finances_bp)
-
-    # Security headers
-    @app.after_request
-    def add_security_headers(response):
-        response.headers['X-Content-Type-Options'] = 'nosniff'
-        response.headers['X-Frame-Options'] = 'DENY'
-        response.headers['X-XSS-Protection'] = '1; mode=block'
-        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-        response.headers['Pragma'] = 'no-cache'
-        response.headers['Expires'] = '0'
-        return response
-
-    # Google Drive credentials
+    # Google Drive credentials environment variable
     if os.path.exists('credentials.json'):
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
         logger.info("Google Drive credentials loaded.")
@@ -139,7 +91,7 @@ def create_app():
         from flask import render_template
         return render_template('index.html')
 
-    # Database initialization
+    # Initialize DB content
     with app.app_context():
         from models import User, Department, Announcement
         from werkzeug.security import generate_password_hash
