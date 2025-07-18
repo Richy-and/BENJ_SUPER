@@ -1,0 +1,306 @@
+/* Optimisations spécifiques mobiles pour déploiement Render */
+
+/* iPhone X/11/12/13/14/15 Safe Areas */
+@supports (padding: max(0px)) {
+    .safe-area-top {
+        padding-top: max(1rem, env(safe-area-inset-top));
+    }
+    
+    .safe-area-bottom {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+    
+    .safe-area-left {
+        padding-left: max(1rem, env(safe-area-inset-left));
+    }
+    
+    .safe-area-right {
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
+}
+
+/* Android Chrome optimisations */
+@media screen and (max-width: 768px) {
+    /* Fix pour zoom Android */
+    input[type="text"],
+    input[type="email"], 
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 16px !important; /* Empêche le zoom sur Android */
+        max-width: 100%;
+    }
+    
+    /* Amélioration touch targets */
+    button, .btn, a.button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 16px;
+    }
+    
+    /* Navigation mobile friendly */
+    .navbar-nav {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+    }
+}
+
+/* Samsung Internet optimisations */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    .high-dpi {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+
+/* iOS Safari optimisations */
+@supports (-webkit-touch-callout: none) {
+    /* Fix sticky hover sur iOS */
+    .hover-fix:hover {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Fix scroll bounce iOS */
+    body {
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix input zoom iOS */
+    input, textarea, select {
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+}
+
+/* PWA Optimisations */
+@media (display-mode: standalone) {
+    /* Mode PWA installée */
+    body {
+        background-attachment: fixed; /* Fix scroll iOS PWA */
+    }
+    
+    .pwa-only {
+        display: block !important;
+    }
+    
+    .browser-only {
+        display: none !important;
+    }
+    
+    /* Status bar pour PWA */
+    .status-bar-spacer {
+        height: env(safe-area-inset-top, 20px);
+        background: var(--primary-color);
+    }
+}
+
+/* Optimisations tablettes */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding: 0 2rem;
+    }
+    
+    .grid-responsive {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+/* Firefox Mobile */
+@-moz-document url-prefix() {
+    @media (max-width: 768px) {
+        input[type="range"] {
+            background: transparent;
+        }
+        
+        select {
+            background-image: none;
+        }
+    }
+}
+
+/* Edge Mobile optimisations */
+@supports (-ms-ime-align: auto) {
+    @media (max-width: 768px) {
+        .flex {
+            display: -ms-flexbox;
+        }
+        
+        .grid {
+            display: -ms-grid;
+        }
+    }
+}
+
+/* Opera Mini optimisations */
+@media all and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: .001dpcm) {
+    .opera-mini-fix {
+        transform: translateZ(0);
+    }
+}
+
+/* Landscape mobile optimisations */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .navbar {
+        min-height: 50px;
+    }
+    
+    .modal {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .btn {
+        border: 2px solid;
+        font-weight: bold;
+    }
+    
+    .card {
+        border: 2px solid;
+        box-shadow: none;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .animated {
+        animation: none;
+    }
+    
+    .transition {
+        transition: none;
+    }
+}
+
+/* Dark mode natif système */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1a1a1a;
+        --text-primary: #ffffff;
+        --border-color: #333333;
+    }
+}
+
+/* Print optimisations */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-friendly {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+    
+    a::after {
+        content: " (" attr(href) ")";
+    }
+}
+
+/* Accessibilité clavier */
+.focus-visible:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Touch gestures */
+.swipeable {
+    touch-action: pan-x;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Performance optimisations */
+.gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.contain-layout {
+    contain: layout;
+}
+
+.contain-paint {
+    contain: paint;
+}
+
+/* Loading states responsive */
+.loading-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .loading-desktop {
+        display: none;
+    }
+    
+    .loading-mobile {
+        display: block;
+    }
+}
+
+/* Audio player mobile */
+@media (max-width: 768px) {
+    audio {
+        width: 100%;
+        height: 50px;
+    }
+    
+    .audio-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Notifications mobile */
+.notification-mobile {
+    position: fixed;
+    top: env(safe-area-inset-top, 20px);
+    left: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.notification-mobile.show {
+    transform: translateY(0);
+}
+
+/* Compatibility fallbacks */
+.flex-fallback {
+    display: block;
+}
+
+@supports (display: flex) {
+    .flex-fallback {
+        display: flex;
+    }
+}
+
+.grid-fallback {
+    display: block;
+}
+
+@supports (display: grid) {
+    .grid-fallback {
+        display: grid;
+    }
+}
