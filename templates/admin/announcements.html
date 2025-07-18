@@ -74,7 +74,7 @@
                         </h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
                             <i class="fas fa-calendar mr-1"></i>
-                            Publié le {{ announcement.date_publication.strftime('%d/%m/%Y à %H:%M') }}
+                            Publié le {{ announcement.date_creation.strftime('%d/%m/%Y à %H:%M') }}
                         </p>
                     </div>
                     <form method="POST" action="{{ url_for('admin.delete_announcement', announcement_id=announcement.id) }}" class="inline"
