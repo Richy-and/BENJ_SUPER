@@ -1,6 +1,5 @@
 import os
 import logging
-import ssl
 import psycopg2
 from datetime import timedelta
 
@@ -13,6 +12,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class Base(DeclarativeBase):
     pass
@@ -24,17 +24,18 @@ babel = Babel()
 def create_app():
     app = Flask(__name__)
 
-    # Force SSL for PostgreSQL on Render
+    # Force SSL for PostgreSQL connections on Render
     os.environ['PGSSLMODE'] = 'require'
 
-    # Configuration base de données - Render en priorité, puis local
+    # Get DATABASE_URL from environment or fallback to SQLite local DB for dev
     db_url = os.environ.get("DATABASE_URL")
     if not db_url:
-        logging.warning("DATABASE_URL not set. Using local SQLite database.")
+        logger.warning("DATABASE_URL not set. Using local SQLite database.")
         db_url = "sqlite:///local.db"
 
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "connect_args": {"sslmode": "require"},  # Force SSL mode for psycopg2
         "pool_recycle": 300,
         "pool_pre_ping": True,
     }
@@ -54,7 +55,7 @@ def create_app():
         'ar': 'العربية'
     }
 
-    # Apply proxy fix for production - Essential for external access on Render
+    # Apply proxy fix for correct headers behind proxy (Render)
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1, x_port=1, x_prefix=1)
 
     # Initialize extensions
@@ -66,7 +67,7 @@ def create_app():
     from services.translation_service import register_template_context
     register_template_context(app)
 
-    # Add custom Jinja filters
+    # Custom Jinja filter for JSON parsing
     import json
     @app.template_filter('from_json')
     def from_json_filter(value):
@@ -108,31 +109,35 @@ def create_app():
         response.headers['Expires'] = '0'
         return response
 
-    # Health check
+    # Health check endpoint
     @app.route('/health')
     def health_check():
         from flask import jsonify
         return jsonify({'status': 'healthy', 'service': 'BENJ INSIDE', 'version': '1.0.0'}), 200
 
-    # Main routes
+    # Main route
     @app.route('/')
     def index():
         from flask import render_template
         return render_template('index.html')
 
+    # Database initialization
     with app.app_context():
         from models import User, Department, Announcement
         from werkzeug.security import generate_password_hash
 
-        db.create_all()
+        try:
+            db.create_all()
+        except Exception as e:
+            logger.error(f"Error during db.create_all(): {e}")
 
-        # Create default departments
+        # Default departments
         departments = ['Chantres', 'Intercesseurs', 'Régis', 'Administration', 'Jeunesse', 'Évangélisation']
         for dept_name in departments:
             if not Department.query.filter_by(nom=dept_name).first():
                 db.session.add(Department(nom=dept_name))
 
-        # Create admin user
+        # Admin user
         admin = User.query.filter_by(username='Yohann').first()
         if not admin:
             admin = User(
@@ -144,7 +149,7 @@ def create_app():
             )
             db.session.add(admin)
 
-        # Create default announcement
+        # Default announcement
         if not Announcement.query.first():
             from datetime import date, time
             db.session.add(Announcement(
@@ -161,7 +166,3 @@ def create_app():
     return app
 
 app = create_app()
-
-
-
-
