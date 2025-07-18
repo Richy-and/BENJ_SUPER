@@ -25,7 +25,7 @@ def create_app():
     # Configuration
     app.secret_key = os.environ.get("SESSION_SECRET", "your-secret-key-here")
     # Configuration base de données - Render en priorité, puis local
-    render_db_url = "postgresql://benj_database_user:iqYVjcyqBmkvh7NdRmgFPARGjIQ8IJ06@dpg-d1smjth5pdvs73cklebg-a/benj_database"
+    render_db_url = "postgresql://dry_moulongo_user:Mj48I1v3ZSDLOqvTBmbTBxPbTQF4SlW1@dpg-d1t4liruibrs738t5ijg-/dry_moulongo"
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", render_db_url)
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
         "pool_recycle": 300,
