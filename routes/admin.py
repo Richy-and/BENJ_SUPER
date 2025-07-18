@@ -379,14 +379,20 @@ def delete_user_admin(user_id):
         
         try:
             # Supprimer dans l'ordre pour éviter les violations de contraintes
+            
+            # 1. D'abord, mettre à NULL les références vers cet utilisateur dans d'autres tables
+            cursor.execute("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = %s", (user_id,))
+            cursor.execute("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = %s", (user_id,))
+            
+            # 2. Ensuite, supprimer les enregistrements où l'utilisateur est propriétaire
             cursor.execute("DELETE FROM score WHERE user_id = %s", (user_id,))
             cursor.execute("DELETE FROM score WHERE chef_id = %s", (user_id,))
             cursor.execute("DELETE FROM temoignage WHERE user_id = %s", (user_id,))
             cursor.execute("DELETE FROM finance WHERE user_id = %s", (user_id,))
             cursor.execute("DELETE FROM department_request WHERE user_id = %s", (user_id,))
-            cursor.execute("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = %s", (user_id,))
             cursor.execute("DELETE FROM announcement WHERE cree_par = %s", (user_id,))
-            cursor.execute("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = %s", (user_id,))
+            
+            # 3. Enfin, supprimer l'utilisateur lui-même
             cursor.execute("DELETE FROM \"user\" WHERE id = %s", (user_id,))
             
             # Valider la transaction
