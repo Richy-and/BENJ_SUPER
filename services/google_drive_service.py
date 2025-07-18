@@ -145,9 +145,16 @@ class GoogleDriveService:
         except Exception as e:
             error_msg = f"Erreur lors de l'upload: {str(e)}"
             logger.error(error_msg)
+            
+            # Si c'est un problème de quota, indiquer le fallback
+            if "storageQuotaExceeded" in str(e) or "quota" in str(e).lower():
+                error_msg = "Quota Google Drive dépassé - fallback vers stockage local activé"
+                logger.warning(error_msg)
+            
             return {
                 'success': False,
-                'error': error_msg
+                'error': error_msg,
+                'quota_exceeded': "quota" in str(e).lower()
             }
     
     def delete_audio_file(self, file_id):

@@ -64,6 +64,11 @@ class CloudAudioService:
             upload_result = self.google_drive.upload_audio_file(file_data, filename)
             
             if not upload_result['success']:
+                # Si quota dépassé, fallback vers stockage local
+                if upload_result.get('quota_exceeded', False):
+                    logger.warning("Quota Google Drive dépassé, utilisation du stockage local...")
+                    return self._save_file_locally_fallback(file_data, filename, title, description, volume)
+                
                 return {
                     'success': False,
                     'error': f"Erreur Google Drive: {upload_result['error']}"
