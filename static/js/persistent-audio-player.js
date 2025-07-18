@@ -26,8 +26,9 @@ class PersistentAudioPlayer {
         // Create or reuse existing audio element
         this.audioElement = document.getElementById('persistent-audio') || document.createElement('audio');
         this.audioElement.id = 'persistent-audio';
-        this.audioElement.preload = 'metadata';
+        this.audioElement.preload = 'none'; // Optimisé pour streaming sans téléchargement
         this.audioElement.style.display = 'none';
+        this.audioElement.crossOrigin = 'anonymous'; // Support CORS pour streaming cloud
         document.body.appendChild(this.audioElement);
         
         // Audio event listeners
@@ -180,7 +181,9 @@ class PersistentAudioPlayer {
     loadAndPlay() {
         if (!this.currentTrack) return;
         
+        // Optimisation pour streaming sans téléchargement
         this.audioElement.src = this.currentTrack.url;
+        this.audioElement.preload = 'none'; // Évite le téléchargement automatique
         this.audioElement.load();
         
         // Set volume (admin setting for users)
@@ -198,10 +201,12 @@ class PersistentAudioPlayer {
                 .then(() => {
                     this.isPlaying = true;
                     this.updateMiniPlayer();
-                    console.log('Persistent audio started:', this.currentTrack.title);
+                    console.log('Streaming audio started (no download):', this.currentTrack.title);
                 })
                 .catch(error => {
-                    console.error('Error playing persistent audio:', error);
+                    console.error('Error streaming audio:', error);
+                    // Fallback: essayer de charger à nouveau
+                    setTimeout(() => this.loadAndPlay(), 2000);
                 });
         }, { once: true });
     }
