@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#3b82f6">
+    
+    <title>Installer BENJ INSIDE</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/icon-72x72.svg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192x192.svg') }}">
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .install-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .device-icon {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-active {
+            background: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-lg mb-6">
+                <img src="{{ url_for('static', filename='images/benj_logo.jpeg') }}" 
+                     alt="BENJ INSIDE" class="w-16 h-16 rounded-full">
+            </div>
+            <h1 class="text-4xl font-bold text-white mb-4">
+                Installer BENJ INSIDE
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Votre plateforme de gestion chrétienne, accessible partout, sur n'importe quel appareil
+            </p>
+        </div>
+
+        <!-- Installation Cards -->
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <!-- Android -->
+            <div class="install-card rounded-xl p-6 text-center shadow-xl">
+                <div class="device-icon text-6xl text-green-500 mb-4">
+                    <i class="fab fa-android"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-gray-800">Android</h3>
+                <p class="text-gray-600 mb-6">
+                    Compatible avec Chrome, Samsung Internet, Firefox et tous les navigateurs Android
+                </p>
+                <div class="space-y-3 text-sm text-left">
+                    <div class="flex items-center">
+                        <span class="step-indicator step-active w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">1</span>
+                        <span>Ouvrir le lien dans votre navigateur</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="step-indicator w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3 bg-gray-200">2</span>
+                        <span>Appuyer sur "Ajouter à l'écran d'accueil"</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="step-indicator w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3 bg-gray-200">3</span>
+                        <span>Confirmer l'installation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- iPhone/iPad -->
+            <div class="install-card rounded-xl p-6 text-center shadow-xl">
+                <div class="device-icon text-6xl text-gray-800 mb-4">
+                    <i class="fab fa-apple"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-gray-800">iPhone/iPad</h3>
+                <p class="text-gray-600 mb-6">
+                    Compatible avec Safari, Chrome iOS, Edge et tous les navigateurs iOS
+                </p>
+                <div class="space-y-3 text-sm text-left">
+                    <div class="flex items-center">
+                        <span class="step-indicator step-active w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">1</span>
+                        <span>Ouvrir le lien dans Safari</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="step-indicator w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3 bg-gray-200">2</span>
+                        <span>Appuyer sur l'icône de partage</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="step-indicator w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3 bg-gray-200">3</span>
+                        <span>Sélectionner "Sur l'écran d'accueil"</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop -->
+            <div class="install-card rounded-xl p-6 text-center shadow-xl">
+                <div class="device-icon text-6xl text-blue-500 mb-4">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-gray-800">Desktop</h3>
+                <p class="text-gray-600 mb-6">
+                    Compatible avec Chrome, Firefox, Safari, Edge sur Windows, Mac et Linux
+                </p>
+                <div class="space-y-3 text-sm text-left">
+                    <div class="flex items-center">
+                        <span class="step-indicator step-active w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">1</span>
+                        <span>Ouvrir le lien dans votre navigateur</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="step-indicator w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3 bg-gray-200">2</span>
+                        <span>Cliquer sur l'icône d'installation</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="step-indicator w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3 bg-gray-200">3</span>
+                        <span>Confirmer "Installer l'application"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Access -->
+        <div class="install-card rounded-xl p-8 text-center shadow-xl mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-rocket text-blue-500 mr-3"></i>
+                Accès Direct
+            </h2>
+            <p class="text-lg text-gray-600 mb-8">
+                Pas besoin d'installation ? Utilisez directement l'application dans votre navigateur
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ url_for('auth.login') }}" 
+                   class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors shadow-lg">
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Se Connecter
+                </a>
+                <a href="{{ url_for('auth.register') }}" 
+                   class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors shadow-lg">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    S'Inscrire
+                </a>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="install-card rounded-xl p-8 shadow-xl mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">
+                <i class="fas fa-star text-yellow-500 mr-3"></i>
+                Fonctionnalités
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-blue-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Gestion Membres</h4>
+                    <p class="text-sm text-gray-600">Administration complète des utilisateurs et rôles</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-robot text-green-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Kadosh.ia</h4>
+                    <p class="text-sm text-gray-600">Assistant spirituel avec IA biblique</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-music text-purple-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Audio Cloud</h4>
+                    <p class="text-sm text-gray-600">Streaming audio avec Google Drive</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-euro-sign text-red-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Finances</h4>
+                    <p class="text-sm text-gray-600">Gestion des cotisations et dettes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- URL Info -->
+        <div class="install-card rounded-xl p-6 text-center shadow-xl">
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-link text-blue-500 mr-2"></i>
+                Lien Universal
+            </h3>
+            <p class="text-gray-600 mb-4">
+                Partagez ce lien pour donner accès à l'application depuis n'importe quel appareil :
+            </p>
+            <div class="bg-gray-100 rounded-lg p-4 font-mono text-sm break-all">
+                <span id="app-url">{{ request.url_root }}</span>
+            </div>
+            <button onclick="copyUrl()" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+                <i class="fas fa-copy mr-2"></i>
+                Copier le Lien
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-12 text-white/80">
+            <p>&copy; 2025 BENJ INSIDE - Plateforme de Gestion Chrétienne</p>
+            <p class="mt-2">Accessible partout, sur tous les appareils</p>
+        </div>
+    </div>
+
+    <!-- PWA Installation Script -->
+    <script>
+        let deferredPrompt;
+        
+        // Listen for install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show custom install button
+            const installButton = document.createElement('button');
+            installButton.innerHTML = '<i class="fas fa-download mr-2"></i>Installer Maintenant';
+            installButton.className = 'fixed bottom-4 right-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow-lg z-50 transition-colors';
+            installButton.onclick = () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                    installButton.remove();
+                });
+            };
+            document.body.appendChild(installButton);
+        });
+
+        // Copy URL function
+        function copyUrl() {
+            const url = document.getElementById('app-url').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                // Show success message
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Copié !';
+                button.className = button.className.replace('bg-blue-600', 'bg-green-600');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.className = button.className.replace('bg-green-600', 'bg-blue-600');
+                }, 2000);
+            });
+        }
+
+        // Animate step indicators
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.install-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

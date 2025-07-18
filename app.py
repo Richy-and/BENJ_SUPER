@@ -121,6 +121,12 @@ def create_app():
         from flask import render_template
         return render_template('index.html')
     
+    # Installation page for PWA
+    @app.route('/install')
+    def install():
+        from flask import render_template
+        return render_template('install.html')
+    
     # Language switching route
     @app.route('/set-language/<language_code>')
     def set_language(language_code):
