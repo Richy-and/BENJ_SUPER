@@ -318,18 +318,36 @@ def playlist_stats():
 @admin_bp.route('/announcements')
 @admin_required
 def announcements():
-    announcements = Announcement.query.order_by(Announcement.date_creation.desc()).all()
-    return render_template('admin/announcements.html', announcements=announcements)
+    # Séparer les annonces par statut
+    pending_announcements = Announcement.query.filter_by(statut='en_attente').order_by(Announcement.date_creation.desc()).all()
+    approved_announcements = Announcement.query.filter_by(statut='approuve').order_by(Announcement.date_creation.desc()).all()
+    rejected_announcements = Announcement.query.filter_by(statut='rejete').order_by(Announcement.date_creation.desc()).all()
+    
+    return render_template('admin/announcements.html', 
+                         pending_announcements=pending_announcements,
+                         approved_announcements=approved_announcements,
+                         rejected_announcements=rejected_announcements)
 
 @admin_bp.route('/announcements/add', methods=['POST'])
 @admin_required
 def add_announcement():
     titre = request.form['titre']
-    contenu = request.form['contenu']
+    description = request.form['description']
+    date_programme = request.form['date_programme']
+    heure_programme = request.form['heure_programme']
+    lieu = request.form.get('lieu', '')
     
+    # Créer l'annonce admin directement approuvée
     announcement = Announcement(
         titre=titre,
-        contenu=contenu
+        description=description,
+        date_programme=datetime.strptime(date_programme, '%Y-%m-%d').date(),
+        heure_programme=datetime.strptime(heure_programme, '%H:%M').time(),
+        lieu=lieu,
+        cree_par=session['user_id'],
+        statut='approuve',  # Admin announcements are auto-approved
+        approuve_par=session['user_id'],
+        date_approbation=datetime.utcnow()
     )
     
     db.session.add(announcement)
@@ -338,14 +356,39 @@ def add_announcement():
     flash('Annonce ajoutée avec succès!', 'success')
     return redirect(url_for('admin.announcements'))
 
+@admin_bp.route('/announcements/approve/<int:announcement_id>', methods=['POST'])
+@admin_required
+def approve_announcement(announcement_id):
+    announcement = Announcement.query.get_or_404(announcement_id)
+    announcement.statut = 'approuve'
+    announcement.approuve_par = session['user_id']
+    announcement.date_approbation = datetime.utcnow()
+    
+    db.session.commit()
+    flash(f'Annonce "{announcement.titre}" approuvée avec succès!', 'success')
+    return redirect(url_for('admin.announcements'))
+
+@admin_bp.route('/announcements/reject/<int:announcement_id>', methods=['POST'])
+@admin_required
+def reject_announcement(announcement_id):
+    announcement = Announcement.query.get_or_404(announcement_id)
+    announcement.statut = 'rejete'
+    announcement.approuve_par = session['user_id']
+    announcement.date_approbation = datetime.utcnow()
+    
+    db.session.commit()
+    flash(f'Annonce "{announcement.titre}" rejetée', 'warning')
+    return redirect(url_for('admin.announcements'))
+
 @admin_bp.route('/announcements/delete/<int:announcement_id>', methods=['POST'])
 @admin_required
 def delete_announcement(announcement_id):
     announcement = Announcement.query.get_or_404(announcement_id)
+    titre = announcement.titre
     db.session.delete(announcement)
     db.session.commit()
     
-    flash('Annonce supprimée', 'success')
+    flash(f'Annonce "{titre}" supprimée', 'success')
     return redirect(url_for('admin.announcements'))
 
 @admin_bp.route('/members/delete/<int:user_id>', methods=['POST'])
