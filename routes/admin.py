@@ -318,7 +318,7 @@ def playlist_stats():
 @admin_bp.route('/announcements')
 @admin_required
 def announcements():
-    announcements = Announcement.query.order_by(Announcement.date_publication.desc()).all()
+    announcements = Announcement.query.order_by(Announcement.date_creation.desc()).all()
     return render_template('admin/announcements.html', announcements=announcements)
 
 @admin_bp.route('/announcements/add', methods=['POST'])
