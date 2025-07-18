@@ -394,63 +394,51 @@ def delete_announcement(announcement_id):
 @admin_bp.route('/members/delete/<int:user_id>', methods=['POST'])
 @admin_required
 def delete_user_admin(user_id):
-    # Récupérer le nom d'utilisateur avant de faire quoi que ce soit
-    try:
-        result = db.session.execute(db.text("SELECT username FROM \"user\" WHERE id = :user_id"), {'user_id': user_id})
-        user_data = result.fetchone()
-        if not user_data:
-            flash('Utilisateur non trouvé', 'error')
-            return redirect(url_for('admin.members'))
-        username = user_data[0]
-    except Exception as e:
-        flash('Erreur lors de la récupération de l\'utilisateur', 'error')
+    from models import User, Temoignage, Finance, DepartmentRequest, Announcement, Score
+    
+    # Récupérer l'utilisateur
+    user = User.query.get(user_id)
+    if not user:
+        flash('Utilisateur non trouvé', 'error')
         return redirect(url_for('admin.members'))
+    
+    username = user.username
     
     # Vérifier que l'utilisateur n'est pas l'admin actuel
     if user_id == session['user_id']:
         flash('Vous ne pouvez pas supprimer votre propre compte', 'error')
         return redirect(url_for('admin.members'))
     
+    # Vérifier que l'utilisateur n'est pas un admin
+    if user.role == 'admin':
+        flash('Impossible de supprimer un administrateur', 'error')
+        return redirect(url_for('admin.members'))
+    
     try:
-        # Utiliser psycopg2 directement pour éviter complètement SQLAlchemy
-        import psycopg2
-        import os
+        # Supprimer dans l'ordre pour éviter les violations de contraintes
         
-        # Connexion directe à la base de données
-        conn = psycopg2.connect(os.environ.get('DATABASE_URL'))
-        cursor = conn.cursor()
+        # 1. Mettre à NULL les références vers cet utilisateur dans d'autres tables
+        db.session.execute(db.text("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = :user_id"), {'user_id': user_id})
+        db.session.execute(db.text("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = :user_id"), {'user_id': user_id})
         
-        try:
-            # Supprimer dans l'ordre pour éviter les violations de contraintes
-            
-            # 1. D'abord, mettre à NULL les références vers cet utilisateur dans d'autres tables
-            cursor.execute("UPDATE department_request SET reviewed_by = NULL WHERE reviewed_by = %s", (user_id,))
-            cursor.execute("UPDATE announcement SET approuve_par = NULL WHERE approuve_par = %s", (user_id,))
-            
-            # 2. Ensuite, supprimer les enregistrements où l'utilisateur est propriétaire
-            cursor.execute("DELETE FROM score WHERE user_id = %s", (user_id,))
-            cursor.execute("DELETE FROM score WHERE chef_id = %s", (user_id,))
-            cursor.execute("DELETE FROM temoignage WHERE user_id = %s", (user_id,))
-            cursor.execute("DELETE FROM finance WHERE user_id = %s", (user_id,))
-            cursor.execute("DELETE FROM department_request WHERE user_id = %s", (user_id,))
-            cursor.execute("DELETE FROM announcement WHERE cree_par = %s", (user_id,))
-            
-            # 3. Enfin, supprimer l'utilisateur lui-même
-            cursor.execute("DELETE FROM \"user\" WHERE id = %s", (user_id,))
-            
-            # Valider la transaction
-            conn.commit()
-            flash(f'Membre {username} supprimé avec succès', 'success')
-            
-        except Exception as e:
-            conn.rollback()
-            raise e
-        finally:
-            cursor.close()
-            conn.close()
-            
+        # 2. Supprimer les enregistrements liés
+        Score.query.filter_by(user_id=user_id).delete()
+        Score.query.filter_by(chef_id=user_id).delete()
+        Temoignage.query.filter_by(user_id=user_id).delete()
+        Finance.query.filter_by(user_id=user_id).delete()
+        DepartmentRequest.query.filter_by(user_id=user_id).delete()
+        Announcement.query.filter_by(cree_par=user_id).delete()
+        
+        # 3. Supprimer l'utilisateur
+        db.session.delete(user)
+        
+        # Valider la transaction
+        db.session.commit()
+        flash(f'Membre {username} supprimé avec succès', 'success')
+        
     except Exception as e:
-        flash('Erreur lors de la suppression du membre', 'error')
+        db.session.rollback()
+        flash(f'Erreur lors de la suppression du membre: {str(e)}', 'error')
         print(f"Erreur suppression utilisateur: {e}")
         import traceback
         traceback.print_exc()
