@@ -16,35 +16,77 @@
                     <p class="text-gray-600 dark:text-gray-400">Créez et gérez les annonces pour les membres</p>
                 </div>
             </div>
-            <div class="text-right">
-                <div class="text-2xl font-bold text-blue-600">{{ announcements|length }}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">Annonces total</div>
+            <div class="text-right flex space-x-6">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-600">{{ pending_announcements|length }}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">En attente</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-600">{{ approved_announcements|length }}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Approuvées</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600">{{ (pending_announcements|length) + (approved_announcements|length) + (rejected_announcements|length) }}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Total</div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Add Announcement Form -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Ajouter une annonce</h2>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Créer une nouvelle annonce</h2>
         <form method="POST" action="{{ url_for('admin.add_announcement') }}" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Titre
-                </label>
-                <input type="text" name="titre" required
-                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                              bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                       placeholder="Titre de l'annonce">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Titre *
+                    </label>
+                    <input type="text" name="titre" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                           placeholder="Titre de l'annonce">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Lieu
+                    </label>
+                    <input type="text" name="lieu"
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                           placeholder="Lieu de l'événement">
+                </div>
             </div>
             
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Contenu
+                    Description *
                 </label>
-                <textarea name="contenu" rows="4" required
+                <textarea name="description" rows="3" required
                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                          placeholder="Contenu de l'annonce"></textarea>
+                          placeholder="Description de l'annonce"></textarea>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Date *
+                    </label>
+                    <input type="date" name="date_programme" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Heure *
+                    </label>
+                    <input type="time" name="heure_programme" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                  bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                </div>
             </div>
             
             <div class="flex justify-end">
@@ -57,24 +99,108 @@
         </form>
     </div>
 
-    <!-- Announcements List -->
+    <!-- Annonces en attente de validation -->
+    {% if pending_announcements %}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md">
         <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Annonces publiées</h2>
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                    <i class="fas fa-clock text-yellow-500 mr-2"></i>
+                    Annonces en attente
+                </h2>
+                <span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ pending_announcements|length }}
+                </span>
+            </div>
         </div>
         
-        {% if announcements %}
         <div class="p-6 space-y-6">
-            {% for announcement in announcements %}
-            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            {% for announcement in pending_announcements %}
+            <div class="border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 bg-yellow-50 dark:bg-yellow-900/20">
                 <div class="flex items-start justify-between mb-4">
                     <div class="flex-1">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                             {{ announcement.titre }}
                         </h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                            <i class="fas fa-user mr-1"></i>
+                            Créée par {{ announcement.createur.username }} le {{ announcement.date_creation.strftime('%d/%m/%Y à %H:%M') }}
+                        </p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                             <i class="fas fa-calendar mr-1"></i>
-                            Publié le {{ announcement.date_creation.strftime('%d/%m/%Y à %H:%M') }}
+                            {{ announcement.date_programme.strftime('%d/%m/%Y') }} à {{ announcement.heure_programme.strftime('%H:%M') }}
+                            {% if announcement.lieu %}
+                            <i class="fas fa-map-marker-alt ml-3 mr-1"></i>
+                            {{ announcement.lieu }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <form method="POST" action="{{ url_for('admin.approve_announcement', announcement_id=announcement.id) }}" class="inline">
+                            <button type="submit"
+                                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-check mr-1"></i>
+                                Approuver
+                            </button>
+                        </form>
+                        <form method="POST" action="{{ url_for('admin.reject_announcement', announcement_id=announcement.id) }}" class="inline">
+                            <button type="submit"
+                                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-times mr-1"></i>
+                                Rejeter
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 rounded-lg p-4">
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {{ announcement.description }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Annonces approuvées -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    Annonces approuvées
+                </h2>
+                <span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ approved_announcements|length }}
+                </span>
+            </div>
+        </div>
+        
+        {% if approved_announcements %}
+        <div class="p-6 space-y-6">
+            {% for announcement in approved_announcements %}
+            <div class="border border-green-200 dark:border-green-800 rounded-lg p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                            {{ announcement.titre }}
+                        </h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                            <i class="fas fa-user mr-1"></i>
+                            Créée par {{ announcement.createur.username }}
+                            {% if announcement.approbateur %}
+                            • Approuvée par {{ announcement.approbateur.username }}
+                            {% endif %}
+                        </p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                            <i class="fas fa-calendar mr-1"></i>
+                            {{ announcement.date_programme.strftime('%d/%m/%Y') }} à {{ announcement.heure_programme.strftime('%H:%M') }}
+                            {% if announcement.lieu %}
+                            <i class="fas fa-map-marker-alt ml-3 mr-1"></i>
+                            {{ announcement.lieu }}
+                            {% endif %}
                         </p>
                     </div>
                     <form method="POST" action="{{ url_for('admin.delete_announcement', announcement_id=announcement.id) }}" class="inline"
@@ -89,7 +215,7 @@
                 
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                     <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        {{ announcement.contenu }}
+                        {{ announcement.description }}
                     </p>
                 </div>
             </div>
@@ -98,10 +224,60 @@
         {% else %}
         <div class="p-12 text-center">
             <i class="fas fa-bullhorn text-gray-300 dark:text-gray-600 text-6xl mb-4"></i>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucune annonce</h3>
-            <p class="text-gray-500 dark:text-gray-400">Aucune annonce n'a été publiée pour le moment</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Aucune annonce approuvée</h3>
+            <p class="text-gray-500 dark:text-gray-400">Aucune annonce n'a été approuvée pour le moment</p>
         </div>
         {% endif %}
     </div>
+
+    <!-- Annonces rejetées -->
+    {% if rejected_announcements %}
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                    <i class="fas fa-times-circle text-red-500 mr-2"></i>
+                    Annonces rejetées
+                </h2>
+                <span class="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ rejected_announcements|length }}
+                </span>
+            </div>
+        </div>
+        
+        <div class="p-6 space-y-6">
+            {% for announcement in rejected_announcements %}
+            <div class="border border-red-200 dark:border-red-800 rounded-lg p-6 bg-red-50 dark:bg-red-900/20">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                            {{ announcement.titre }}
+                        </h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                            <i class="fas fa-user mr-1"></i>
+                            Créée par {{ announcement.createur.username }}
+                            • Rejetée par {{ announcement.approbateur.username }}
+                        </p>
+                    </div>
+                    <form method="POST" action="{{ url_for('admin.delete_announcement', announcement_id=announcement.id) }}" class="inline"
+                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce?')">
+                        <button type="submit"
+                                class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 px-3 py-1 rounded-lg transition-colors">
+                            <i class="fas fa-trash mr-1"></i>
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 rounded-lg p-4">
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {{ announcement.description }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
