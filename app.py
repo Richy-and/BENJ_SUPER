@@ -29,7 +29,7 @@ def create_app():
     # Configuration
     app.secret_key = os.environ.get("SESSION_SECRET", "your-secret-key-here")
     # Configuration base de données - Render en priorité, puis local
-   import psycopg2
+import psycopg2
 import ssl
 
 # Force SSL pour PostgreSQL sur Render
