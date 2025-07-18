@@ -79,9 +79,9 @@
                     </button>
                 </div>
                 
-                    <form method="POST" action="{{ url_for('admin.add_playlist_item') }}" enctype="multipart/form-data" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+                <form method="POST" action="{{ url_for('admin.add_playlist_item') }}" enctype="multipart/form-data" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Titre
                     </label>
@@ -89,9 +89,9 @@
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
                                   bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                            placeholder="Titre de l'audio">
-                </div>
-                
-                <div>
+                        </div>
+                        
+                        <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Volume (0.0 - 1.0)
                     </label>
@@ -102,68 +102,68 @@
                         <span id="volumeValue">0.7</span>
                         <span>1.0</span>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Audio Source Selection -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Source audio
-                </label>
-                <div class="space-y-3">
-                    <div>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="audio_source" value="local" checked
-                                   class="form-radio text-orange-600" onchange="toggleAudioSource()">
-                            <span class="ml-2 text-gray-700 dark:text-gray-300">
-                                <i class="fab fa-google-drive text-blue-500 mr-1"></i>
-                                Upload vers Google Drive (recommandé)
-                            </span>
-                        </label>
+                        </div>
                     </div>
+                    
+                    <!-- Audio Source Selection -->
                     <div>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="audio_source" value="url" 
-                                   class="form-radio text-orange-600" onchange="toggleAudioSource()">
-                            <span class="ml-2 text-gray-700 dark:text-gray-300">URL externe</span>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Source audio
                         </label>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="audio_source" value="local" checked
+                                           class="form-radio text-orange-600" onchange="toggleAudioSource()">
+                                    <span class="ml-2 text-gray-700 dark:text-gray-300">
+                                        <i class="fab fa-google-drive text-blue-500 mr-1"></i>
+                                        Upload vers Google Drive (recommandé)
+                                    </span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="audio_source" value="url" 
+                                           class="form-radio text-orange-600" onchange="toggleAudioSource()">
+                                    <span class="ml-2 text-gray-700 dark:text-gray-300">URL externe</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Local File Upload -->
-            <div id="localFileSection">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Fichier audio (MP3, WAV, OGG)
-                </label>
-                <input type="file" name="fichier_audio" accept="audio/*"
-                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                              bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Taille maximale: 50MB. Formats supportés: MP3, WAV, OGG
-                </p>
-            </div>
-            
-            <!-- URL Input -->
-            <div id="urlSection" style="display: none;">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    URL du fichier audio
-                </label>
-                <input type="url" name="fichier_audio_url"
-                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                              bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                       placeholder="https://example.com/audio.mp3">
-            </div>
-            
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Description (optionnel)
-                </label>
-                <textarea name="description" rows="3"
-                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
-                                 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                          placeholder="Description de l'audio"></textarea>
-            </div>
+                    
+                    <!-- Local File Upload -->
+                    <div id="localFileSection">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Fichier audio (MP3, WAV, OGG)
+                        </label>
+                        <input type="file" name="fichier_audio" accept="audio/*"
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                      bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            Taille maximale: 50MB. Formats supportés: MP3, WAV, OGG
+                        </p>
+                    </div>
+                    
+                    <!-- URL Input -->
+                    <div id="urlSection" style="display: none;">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            URL du fichier audio
+                        </label>
+                        <input type="url" name="fichier_audio_url"
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                      bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                               placeholder="https://example.com/audio.mp3">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Description (optionnel)
+                        </label>
+                        <textarea name="description" rows="3"
+                                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                         bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                  placeholder="Description de l'audio"></textarea>
+                    </div>
             
                     <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
                         <button type="button" onclick="closeAddAudioModal()"
@@ -331,13 +331,22 @@ document.getElementById('audioTestModal').addEventListener('click', function(e) 
 
 // Modal functions
 function openAddAudioModal() {
-    document.getElementById('addAudioModal').classList.remove('hidden');
+    const modal = document.getElementById('addAudioModal');
+    modal.classList.remove('hidden');
     // Reset form when opening
-    document.querySelector('#addAudioModal form').reset();
+    const form = document.querySelector('#addAudioModal form');
+    form.reset();
     document.getElementById('volumeValue').textContent = '0.7';
     document.getElementById('volumeSlider').value = '0.7';
     document.querySelector('input[name="audio_source"][value="local"]').checked = true;
     toggleAudioSource();
+    
+    // Add form submit handler to show loading state
+    form.addEventListener('submit', function(e) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Upload en cours...';
+        submitBtn.disabled = true;
+    });
 }
 
 function closeAddAudioModal() {
