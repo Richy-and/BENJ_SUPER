@@ -1,3 +1,7 @@
+
+
+
+
 import os
 import logging
 from datetime import timedelta
@@ -7,12 +11,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_babel import Babel
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.engine.url import make_url
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 class Base(DeclarativeBase):
     pass
@@ -23,33 +25,28 @@ babel = Babel()
 
 def create_app():
     app = Flask(__name__)
+    
+    # Configuration
+    app.secret_key = os.environ.get("SESSION_SECRET", "your-secret-key-here")
+    # Configuration base de données - Render en priorité, puis local
+   import psycopg2
+import ssl
 
-    # Get DATABASE_URL from environment or fallback to SQLite local DB for dev
-    db_url = os.environ.get("DATABASE_URL")
-    if not db_url:
-        logger.warning("DATABASE_URL not set. Using local SQLite database.")
-        db_url = "sqlite:///local.db"
-    else:
-        # Parse and ensure driver and sslmode for PostgreSQL
-        try:
-            url = make_url(db_url)
-            url = url.set(drivername="postgresql+psycopg2")
-            # Add sslmode=require query param if not present
-            if not url.query.get("sslmode"):
-                url = url.set(query={**url.query, "sslmode": "require"})
-            db_url = str(url)
-            logger.info(f"Using DATABASE_URL: {db_url}")
-        except Exception as e:
-            logger.error(f"Error parsing DATABASE_URL: {e}")
+# Force SSL pour PostgreSQL sur Render
+os.environ['PGSSLMODE'] = 'require'
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = db_url
-    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-        "pool_recycle": 300,
-        "pool_pre_ping": True,
-    }
+# Config DB : Render ou fallback local
+db_url = os.environ.get("DATABASE_URL")
+if not db_url:
+    # Fallback local pour tests (SQLite)
+    db_url = "sqlite:///local.db"
 
-    # Set secret keys securely
-    app.secret_key = os.environ.get("SESSION_SECRET") or os.urandom(24)
+app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_recycle": 300,
+    "pool_pre_ping": True,
+}
+
     app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY", "jwt-secret-string")
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
     app.config["BABEL_DEFAULT_LOCALE"] = "fr"
@@ -63,51 +60,156 @@ def create_app():
         'it': 'Italiano',
         'ar': 'العربية'
     }
-
-    # Apply proxy fix for correct headers behind proxy (Render)
+    
+    # Apply proxy fix for production - Essential for external access on Render
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1, x_port=1, x_prefix=1)
-
+    
     # Initialize extensions
     db.init_app(app)
     jwt.init_app(app)
     babel.init_app(app)
+    
+    # Initialize translation service
+    from services.translation_service import register_template_context
+    register_template_context(app)
+    
+    # Add custom Jinja filters
+    import json
+    @app.template_filter('from_json')
+    def from_json_filter(value):
+        if value:
+            return json.loads(value)
+        return []
+    
+    # Register blueprints
+    from routes.auth import auth_bp
+    from routes.dashboard import dashboard_bp
+    from routes.admin import admin_bp
+    from routes.chef import chef_bp
+    from routes.chatbot import chatbot_bp
+    from routes.announcements import announcements_bp
+    from routes.department_requests import department_requests_bp
+    from routes.finances import finances_bp
+    
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
+    app.register_blueprint(department_requests_bp, url_prefix='/department-requests')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(chef_bp, url_prefix='/chef')
+    app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
+    app.register_blueprint(announcements_bp)
+    app.register_blueprint(finances_bp)
+    
+    # Security headers for cross-browser compatibility
+    @app.after_request
+    def add_security_headers(response):
+        # Security headers
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        
+        # CORS for mobile apps
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        
+        # Cache control optimized for production
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        
+        return response
 
-    # Google Drive credentials environment variable
-    if os.path.exists('credentials.json'):
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
-        logger.info("Google Drive credentials loaded.")
-    else:
-        logger.warning("credentials.json not found. Google Drive API might not work.")
-
-    # Health check endpoint
+    # Health check for Render
     @app.route('/health')
     def health_check():
         from flask import jsonify
-        return jsonify({'status': 'healthy', 'service': 'BENJ INSIDE', 'version': '1.0.0'}), 200
+        return jsonify({
+            'status': 'healthy',
+            'service': 'BENJ INSIDE',
+            'version': '1.0.0'
+        }), 200
 
-    # Main route
+    # Main routes
     @app.route('/')
     def index():
         from flask import render_template
         return render_template('index.html')
-
-    # Initialize DB content
+    
+    # Installation page for PWA
+    @app.route('/install')
+    def install():
+        from flask import render_template
+        return render_template('install.html')
+    
+    # Language switching route
+    @app.route('/set-language/<language_code>')
+    def set_language(language_code):
+        from flask import redirect, url_for, request, jsonify
+        from services.translation_service import translation_service
+        
+        success = translation_service.set_language(language_code)
+        
+        # Handle AJAX requests
+        if request.headers.get('Content-Type') == 'application/json' or request.is_json:
+            return jsonify({
+                'success': success,
+                'language': language_code,
+                'message': translation_service.translate('language_changed', language_code)
+            })
+        
+        # Handle regular requests
+        return redirect(request.referrer or url_for('index'))
+    
+    # API route for translations
+    @app.route('/api/translations')
+    def get_translations():
+        from flask import jsonify, request
+        from services.translation_service import translation_service
+        
+        language = request.args.get('language', translation_service.get_current_language())
+        return jsonify(translation_service.get_all_translations(language))
+    
+    # PWA Service Worker route
+    @app.route('/sw.js')
+    def service_worker():
+        from flask import send_from_directory
+        return send_from_directory('static/js', 'sw.js', mimetype='application/javascript')
+    
+    # PWA Installation page
+    @app.route('/install')
+    def pwa_install():
+        from flask import render_template
+        return render_template('pwa_install.html')
+    
+    # Mobile test endpoint
+    @app.route('/mobile-test')
+    def mobile_test():
+        from flask import request, jsonify
+        return jsonify({
+            'status': 'OK',
+            'message': 'Mobile access working',
+            'user_agent': request.headers.get('User-Agent', 'Unknown'),
+            'remote_addr': request.remote_addr,
+            'host': request.host,
+            'url': request.url
+        })
+    
     with app.app_context():
         from models import User, Department, Announcement
         from werkzeug.security import generate_password_hash
-
-        try:
-            db.create_all()
-        except Exception as e:
-            logger.error(f"Error during db.create_all(): {e}")
-
-        # Default departments
+        
+        db.create_all()
+        
+        # Create default departments
         departments = ['Chantres', 'Intercesseurs', 'Régis', 'Administration', 'Jeunesse', 'Évangélisation']
         for dept_name in departments:
             if not Department.query.filter_by(nom=dept_name).first():
-                db.session.add(Department(nom=dept_name))
-
-        # Admin user
+                dept = Department(nom=dept_name)
+                db.session.add(dept)
+        
+        # Create admin user
         admin = User.query.filter_by(username='Yohann').first()
         if not admin:
             admin = User(
@@ -118,21 +220,23 @@ def create_app():
                 langue='fr'
             )
             db.session.add(admin)
-
-        # Default announcement
+        
+        # Create default announcement
         if not Announcement.query.first():
             from datetime import date, time
-            db.session.add(Announcement(
+            welcome_announcement = Announcement(
                 titre="Bienvenue sur BENJ INSIDE",
                 description="Plateforme de gestion chrétienne pour notre communauté. Que Dieu vous bénisse!",
                 date_programme=date(2025, 7, 20),
                 heure_programme=time(9, 0),
                 lieu="Église BENJ INSIDE",
                 statut="approuve",
-                cree_par=admin.id
-            ))
+                cree_par=admin.id  # Admin user
+            )
+            db.session.add(welcome_announcement)
+        
         db.session.commit()
-
+    
     return app
 
 app = create_app()
