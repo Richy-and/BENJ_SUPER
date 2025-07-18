@@ -6,6 +6,26 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Cross-browser compatibility -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta name="google" content="notranslate">
+    <meta name="robots" content="index, follow">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="author" content="BENJ INSIDE Team">
+    <meta name="keywords" content="communauté chrétienne, gestion, plateforme spirituelle, église">
+    <meta property="og:title" content="BENJ INSIDE - Plateforme Chrétienne">
+    <meta property="og:description" content="Plateforme de gestion pour notre communauté spirituelle">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <title>{% block title %}BENJ INSIDE{% endblock %}</title>
     
     <!-- PWA Meta Tags -->
@@ -38,6 +58,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/pwa-styles.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/render-optimizations.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/mobile-optimizations.css') }}" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',

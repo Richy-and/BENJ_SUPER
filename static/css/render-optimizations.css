@@ -1,0 +1,201 @@
+/* Render Deployment Optimizations for Cross-Browser Compatibility */
+
+/* Reset pour la compatibilité navigateurs */
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Variables CSS pour tous les navigateurs */
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #1e40af;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --background-light: #ffffff;
+    --background-dark: #1f2937;
+    --text-light: #111827;
+    --text-dark: #f9fafb;
+}
+
+/* Support pour Internet Explorer et Edge Legacy */
+@supports (-ms-ime-align: auto) {
+    .grid {
+        display: -ms-grid;
+    }
+}
+
+/* Flexbox fallback pour navigateurs anciens */
+.flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.flex-col {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+/* Optimisations pour Safari mobile */
+@supports (-webkit-appearance: none) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+        -webkit-appearance: none;
+        border-radius: 0.5rem;
+    }
+    
+    button {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* Optimisations pour Firefox */
+@-moz-document url-prefix() {
+    input[type="text"],
+    input[type="email"], 
+    input[type="password"],
+    textarea {
+        background-clip: padding-box;
+    }
+}
+
+/* Optimisations pour Chrome et navigateurs Webkit */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+}
+
+/* Styles responsive pour tous appareils */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .text-responsive {
+        font-size: 0.875rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Support PWA pour Android et iOS */
+@media (display-mode: standalone) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
+/* Dark mode pour tous navigateurs */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: var(--background-dark);
+        --text-color: var(--text-dark);
+    }
+}
+
+/* Animation optimisées pour performance */
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll smooth pour tous navigateurs */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fix pour navigateurs anciens */
+@supports not (scroll-behavior: smooth) {
+    html {
+        overflow-x: hidden;
+    }
+}
+
+/* Optimisations audio pour tous navigateurs */
+audio {
+    width: 100%;
+    outline: none;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: var(--background-light);
+}
+
+/* Loading states universels */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    button, input, select, textarea {
+        border: 2px solid;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

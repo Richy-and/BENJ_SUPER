@@ -45,8 +45,8 @@ def create_app():
         'ar': 'العربية'
     }
     
-    # Apply proxy fix for production - Essential for external access
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1, x_port=1)
+    # Apply proxy fix for production - Essential for external access on Render
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1, x_port=1, x_prefix=1)
     
     # Initialize extensions
     db.init_app(app)
@@ -84,6 +84,37 @@ def create_app():
     app.register_blueprint(announcements_bp)
     app.register_blueprint(finances_bp)
     
+    # Security headers for cross-browser compatibility
+    @app.after_request
+    def add_security_headers(response):
+        # Security headers
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        
+        # CORS for mobile apps
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        
+        # Cache control optimized for production
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        
+        return response
+
+    # Health check for Render
+    @app.route('/health')
+    def health_check():
+        from flask import jsonify
+        return jsonify({
+            'status': 'healthy',
+            'service': 'BENJ INSIDE',
+            'version': '1.0.0'
+        }), 200
+
     # Main routes
     @app.route('/')
     def index():

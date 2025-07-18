@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: benj-inside
+    env: python
+    region: oregon # ou frankfurt pour l'Europe
+    plan: starter # Plan gratuit Render
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --keep-alive 2 --max-requests 1000 --max-requests-jitter 100 main:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: benj-database
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false # Sera fourni manuellement
+    healthCheckPath: /
+    
+databases:
+  - name: benj-database
+    databaseName: benj_database
+    user: benj_database_user
+    region: oregon
+    plan: starter # PostgreSQL gratuit
